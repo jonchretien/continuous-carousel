@@ -1,0 +1,7 @@
+/*!
+ * Infinite Carousel v0.0.0
+ * Timed infinite carousel that uses vanilla JavaScript & CSS animations.
+ *
+ * @license Released under the MIT license.
+ * @copyright 2015 Jon Chretien
+ */.infinitecarousel-shell{overflow:hidden;-webkit-transform-style:preserve-3d;transform-style:preserve-3d}.infinitecarousel-item-wrapper{height:100%}.infinitecarousel-vertical{width:100%}.infinitecarousel-horizontal .infinitecarousel-item{float:left;height:100%}

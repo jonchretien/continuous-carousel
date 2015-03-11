@@ -1,0 +1,16 @@
+{
+  "name": "infinitecarousel",
+  "version": "0.0.0",
+  "description": "Timed infinite carousel that uses vanilla JavaScript & CSS animations.",
+  "main": "js/infinitecarousel.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jshint": "~2.6.3",
+    "clean-css": "~3.1.5",
+    "uglify-js": "~2.4.17"
+  }
+}
