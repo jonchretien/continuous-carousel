@@ -4,4 +4,4 @@
  *
  * @license Released under the MIT license.
  * @copyright 2015 Jon Chretien
- */.infinitecarousel-shell{overflow:hidden;-webkit-transform-style:preserve-3d;transform-style:preserve-3d}.infinitecarousel-item-wrapper{height:100%}.infinitecarousel-vertical{width:100%}.infinitecarousel-horizontal .infinitecarousel-item{float:left;height:100%}
+ */.infinite-carousel-shell{overflow:hidden;-webkit-transform-style:preserve-3d;transform-style:preserve-3d}.infinite-carousel-group{height:100%}.infinite-carousel-vertical{width:100%}.infinite-carousel-horizontal .infinite-carousel-group-item{float:left;height:100%}

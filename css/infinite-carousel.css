@@ -6,21 +6,21 @@
  * @copyright 2015 Jon Chretien
  */
 
-.infinitecarousel-shell {
+.infinite-carousel-shell {
   overflow: hidden;
   -webkit-transform-style: preserve-3d;
           transform-style: preserve-3d;
 }
 
-.infinitecarousel-group {
+.infinite-carousel-group {
   height: 100%;
 }
 
-.infinitecarousel-vertical {
+.infinite-carousel-vertical {
   width: 100%;
 }
 
-.infinitecarousel-horizontal .infinitecarousel-group-item {
+.infinite-carousel-horizontal .infinite-carousel-group-item {
   float: left;
   height: 100%;
 }
