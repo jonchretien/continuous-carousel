@@ -1,8 +1,8 @@
 {
-  "name": "infinitecarousel",
+  "name": "infinite-carousel",
   "version": "0.0.0",
   "description": "Timed infinite carousel that uses vanilla JavaScript & CSS animations.",
-  "main": "js/infinitecarousel.js",
+  "main": "js/infinite-carousel.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

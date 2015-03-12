@@ -14,8 +14,8 @@ clean:
 	@echo "${GREEN}Removed old build directory.${NO_COLOR}\n"
 
 copy:
-	cp js/infinitecarousel.js $(DIST)/infinitecarousel.js
-	cp css/infinitecarousel.css $(DIST)/infinitecarousel.css
+	cp js/infinite-carousel.js $(DIST)/infinite-carousel.js
+	cp css/infinite-carousel.css $(DIST)/infinite-carousel.css
 	@echo "${GREEN}Copied files.${NO_COLOR}\n"
 
 make_dir:
@@ -23,11 +23,11 @@ make_dir:
 	@echo "${GREEN}Created new directories.${NO_COLOR}\n"
 
 min_css:
-	$(BIN)/cleancss -o $(DIST)/infinitecarousel.min.css $(DIST)/infinitecarousel.css
+	$(BIN)/cleancss -o $(DIST)/infinite-carousel.min.css $(DIST)/infinite-carousel.css
 	@echo "${GREEN}Minified CSS.${NO_COLOR}\n"
 
 min_js:
-	$(BIN)/uglifyjs $(DIST)/infinitecarousel.js --mangle --compress -o $(DIST)/infinitecarousel.min.js
+	$(BIN)/uglifyjs $(DIST)/infinite-carousel.js --mangle --compress -o $(DIST)/infinite-carousel.min.js
 	@echo "${GREEN}Minified JavaScript.${NO_COLOR}\n"
 
 # --------------------------
@@ -35,5 +35,5 @@ min_js:
 # --------------------------
 
 test:
-	@jshint --verbose js/infinitecarousel.js --config .jshintrc
+	@jshint --verbose js/infinite-carousel.js --config .jshintrc
 	@echo "${GREEN}Linted JavaScript files.${NO_COLOR}\n"
