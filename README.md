@@ -7,23 +7,23 @@ _Timed infinite carousel that uses vanilla JavaScript & CSS animations. It suppo
 ### Download
 
 + CSS:
-  - [infinitecarousel.css](https://github.com/jonchretien/infinitecarousel/raw/master/dist/infinitecarousel.css)
-  - [infinitecarousel.min.css](https://github.com/jonchretien/infinitecarousel/raw/master/dist/infinitecarousel.min.css)
+  - [infinite-carousel.css](https://github.com/jonchretien/infinite-carousel/raw/master/dist/infinite-carousel.css)
+  - [infinite-carousel.min.css](https://github.com/jonchretien/infinite-carousel/raw/master/dist/infinite-carousel.min.css)
 + JavaScript:
-  - [infinitecarousel.js](https://github.com/jonchretien/infinitecarousel/raw/master/dist/infinitecarousel.js)
-  - [infinitecarousel.min.js](https://github.com/jonchretien/infinitecarousel/raw/master/dist/infinitecarousel.min.js)
+  - [infinite-carousel.js](https://github.com/jonchretien/infinite-carousel/raw/master/dist/infinite-carousel.js)
+  - [infinite-carousel.min.js](https://github.com/jonchretien/infinite-carousel/raw/master/dist/infinite-carousel.min.js)
 
 ## Usage
 
 Infinite Carousel works with a container element and a set of child item elements.
 
 ``` html
-<div class="infinitecarousel-shell">
-  <div id="container" class="infinitecarousel-group">
-    <div class="infinitecarousel-group-item">1</div>
-    <div class="infinitecarousel-group-item">2</div>
-    <div class="infinitecarousel-group-item">3</div>
-    <div class="infinitecarousel-group-item">4</div>
+<div class="infinite-carousel-shell">
+  <div id="container" class="infinite-carousel-group">
+    <div class="infinite-carousel-group-item">1</div>
+    <div class="infinite-carousel-group-item">2</div>
+    <div class="infinite-carousel-group-item">3</div>
+    <div class="infinite-carousel-group-item">4</div>
   </div>
 </div>
 ```
@@ -52,9 +52,7 @@ Tested in the latest versions of:
 
 ## License
 
-### Open source license
-
-Infinite Carousel is released under the [MIT license](https://github.com/jonchretien/infinitecarousel/LICENSE.txt).
+Infinite Carousel is released under the [MIT license](https://github.com/jonchretien/infinite-carousel/blob/master/LICENSE.txt).
 
 ## To Do
 + Tests
