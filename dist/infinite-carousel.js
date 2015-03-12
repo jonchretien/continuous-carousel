@@ -53,7 +53,7 @@
     // assign variables
     this.container = document.querySelector(element);
     this.direction = direction;
-    this.items = this.container.querySelectorAll('.js-infinitecarousel-item');
+    this.items = this.container.children;
     this.firstItem = this.items[0];
     this.numItems = this.items.length;
     this.numVisible = numVisible;
