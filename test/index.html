@@ -2,9 +2,79 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Document</title>
+  <title>Infinite Carousel Tests</title>
+  <link rel="stylesheet" href="../node_modules/qunitjs/qunit/qunit.css">
+  <link rel="stylesheet" href="../css/infinite-carousel.css">
+  <style>
+  /*
+   * Base Styles
+   *
+   * Note: base font-size of 100% (16px) is declared above;
+   */
+
+  html {
+    box-sizing: border-box;
+  }
+
+  *, *:before, *:after {
+    box-sizing: inherit;
+  }
+
+  /*
+   * Component: Carousel
+   */
+
+  .infinite-carousel-shell {
+    background: #3d9970;
+    color: #fff;
+    height: 449px;
+    margin-bottom: 15px;
+  }
+
+  .infinite-carousel-horizontal .infinite-carousel-group-item {
+    margin-right: 16px;
+    padding-top: 220px;
+    width: 101px;
+  }
+
+  .infinite-carousel-vertical .infinite-carousel-group-item {
+    margin-bottom: 25px;
+    padding-top: 49px;
+  }
+
+  .infinite-carousel-group-item {
+    background: #7fdbff;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 36px;
+    font-weight: bold;
+    height: 133px;
+    text-align: center;
+  }
+  </style>
+
+  <script src="../js/infinite-carousel.js"></script>
+  <script src="../node_modules/qunitjs/qunit/qunit.js"></script>
+  <script src="unit/init.js"></script>
 </head>
 <body>
+
+  <div id="qunit"></div>
+
+  <div class="infinite-carousel-shell">
+    <div id="init" class="infinite-carousel-group infinite-carousel-vertical">
+      <div class="infinite-carousel-group-item">1</div>
+      <div class="infinite-carousel-group-item">2</div>
+      <div class="infinite-carousel-group-item">3</div>
+      <div class="infinite-carousel-group-item">4</div>
+      <div class="infinite-carousel-group-item">5</div>
+      <div class="infinite-carousel-group-item">6</div>
+      <div class="infinite-carousel-group-item">7</div>
+      <div class="infinite-carousel-group-item">8</div>
+      <div class="infinite-carousel-group-item">9</div>
+      <div class="infinite-carousel-group-item">10</div>
+      <div class="infinite-carousel-group-item">11</div>
+    </div><!-- /.infinite-carousel-group -->
+  </div><!-- /.infinite-carousel-shell -->
 
 </body>
 </html>
