@@ -42,7 +42,7 @@ Infinite Carousel works with a container element and a set of child item element
  * - a direction ('horizontal' or 'vertical')
  * - the number of items that are visible at once
  */
-var infinitecarousel = new InfiniteCarousel('#container', 'horizontal', 3 {
+var infinitecarousel = new InfiniteCarousel('#container', 'horizontal', 3, {
   // optional options object (defaults are listed)
 
   timerDuration: 2000,
