@@ -7,7 +7,7 @@ NO_COLOR = \033[0m
 # Build Tasks
 # --------------------------
 
-build: test clean make_dir copy min_css min_js
+build: lint clean make_dir copy min_css min_js
 
 clean:
 	rm -rf $(DIST)/
@@ -31,9 +31,9 @@ min_js:
 	@echo "${GREEN}Minified JavaScript.${NO_COLOR}\n"
 
 # --------------------------
-# Test
+# Lint
 # --------------------------
 
-test:
+lint:
 	@jshint --verbose js/infinite-carousel.js --config .jshintrc
 	@echo "${GREEN}Linted JavaScript files.${NO_COLOR}\n"
