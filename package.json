@@ -1,6 +1,6 @@
 {
   "name": "infinite-carousel",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Timed infinite carousel that uses vanilla JavaScript & CSS animations.",
   "main": "js/infinite-carousel.js",
   "scripts": {
