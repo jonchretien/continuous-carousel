@@ -1,5 +1,5 @@
 /*!
- * Infinite Carousel v0.0.0
+ * Infinite Carousel v0.1.0
  * Timed infinite carousel that uses vanilla JavaScript & CSS animations.
  *
  * @license Released under the MIT license.
