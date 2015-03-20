@@ -27,7 +27,7 @@ min_css:
 	@echo "${GREEN}Minified CSS.${NO_COLOR}\n"
 
 min_js:
-	$(BIN)/uglifyjs $(DIST)/infinite-carousel.js --mangle --compress -o $(DIST)/infinite-carousel.min.js
+	$(BIN)/uglifyjs $(DIST)/infinite-carousel.js --mangle --compress --comments -o $(DIST)/infinite-carousel.min.js
 	@echo "${GREEN}Minified JavaScript.${NO_COLOR}\n"
 
 # --------------------------
