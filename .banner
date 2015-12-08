@@ -1,0 +1,7 @@
+/**
+ * @name <%= pkg.name %>
+ * @overview Timed infinite carousel that uses vanilla JavaScript & CSS animations.
+ * @version <%= pkg.version %>
+ * @author <%= pkg.author %>
+ * @license <%= pkg.license %>
+ */

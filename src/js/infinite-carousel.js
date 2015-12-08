@@ -1,11 +1,3 @@
-/*!
- * Infinite Carousel v0.1.0
- * Timed infinite carousel that uses vanilla JavaScript & CSS animations.
- *
- * @license Released under the MIT license.
- * @copyright 2015 Jon Chretien
- */
-
 'use strict';
 
 import extend from './extend';
@@ -50,7 +42,7 @@ export default class InfiniteCarousel {
     this.firstItem = this.items[0];
     this.numItems = this.items.length;
     this.numVisible = numVisible;
-    this.options = extend(this.defaults, options);
+    this.options = extend(defaults, options);
     this.pos = 0;
     this.isBypassingTimer = false;
     this.isReadyToReset = false;
