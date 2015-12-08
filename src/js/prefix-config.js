@@ -1,8 +1,10 @@
+'use strict';
+
 /**
  * Vendor prefixes.
  * @type {Object}
  */
-var CSS_VENDOR_PREFIX = {
+export const CSS_VENDOR_PREFIX = {
   TRANSFORM: {
     'transform': 'transform',
     'WebkitTransform': 'webkitTransform'

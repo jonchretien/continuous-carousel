@@ -9,7 +9,7 @@
 'use strict';
 
 /**
- * Infinite Carousel Class
+ * Infinite Carousel
  *
  * @constructor
  * @param {String} element - Selector for scroll container.
