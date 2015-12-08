@@ -11,6 +11,10 @@
     "build:min": "uglifyjs dist/infinite-carousel.pkgd.js --mangle --compress --comments -o dist/infinite-carousel.pkgd.min.js",
     "build:watch": "watchify src/js/infinite-carousel.js --standalone InfiniteCarousel -t -o dist/infinite-carousel.pkgd.js -v"
   },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jonchretien/infinite-carousel.git"
+  },
   "browserify": {
     "transform": [
       [
