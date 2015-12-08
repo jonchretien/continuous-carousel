@@ -8,6 +8,11 @@
 
 'use strict';
 
+import extend from './extend';
+import cloneNodes from './clone-nodes';
+import CSS_VENDOR_PREFIX from './prefix-config';
+import getVendorPrefix from './get-prefixes';
+
 /**
  * Infinite Carousel
  *
@@ -20,15 +25,15 @@
 function InfiniteCarousel(element, direction, numVisible, options) {
   // check for errors
   if (!element || typeof(element) !== 'string') {
-    throw new Error('Auto Scroller requires a selector.');
+    throw new Error('The `element` argument must be a string.');
   }
 
   if (!direction || typeof(direction) !== 'string') {
-    throw new Error('Auto Scroller requires a direction.');
+    throw new Error('The `direction` argument must be a string.');
   }
 
   if (!numVisible || typeof(numVisible) !== 'number') {
-    throw new Error('numVisible argument must be number.');
+    throw new Error('The `numVisible` argument must be a number.');
   }
 
   // assign variables
@@ -38,15 +43,15 @@ function InfiniteCarousel(element, direction, numVisible, options) {
   this.firstItem = this.items[0];
   this.numItems = this.items.length;
   this.numVisible = numVisible;
-  this.options = Utils.extend(this.defaults, options);
+  this.options = extend(this.defaults, options);
   this.pos = 0;
   this.isBypassingTimer = false;
   this.isReadyToReset = false;
   this.scrollingDistance = null;
   this.timerDuration = this.options.timerDuration;
-  this.transformEvent = Utils.getVendorPrefix(CSS_VENDOR_PREFIX.TRANSFORM);
+  this.transformEvent = getVendorPrefix(CSS_VENDOR_PREFIX.TRANSFORM);
   this.transitionDuration = this.options.transitionDuration;
-  this.transitionEndEvent = Utils.getVendorPrefix(CSS_VENDOR_PREFIX.TRANSITION_END);
+  this.transitionEndEvent = getVendorPrefix(CSS_VENDOR_PREFIX.TRANSITION_END);
   this.TRANSITION_DURATION_RESET = '0.001s';
 
   // kick off logic
@@ -76,7 +81,7 @@ InfiniteCarousel.prototype._init = function() {
     this._setContainerAttributes('data-left', 'margin-right');
   }
 
-  Utils.cloneNodes(this.items, this.numVisible, this.container);
+  cloneNodes(this.items, this.numVisible, this.container);
   this._attachEvents();
   this._setTimer();
 };

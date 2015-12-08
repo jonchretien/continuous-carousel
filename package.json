@@ -4,14 +4,18 @@
   "description": "Timed infinite carousel that uses vanilla JavaScript & CSS animations.",
   "main": "js/infinite-carousel.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:js": "browserify src/js/infinite-carousel.js -o dist/infinite-carousel.pkgd.js -t [ babelify --presets [ es2015 ] ]"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "babel-cli": "^6.3.15",
     "babel-core": "^6.3.15",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.3.13",
     "babel-preset-es2015": "^6.3.13",
+    "babelify": "^7.2.0",
+    "browserify": "^12.0.1",
     "clean-css": "~3.1.5",
     "jshint": "~2.6.3",
     "qunitjs": "~1.17.1",
