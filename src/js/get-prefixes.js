@@ -8,7 +8,7 @@
  * @returns {String}
  * @api public
  */
-export function getVendorPrefix(transitions) {
+let getVendorPrefix = (transitions) => {
   let el = document.createElement('div');
 
   for (let key in transitions) {
@@ -19,3 +19,5 @@ export function getVendorPrefix(transitions) {
     }
   }
 };
+
+export { getVendorPrefix };

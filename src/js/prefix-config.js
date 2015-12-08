@@ -4,7 +4,7 @@
  * Vendor prefixes.
  * @type {Object}
  */
-export const CSS_VENDOR_PREFIX = {
+const CSS_VENDOR_PREFIX = {
   TRANSFORM: {
     'transform': 'transform',
     'WebkitTransform': 'webkitTransform'
@@ -16,3 +16,5 @@ export const CSS_VENDOR_PREFIX = {
     'WebkitTransition': 'webkitTransitionEnd'
   }
 };
+
+export { CSS_VENDOR_PREFIX };

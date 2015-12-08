@@ -8,7 +8,7 @@
  * @param {Object} container - The container to append cloned nodes to.
  * @api public
  */
-export function cloneNodes(items, number, container) {
+let cloneNodes = (items, number, container) => {
   let fragment = document.createDocumentFragment();
 
   for (let i = 0; i < number; ++i) {
@@ -18,3 +18,5 @@ export function cloneNodes(items, number, container) {
 
   container.appendChild(fragment);
 };
+
+export { cloneNodes };

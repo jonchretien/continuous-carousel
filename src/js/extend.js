@@ -8,7 +8,7 @@
  * @returns {Object}
  * @api public
  */
-export function extend(a, b) {
+let extend = (a, b) => {
   for (let key in b) {
     if (b.hasOwnProperty(key)) {
       a[key] = b[key];
@@ -17,3 +17,5 @@ export function extend(a, b) {
 
   return a;
 };
+
+export { extend };
