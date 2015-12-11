@@ -89,7 +89,7 @@ export default class InfiniteCarousel {
     this.endPosition = -(this.scrollingDistance * this.numItems);
 
     if (this.direction === 'horizontal') {
-      this.container.setAttribute('style', 'width: ' + (this.scrollingDistance * (this.numItems + this.numVisible)) + 'px');
+      this.container.setAttribute('style', `width: ${(this.scrollingDistance * (this.numItems + this.numVisible))}px`);
     }
   }
 
@@ -164,7 +164,7 @@ export default class InfiniteCarousel {
     let attr = (this.direction === 'vertical') ? 'data-top' : 'data-left';
     this.container.setAttribute(attr, this.pos);
 
-    let translate = (this.direction === 'vertical') ? 'translate3d(0, ' + this.pos + 'px, 0)' : 'translate3d(' + this.pos + 'px, 0, 0)';
+    let translate = (this.direction === 'vertical') ? `translate3d(0, ${this.pos}px, 0)` : `translate3d(${this.pos}px, 0, 0)`;
     this.container.style[this.transformEvent] = translate;
   }
 
