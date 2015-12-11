@@ -136,9 +136,9 @@ export default class InfiniteCarousel {
    * @api private
    */
   _setTimer() {
-    setTimeout(function() {
+    setTimeout(() => {
       this._animateContainer();
-    }.bind(this), this.timerDuration);
+    }, this.timerDuration);
   }
 
   /**
