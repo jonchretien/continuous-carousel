@@ -1,6 +1,5 @@
 'use strict';
 
-import extend from './extend';
 import cloneNodes from './clone-nodes';
 import CSS_VENDOR_PREFIX from './prefix-config';
 import getVendorPrefix from './get-prefixes';
@@ -42,7 +41,7 @@ export default class InfiniteCarousel {
     this.firstItem = this.items[0];
     this.numItems = this.items.length;
     this.numVisible = numVisible;
-    this.options = extend(defaults, options);
+    this.options = Object.assign(defaults, options);
     this.pos = 0;
     this.isBypassingTimer = false;
     this.isReadyToReset = false;
