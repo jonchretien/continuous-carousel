@@ -41,17 +41,15 @@ export default class InfiniteCarousel {
     this.firstItem = this.items[0];
     this.numItems = this.items.length;
     this.numVisible = numVisible;
-    this.options = Object.assign(defaults, options);
     this.pos = 0;
     this.isBypassingTimer = false;
     this.isReadyToReset = false;
     this.scrollingDistance = null;
-    this.timerDuration = this.options.timerDuration;
     this.transformEvent = getVendorPrefix(prefix.TRANSFORM);
-    this.transitionDuration = this.options.transitionDuration;
     this.transitionEndEvent = getVendorPrefix(prefix.TRANSITION_END);
 
     // kick off logic
+    this._resolveOptions(options);
     this._init();
   }
 
@@ -72,6 +70,17 @@ export default class InfiniteCarousel {
     cloneNodes(this.items, this.numVisible, this.container);
     this._attachEvents();
     this._setTimer();
+  }
+
+  /**
+   * Resolve config options.
+   *
+   * @api private
+   */
+  _resolveOptions() {
+    this.options = Object.assign(defaults, options);
+    this.timerDuration = this.options.timerDuration;
+    this.transitionDuration = this.options.transitionDuration;
   }
 
   /**
