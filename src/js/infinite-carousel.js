@@ -1,7 +1,7 @@
 'use strict';
 
 import cloneNodes from './clone-nodes';
-import CSS_VENDOR_PREFIX from './prefix-config';
+import prefix from './prefix-config';
 import getVendorPrefix from './get-prefixes';
 
 export default class InfiniteCarousel {
@@ -47,9 +47,9 @@ export default class InfiniteCarousel {
     this.isReadyToReset = false;
     this.scrollingDistance = null;
     this.timerDuration = this.options.timerDuration;
-    this.transformEvent = getVendorPrefix(CSS_VENDOR_PREFIX.TRANSFORM);
+    this.transformEvent = getVendorPrefix(prefix.TRANSFORM);
     this.transitionDuration = this.options.transitionDuration;
-    this.transitionEndEvent = getVendorPrefix(CSS_VENDOR_PREFIX.TRANSITION_END);
+    this.transitionEndEvent = getVendorPrefix(prefix.TRANSITION_END);
     this.TRANSITION_DURATION_RESET = '0.001s';
 
     // kick off logic
