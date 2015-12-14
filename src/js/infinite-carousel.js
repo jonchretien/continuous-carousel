@@ -50,7 +50,6 @@ export default class InfiniteCarousel {
     this.transformEvent = getVendorPrefix(prefix.TRANSFORM);
     this.transitionDuration = this.options.transitionDuration;
     this.transitionEndEvent = getVendorPrefix(prefix.TRANSITION_END);
-    this.TRANSITION_DURATION_RESET = '0.001s';
 
     // kick off logic
     this._init();
@@ -158,7 +157,7 @@ export default class InfiniteCarousel {
       this.isReadyToReset = false;
       this.isBypassingTimer = true;
       this.pos = 0;
-      this.container.style.transitionDuration = this.TRANSITION_DURATION_RESET;
+      this.container.style.transitionDuration = '0.001s';
     }
 
     let attr = (this.direction === 'vertical') ? 'data-top' : 'data-left';
