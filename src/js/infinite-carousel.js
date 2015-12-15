@@ -49,7 +49,7 @@ export default class InfiniteCarousel {
     this.transitionEndEvent = getVendorPrefix(prefix.TRANSITION_END);
 
     // kick off logic
-    this._resolveOptions(options);
+    this._resolveOptions(defaults, options);
     this._init();
   }
 
@@ -77,7 +77,7 @@ export default class InfiniteCarousel {
    *
    * @api private
    */
-  _resolveOptions() {
+  _resolveOptions(defaults, options) {
     this.options = Object.assign(defaults, options);
     this.timerDuration = this.options.timerDuration;
     this.transitionDuration = this.options.transitionDuration;

@@ -17,4 +17,4 @@ const CSS_VENDOR_PREFIX = {
   },
 };
 
-export { CSS_VENDOR_PREFIX };
+export default CSS_VENDOR_PREFIX;

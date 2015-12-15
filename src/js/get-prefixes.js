@@ -20,4 +20,4 @@ let getVendorPrefix = (transitions) => {
   }
 };
 
-export { getVendorPrefix };
+export default getVendorPrefix;

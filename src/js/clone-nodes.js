@@ -19,4 +19,4 @@ let cloneNodes = (items, number, container) => {
   container.appendChild(fragment);
 };
 
-export { cloneNodes };
+export default cloneNodes;
