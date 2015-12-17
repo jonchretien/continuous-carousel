@@ -12,7 +12,7 @@ export default class InfiniteCarousel {
    * @param {Number} numVisible - The number of items visible at once.
    * @param {Object} [options] - Optional options object passed in by constructor.
    */
-  constructor(element, direction, numVisible, options) {
+  constructor(element, direction, numVisible, options = {}) {
     // check for errors
     if (!element || typeof(element) !== 'string') {
       throw new Error('The `element` argument must be a string.');
@@ -25,15 +25,6 @@ export default class InfiniteCarousel {
     if (!numVisible || typeof(numVisible) !== 'number') {
       throw new Error('The `numVisible` argument must be a number.');
     }
-
-    /**
-     * App defaults.
-     * @type {Object}
-     */
-    let defaults = {
-      timerDuration: 2000,
-      transitionDuration: '1s'
-    };
 
     // assign variables
     this.container = document.querySelector(element);
@@ -50,7 +41,7 @@ export default class InfiniteCarousel {
     this.transitionEndEvent = getVendorPrefix(prefixConfig.TRANSITION_END);
 
     // kick off logic
-    this._resolveOptions(defaults, options);
+    this._resolveOptions(options);
     this._init();
   }
 
@@ -74,7 +65,13 @@ export default class InfiniteCarousel {
    *
    * @api private
    */
-  _resolveOptions(defaults, options) {
+  _resolveOptions(options) {
+    // app defaults
+    let defaults = {
+      timerDuration: 2000,
+      transitionDuration: '1s'
+    };
+
     this.options = Object.assign(defaults, options);
     this.timerDuration = this.options.timerDuration;
     this.transitionDuration = this.options.transitionDuration;
