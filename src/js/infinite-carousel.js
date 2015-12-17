@@ -1,7 +1,8 @@
 'use strict';
 
 import cloneNodes from './clone-nodes';
-import prefix from './prefix-config';
+import prefixConfig from './config-prefix';
+import containerConfig from './config-container';
 import getVendorPrefix from './get-prefixes';
 
 export default class InfiniteCarousel {
@@ -45,8 +46,8 @@ export default class InfiniteCarousel {
     this.isBypassingTimer = false;
     this.isReadyToReset = false;
     this.scrollingDistance = null;
-    this.transformEvent = getVendorPrefix(prefix.TRANSFORM);
-    this.transitionEndEvent = getVendorPrefix(prefix.TRANSITION_END);
+    this.transformEvent = getVendorPrefix(prefixConfig.TRANSFORM);
+    this.transitionEndEvent = getVendorPrefix(prefixConfig.TRANSITION_END);
 
     // kick off logic
     this._resolveOptions(defaults, options);
@@ -59,14 +60,10 @@ export default class InfiniteCarousel {
    * @api private
    */
   _init() {
-    if (this.direction === 'vertical') {
-      this._setContainerAttributes('data-top', 'margin-bottom');
-    }
+    let margin = containerConfig[this.direction].margin;
+    let pos = containerConfig[this.direction].pos;
 
-    if (this.direction === 'horizontal') {
-      this._setContainerAttributes('data-left', 'margin-right');
-    }
-
+    this._setContainerAttributes(pos, margin);
     cloneNodes(this.items, this.numVisible, this.container);
     this._attachEvents();
     this._setTimer();
@@ -169,7 +166,7 @@ export default class InfiniteCarousel {
       this.container.style.transitionDuration = '0.001s';
     }
 
-    let attr = (this.direction === 'vertical') ? 'data-top' : 'data-left';
+    let attr = containerConfig[this.direction].pos;
     this.container.setAttribute(attr, this.pos);
 
     let translate = (this.direction === 'vertical') ? `translate3d(0, ${this.pos}px, 0)` : `translate3d(${this.pos}px, 0, 0)`;
@@ -183,9 +180,7 @@ export default class InfiniteCarousel {
    * @api private
    */
   _monitorScrollPosition() {
-    let currentPosition = (this.direction === 'vertical') ?
-                          this.container.getAttribute('data-top') :
-                          this.container.getAttribute('data-left');
+    let currentPosition = containerConfig[this.direction].pos;
 
     // check if we've reached the last scrollable element
     if (parseInt(currentPosition, 10) === this.endPosition) {
