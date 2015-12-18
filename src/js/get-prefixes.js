@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Gets correct vendor prefix.
  * http://davidwalsh.name/css-animation-callback
@@ -8,10 +6,10 @@
  * @returns {String}
  * @api public
  */
-let getVendorPrefix = (transitions) => {
-  let el = document.createElement('div');
+const getVendorPrefix = (transitions) => {
+  const el = document.createElement('div');
 
-  for (let key in transitions) {
+  for (const key in transitions) {
     if (transitions.hasOwnProperty(key)) {
       if (el.style[key] !== undefined) {
         return transitions[key];

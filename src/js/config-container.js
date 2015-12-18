@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Direction attributes.
  * @type {Object}

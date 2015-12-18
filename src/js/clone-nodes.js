@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Clones the first x nodes and appends them to a container.
  *
@@ -8,11 +6,11 @@
  * @param {Object} container - The container to append cloned nodes to.
  * @api public
  */
-let cloneNodes = (items, number, container) => {
-  let fragment = document.createDocumentFragment();
+const cloneNodes = (items, number, container) => {
+  const fragment = document.createDocumentFragment();
 
   for (let i = 0; i < number; ++i) {
-    let node = items[i].cloneNode(true);
+    const node = items[i].cloneNode(true);
     fragment.appendChild(node);
   }
 

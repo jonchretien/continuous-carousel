@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Vendor prefixes.
  * @type {Object}

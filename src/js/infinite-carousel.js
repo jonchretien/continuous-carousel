@@ -1,5 +1,3 @@
-'use strict';
-
 import cloneNodes from './clone-nodes';
 import prefixConfig from './config-prefix';
 import containerConfig from './config-container';
@@ -27,7 +25,7 @@ export default class InfiniteCarousel {
     }
 
     // destructure options
-    ({timerDuration: this.timerDuration, transitionDuration: this.transitionDuration} = options);
+    ({ timerDuration: this.timerDuration, transitionDuration: this.transitionDuration } = options);
 
     // variable assignment
     this.container = document.querySelector(element);
@@ -53,8 +51,8 @@ export default class InfiniteCarousel {
    * @api private
    */
   _init() {
-    let margin = containerConfig[this.direction].margin;
-    let pos = containerConfig[this.direction].pos;
+    const margin = containerConfig[this.direction].margin;
+    const pos = containerConfig[this.direction].pos;
 
     this._setContainerAttributes(pos, margin);
     cloneNodes(this.items, this.numVisible, this.container);
@@ -71,7 +69,7 @@ export default class InfiniteCarousel {
    */
   _setContainerAttributes(position, style) {
     this.container.setAttribute(position, this.pos);
-    let offset = (this.direction === 'vertical') ? this.firstItem.offsetHeight : this.firstItem.offsetWidth;
+    const offset = (this.direction === 'vertical') ? this.firstItem.offsetHeight : this.firstItem.offsetWidth;
     this.scrollingDistance = offset + parseInt(getComputedStyle(this.firstItem)[style].slice(0, -2), 10);
     this.endPosition = -(this.scrollingDistance * this.numItems);
 
@@ -148,10 +146,10 @@ export default class InfiniteCarousel {
       this.container.style.transitionDuration = '0.001s';
     }
 
-    let attr = containerConfig[this.direction].pos;
+    const attr = containerConfig[this.direction].pos;
     this.container.setAttribute(attr, this.pos);
 
-    let translate = (this.direction === 'vertical') ? `translate3d(0, ${this.pos}px, 0)` : `translate3d(${this.pos}px, 0, 0)`;
+    const translate = (this.direction === 'vertical') ? `translate3d(0, ${this.pos}px, 0)` : `translate3d(${this.pos}px, 0, 0)`;
     this.container.style[this.transformEvent] = translate;
   }
 
@@ -162,7 +160,7 @@ export default class InfiniteCarousel {
    * @api private
    */
   _monitorScrollPosition() {
-    let currentPosition = containerConfig[this.direction].pos;
+    const currentPosition = containerConfig[this.direction].pos;
 
     // check if we've reached the last scrollable element
     if (parseInt(currentPosition, 10) === this.endPosition) {

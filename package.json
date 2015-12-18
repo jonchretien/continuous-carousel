@@ -6,10 +6,11 @@
   "main": "js/infinite-carousel.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm run build:debug && npm run build:min",
+    "build": "npm run build:lint && npm run build:debug && npm run build:min",
     "build:debug": "browserify src/js/entry.js -t -p [bannerify --file .banner ] -o dist/infinite-carousel.pkgd.js",
     "build:min": "uglifyjs dist/infinite-carousel.pkgd.js --mangle --compress --screw-ie8 --comments -o dist/infinite-carousel.pkgd.min.js",
-    "build:watch": "watchify src/js/infinite-carousel.js -t -o dist/infinite-carousel.pkgd.js -v"
+    "build:watch": "watchify src/js/infinite-carousel.js -t -o dist/infinite-carousel.pkgd.js -v",
+    "build:lint": "eslint src/**/*.js"
   },
   "repository": {
     "type": "git",
@@ -36,7 +37,9 @@
     "bannerify": "^1.0.1",
     "browserify": "^12.0.1",
     "clean-css": "~3.1.5",
-    "jshint": "~2.6.3",
+    "eslint": "^1.10.3",
+    "eslint-config-airbnb": "^2.1.1",
+    "eslint-plugin-react": "^3.11.3",
     "qunitjs": "~1.17.1",
     "uglify-js": "~2.4.17",
     "watchify": "^3.6.1"
