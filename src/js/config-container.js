@@ -4,7 +4,7 @@
  * Direction attributes.
  * @type {Object}
  */
-const CONFIG_CONTAINER = {
+const configContainer = {
   'vertical': {
     'pos': 'data-top',
     'margin': 'margin-bottom',
@@ -15,4 +15,4 @@ const CONFIG_CONTAINER = {
   },
 };
 
-export default CONFIG_CONTAINER;
+export default configContainer;

@@ -40,8 +40,8 @@ export default class InfiniteCarousel {
     this.isBypassingTimer = false;
     this.isReadyToReset = false;
     this.scrollingDistance = null;
-    this.transformEvent = getVendorPrefix(prefixConfig.TRANSFORM);
-    this.transitionEndEvent = getVendorPrefix(prefixConfig.TRANSITION_END);
+    this.transformEvent = getVendorPrefix(prefixConfig.transform);
+    this.transitionEndEvent = getVendorPrefix(prefixConfig.transitionEnd);
 
     // kick off logic
     this._init();
