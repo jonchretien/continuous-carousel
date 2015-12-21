@@ -160,7 +160,7 @@ export default class InfiniteCarousel {
    * @api private
    */
   _monitorScrollPosition() {
-    const currentPosition = containerConfig[this.direction].pos;
+    const currentPosition = this.container.getAttribute(containerConfig[this.direction].pos);
 
     // check if we've reached the last scrollable element
     if (parseInt(currentPosition, 10) === this.endPosition) {
