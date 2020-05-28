@@ -10,7 +10,7 @@
   "license": "ISC",
   "devDependencies": {
     "jshint": "~2.6.3",
-    "clean-css": "~3.1.5",
+    "clean-css": "~4.2.3",
     "uglify-js": "~2.4.17",
     "qunitjs": "~1.17.1"
   }
