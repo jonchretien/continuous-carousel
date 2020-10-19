@@ -1,0 +1,84 @@
+/*
+ * === RESET ===
+*/
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/*
+ * === VARIABLES ===
+*/
+
+:root {
+  --black:                 #000;
+  --gray-darker:           #0a0a0a;
+  --gray-dark:             #3a3a3a;
+  --gray:                  #666;
+  --gray-light:            #999;
+  --gray-lighter:          #ccc;
+  --white:                 #fff;
+
+  /* Typography */
+
+  --font-family-san-serif:  "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  /* Spacing */
+
+  --spacing-4:              4px;
+  --spacing-8:              8px;
+  --spacing-16:             16px;
+  --spacing-24:             24px;
+  --spacing-32:             32px;
+  --spacing-40:             40px;
+  --spacing-48:             48px;
+  --spacing-56:             56px;
+  --spacing-64:             64px;
+  --spacing-72:             72px;
+  --spacing-80:             80px;
+}
+
+/*
+ * === CAROUSEL DEMO ===
+*/
+
+body {
+  background: var(--white);
+  color: var(--gray);
+  font-family: var(--font-family-san-serif);
+  font-size: 20px;
+  line-height: 1.5;
+  padding: var(--spacing-48);
+  text-align: center;
+}
+
+.c-carousel-container {
+  background: #3d9970;
+  color: #fff;
+  height: 400px;
+  margin: 0 auto;
+  width: 960px;
+}
+
+.c-carousel-container .c-carousel-item {
+  align-items: center;
+  display: flex;
+  font-size: 64px;
+  font-weight: bold;
+  justify-content: center;
+}
+
+.c-carousel-container .c-carousel-item:nth-child(odd) {
+  background: #f94144;
+}
+
+.c-carousel-container .c-carousel-item:nth-child(even) {
+  background: #7fdbff;
+}

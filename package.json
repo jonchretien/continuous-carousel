@@ -1,17 +1,14 @@
 {
-  "name": "infinite-carousel",
-  "version": "0.1.0",
-  "description": "Timed infinite carousel that uses vanilla JavaScript & CSS animations.",
-  "main": "js/infinite-carousel.js",
+  "name": "continuous-carousel",
+  "version": "0.2.0",
+  "description": "Timed continuous carousel that uses vanilla JavaScript & CSS animations.",
+  "main": "continuous-carousel.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Jon Chretien",
+  "license": "MIT",
   "devDependencies": {
-    "jshint": "~2.6.3",
-    "clean-css": "~4.2.3",
-    "uglify-js": "~2.4.17",
-    "qunitjs": "~1.17.1"
+    "eslint": "^7.11.0"
   }
 }
