@@ -60,6 +60,18 @@ Continuous Carousel works with a container element and a set of child elements.
 </script>
 ```
 
+## Browser Support
+
+As of 10/2020 `ContinuousCarousel` is supported in the latest versions of:
+
+- Edge
+- Firefox
+- Chrome
+- Safari
+- Opera
+
+There's currently no support for Internet Explorer.
+
 ## License
 
 Continuous Carousel is released under the [MIT license](https://github.com/jonchretien/continuous-carousel/blob/master/LICENSE.txt).
