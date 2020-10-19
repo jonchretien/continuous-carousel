@@ -7,16 +7,16 @@
  */
 
 (() => {
-  "use strict";
+  'use strict';
 
-  const DIRECTION_HORIZONTAL = "horizontal";
-  const DIRECTION_VERTICAL = "vertical";
-  const CLASS_NAME_ITEM = ".c-carousel-item";
-  const CLASS_NAME_GROUP = ".c-carousel-group";
-  const SELECTOR_DIRECTION = "data-direction";
-  const SELECTOR_NUM_VISIBLE = "data-num-visible";
-  const TRANSITION_DURATION_INITIAL = "1s";
-  const TRANSITION_DURATION_RESET = "0.001s";
+  const DIRECTION_HORIZONTAL = 'horizontal';
+  const DIRECTION_VERTICAL = 'vertical';
+  const CLASS_NAME_ITEM = '.c-carousel-item';
+  const CLASS_NAME_GROUP = '.c-carousel-group';
+  const SELECTOR_DIRECTION = 'data-direction';
+  const SELECTOR_NUM_VISIBLE = 'data-num-visible';
+  const TRANSITION_DURATION_INITIAL = '1s';
+  const TRANSITION_DURATION_RESET = '0.001s';
 
   function ContinuousCarousel(element) {
     let position = 0;
@@ -99,11 +99,11 @@
 
       // set item group width
       itemGroup.setAttribute(
-        "style",
+        'style',
         `width: ${itemWidth * (itemsLength + numVisible)}px`
       );
       items.forEach((item) => {
-        item.setAttribute("style", `width: ${itemWidth}px`);
+        item.setAttribute('style', `width: ${itemWidth}px`);
       });
 
       return { itemWidth };
@@ -116,11 +116,11 @@
 
       // set item group height
       itemGroup.setAttribute(
-        "style",
+        'style',
         `height: ${itemHeight * (itemsLength + numVisible)}px`
       );
       items.forEach((item) => {
-        item.setAttribute("style", `height: ${itemHeight}px`);
+        item.setAttribute('style', `height: ${itemHeight}px`);
       });
 
       return { itemHeight };
@@ -150,9 +150,9 @@
   /**
    * Expose `ContinuousCarousel`.
    */
-  if (typeof define === "function" && define.amd) {
+  if (typeof define === 'function' && define.amd) {
     define(ContinuousCarousel);
-  } else if (typeof module === "object" && module.exports) {
+  } else if (typeof module === 'object' && module.exports) {
     module.exports = ContinuousCarousel;
   } else {
     window.ContinuousCarousel = ContinuousCarousel;
