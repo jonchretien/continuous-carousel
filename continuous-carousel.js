@@ -1,5 +1,5 @@
 /*!
- * Continuous Carousel v0.2.0
+ * Continuous Carousel ∞ v0.2.0
  * Continuous carousel that uses vanilla JavaScript & CSS animations.
  *
  * @author Jon Chretien
@@ -19,6 +19,7 @@
   const TRANSITION_DURATION_RESET = '0.001s';
 
   function ContinuousCarousel(element) {
+    let activeSlideIndex = 1;
     let position = 0;
 
     const container = document.getElementById(element);
@@ -43,6 +44,20 @@
 
     itemGroup.style.transitionDuration = TRANSITION_DURATION_INITIAL;
 
+    function insertLiveRegion() {
+      const liveRegion = document.createElement('div');
+      liveRegion.setAttribute('aria-live', 'polite');
+      liveRegion.setAttribute('aria-atomic', 'true');
+      liveRegion.setAttribute('class', 'c-carousel-liveregion visuallyhidden');
+      container.appendChild(liveRegion);
+    }
+
+    function updateLiveRegion() {
+      container.querySelector('.c-carousel-liveregion').textContent = `Item ${
+        activeSlideIndex
+      } of ${itemsLength}`;
+    }
+
     function cloneNodes() {
       const fragment = document.createDocumentFragment();
 
@@ -62,6 +77,12 @@
       function animate() {
         let timer = isBypassingTimer ? 100 : 2000;
         setTimeout(() => {
+          if (activeSlideIndex >= itemsLength) {
+            activeSlideIndex = 1;
+          } else if (!isBypassingTimer) {
+            activeSlideIndex++;
+          }
+
           if (position === endPosition) {
             isReadyToReset = true;
             isBypassingTimer = true;
@@ -84,12 +105,13 @@
             itemGroup.style.transitionDuration = TRANSITION_DURATION_RESET;
           }
           itemGroup.style.transform = itemGroupTransform[direction](position);
-
+          updateLiveRegion();
           requestAnimationFrame(animate);
         }, timer);
       }
 
       requestAnimationFrame(animate);
+      updateLiveRegion();
     }
 
     function setHorizontalLayout() {
@@ -130,12 +152,14 @@
       case DIRECTION_HORIZONTAL: {
         const { itemWidth } = setHorizontalLayout();
         cloneNodes();
+        insertLiveRegion();
         animateContainer(itemWidth, DIRECTION_HORIZONTAL);
         break;
       }
       case DIRECTION_VERTICAL: {
         const { itemHeight } = setVerticalLayout();
         cloneNodes();
+        insertLiveRegion();
         animateContainer(itemHeight, DIRECTION_VERTICAL);
         break;
       }

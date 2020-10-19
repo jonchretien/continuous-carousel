@@ -17,14 +17,14 @@ Continuous Carousel works with a container element and a set of child elements.
   data-direction="horizontal"
   <!-- specify how many elements should be visible at once -->
   data-num-visible="1" >
-  <div class="c-carousel-group">
-    <div class="c-carousel-item">1</div>
-    <div class="c-carousel-item">2</div>
-    <div class="c-carousel-item">3</div>
-    <div class="c-carousel-item">4</div>
-    <div class="c-carousel-item">5</div>
-    <div class="c-carousel-item">6</div>
-  </div>
+  <ul class="c-carousel-group">
+    <li class="c-carousel-item">1</li>
+    <li class="c-carousel-item">2</li>
+    <li class="c-carousel-item">3</li>
+    <li class="c-carousel-item">4</li>
+    <li class="c-carousel-item">5</li>
+    <li class="c-carousel-item">6</li>
+  </ul>
 </div>
 
 <script>
@@ -44,14 +44,14 @@ Continuous Carousel works with a container element and a set of child elements.
   data-direction="vertical"
   <!-- specify how many elements should be visible at once -->
   data-num-visible="1" >
-  <div class="c-carousel-group">
-    <div class="c-carousel-item">1</div>
-    <div class="c-carousel-item">2</div>
-    <div class="c-carousel-item">3</div>
-    <div class="c-carousel-item">4</div>
-    <div class="c-carousel-item">5</div>
-    <div class="c-carousel-item">6</div>
-  </div>
+  <ul class="c-carousel-group">
+    <li class="c-carousel-item">1</li>
+    <li class="c-carousel-item">2</li>
+    <li class="c-carousel-item">3</li>
+    <li class="c-carousel-item">4</li>
+    <li class="c-carousel-item">5</li>
+    <li class="c-carousel-item">6</li>
+  </ul>
 </div>
 
 <script>
