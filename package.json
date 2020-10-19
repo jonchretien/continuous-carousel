@@ -4,11 +4,13 @@
   "description": "Timed continuous carousel that uses vanilla JavaScript & CSS animations.",
   "main": "continuous-carousel.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "Jon Chretien",
   "license": "MIT",
   "devDependencies": {
-    "eslint": "^7.11.0"
+    "@testing-library/dom": "^7.26.0",
+    "eslint": "^7.11.0",
+    "jest": "^26.6.0"
   }
 }
