@@ -1,17 +1,29 @@
 {
-  "name": "infinite-carousel",
-  "version": "0.1.0",
-  "description": "Timed infinite carousel that uses vanilla JavaScript & CSS animations.",
-  "main": "js/infinite-carousel.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "name": "continuous-carousel",
+  "version": "0.2.0",
+  "description": "Timed continuous carousel that uses vanilla JavaScript & CSS animations.",
+  "main": "continuous-carousel.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jonchretien/continuous-carousel.git"
   },
-  "author": "",
-  "license": "ISC",
+  "homepage": "https://github.com/jonchretien/continuous-carousel",
+  "scripts": {
+    "copy": "./bin/copy-files.sh",
+    "dist": "npm run test && npm run copy && npm run lint && npm run minify-js && npm run minify-css",
+    "lint": "eslint continuous-carousel.js",
+    "minify-css": "postcss continuous-carousel.css -o dist/continuous-carousel.min.css",
+    "minify-js": "terser dist/continuous-carousel.js --mangle --compress --comments -o dist/continuous-carousel.min.js",
+    "test": "jest"
+  },
+  "author": "Jon Chretien",
+  "license": "MIT",
   "devDependencies": {
-    "jshint": "~2.6.3",
-    "clean-css": "~4.2.3",
-    "uglify-js": "~2.4.17",
-    "qunitjs": "~1.17.1"
+    "@testing-library/dom": "^7.26.0",
+    "cssnano": "^4.1.10",
+    "eslint": "^7.11.0",
+    "jest": "^26.6.0",
+    "postcss-cli": "^8.1.0",
+    "terser": "^5.3.7"
   }
 }

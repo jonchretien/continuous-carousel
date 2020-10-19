@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>∞ Continuous Carousel</title>
+    <link rel="stylesheet" href="../continuous-carousel.css">
+    <link rel="stylesheet" href="css/demo.css">
+</head>
+<body>
+  <div id="carouselExampleHorizontal" class="c-carousel-container" data-direction="horizontal" data-num-visible="1">
+    <ul class="c-carousel-group">
+      <li class="c-carousel-item">1</li>
+      <li class="c-carousel-item">2</li>
+      <li class="c-carousel-item">3</li>
+      <li class="c-carousel-item">4</li>
+      <li class="c-carousel-item">5</li>
+      <li class="c-carousel-item">6</li>
+    </ul>
+  </div>
+
+  <br>
+  <br>
+  <br>
+  <hr>
+  <br>
+  <br>
+  <br>
+
+  <div id="carouselExampleVertical" class="c-carousel-container" data-direction="vertical" data-num-visible="1">
+    <ul class="c-carousel-group">
+      <li class="c-carousel-item">1</li>
+      <li class="c-carousel-item">2</li>
+      <li class="c-carousel-item">3</li>
+      <li class="c-carousel-item">4</li>
+      <li class="c-carousel-item">5</li>
+      <li class="c-carousel-item">6</li>
+    </ul>
+  </div>
+
+  <script src="../continuous-carousel.js"></script>
+  <script>
+    const horizCarousel = ContinuousCarousel('carouselExampleHorizontal');
+    const vertCarousel = ContinuousCarousel('carouselExampleVertical');
+  </script>
+</body>
+</html>

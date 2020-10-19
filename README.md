@@ -1,66 +1,77 @@
-# Infinite Carousel
+# Continuous Carousel
 
-_Timed infinite carousel that uses vanilla JavaScript & CSS animations. It supports both horizontal and vertical scrolling. It's useful if you need a UI element to continuously scroll (ex: ticker being displayed on a TV monitor)._
+_Timed continuous carousel that uses vanilla JavaScript & CSS animations. It supports both horizontal and vertical scrolling. It's useful if you need a UI element to continuously scroll._
 
-[Docs and demos](http://jonchretien.github.io/infinite-carousel-docs/).
+## Markup
 
-## Install
+Continuous Carousel works with a container element and a set of child elements.
 
-### Download
+**Horizontal Carousel**
 
-#### CSS
-
-+ [infinite-carousel.css](https://github.com/jonchretien/infinite-carousel/raw/master/dist/infinite-carousel.css) *or*
-+ [infinite-carousel.min.css](https://github.com/jonchretien/infinite-carousel/raw/master/dist/infinite-carousel.min.css)
-
-#### JavaScript
-
-+ [infinite-carousel.js](https://github.com/jonchretien/infinite-carousel/raw/master/dist/infinite-carousel.js) *or*
-+ [infinite-carousel.min.js](https://github.com/jonchretien/infinite-carousel/raw/master/dist/infinite-carousel.min.js)
-
-### Markup
-
-Infinite Carousel works with a container element and a set of child item elements.
-
-``` html
-<div class="infinite-carousel-shell">
-  <div id="container" class="infinite-carousel-group">
-    <div class="infinite-carousel-group-item">1</div>
-    <div class="infinite-carousel-group-item">2</div>
-    <div class="infinite-carousel-group-item">3</div>
-    <div class="infinite-carousel-group-item">4</div>
-  </div>
+```html
+<div
+  id="carouselExampleHorizontal"
+  <!-- css hooks begin with "c-carousel-..." -->
+  class="c-carousel-container"
+  <!-- direction must be "horizontal" or "vertical" -->
+  data-direction="horizontal"
+  <!-- specify how many elements should be visible at once -->
+  data-num-visible="1" >
+  <ul class="c-carousel-group">
+    <li class="c-carousel-item">1</li>
+    <li class="c-carousel-item">2</li>
+    <li class="c-carousel-item">3</li>
+    <li class="c-carousel-item">4</li>
+    <li class="c-carousel-item">5</li>
+    <li class="c-carousel-item">6</li>
+  </ul>
 </div>
+
+<script>
+  // the carousel id is a required argument for the script
+  const horizCarousel = ContinuousCarousel('carouselExampleHorizontal');
+</script>
 ```
 
-### JavaScript
+**Vertical Carousel**
 
-``` js
-/**
- * Required arguments are:
- * - a container element (string)
- * - a direction ('horizontal' or 'vertical')
- * - the number of items that are visible at once
- */
-var infinitecarousel = new InfiniteCarousel('#container', 'horizontal', 3, {
-  // optional options object (defaults are listed)
+```html
+<div
+  id="carouselExampleVertical"
+  <!-- css hooks begin with "c-carousel-..." -->
+  class="c-carousel-container"
+  <!-- direction must be "horizontal" or "vertical" -->
+  data-direction="vertical"
+  <!-- specify how many elements should be visible at once -->
+  data-num-visible="1" >
+  <ul class="c-carousel-group">
+    <li class="c-carousel-item">1</li>
+    <li class="c-carousel-item">2</li>
+    <li class="c-carousel-item">3</li>
+    <li class="c-carousel-item">4</li>
+    <li class="c-carousel-item">5</li>
+    <li class="c-carousel-item">6</li>
+  </ul>
+</div>
 
-  timerDuration: 2000,
-  // set time between advances in milliseconds
-
-  transitionDuration: '1s'
-  // the duration of the animation
-});
+<script>
+  // the carousel id is a required argument for the script
+  const vertCarousel = ContinuousCarousel('carouselExampleVertical');
+</script>
 ```
 
 ## Browser Support
 
-Tested in the latest versions of:
-+ Chrome (v41+)
-+ Firefox (v36+)
-+ Opera (v27+)
-+ Safari (v8+)
+As of 10/2020 `ContinuousCarousel` is supported in the latest versions of:
+
+- Edge
+- Firefox
+- Chrome
+- Safari
+- Opera
+
+There's currently no support for Internet Explorer.
 
 ## License
 
-Infinite Carousel is released under the [MIT license](https://github.com/jonchretien/infinite-carousel/blob/master/LICENSE.txt).
+Continuous Carousel is released under the [MIT license](https://github.com/jonchretien/continuous-carousel/blob/master/LICENSE.txt).
