@@ -1,23 +1,10 @@
 /*
- * === RESET ===
-*/
-
-* {
-  margin: 0;
-  padding: 0;
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-/*
  * === VARIABLES ===
 */
 
 :root {
+  /* Colors */
+
   --black:                 #000;
   --gray-darker:           #0a0a0a;
   --gray-dark:             #3a3a3a;
@@ -25,6 +12,10 @@
   --gray-light:            #999;
   --gray-lighter:          #ccc;
   --white:                 #fff;
+
+  --demo-green:            #3d9970;
+  --demo-red:              #f94144;
+  --demo-blue:             #7fdbff;
 
   /* Typography */
 
@@ -46,12 +37,27 @@
 }
 
 /*
- * === CAROUSEL DEMO ===
+ * === RESET ===
+*/
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/*
+ * === PAGE ===
 */
 
 body {
   background: var(--white);
-  color: var(--gray);
+  color: var(--gray-darker);
   font-family: var(--font-family-san-serif);
   font-size: 20px;
   line-height: 1.5;
@@ -59,9 +65,31 @@ body {
   text-align: center;
 }
 
+.page-title {
+  font-size: 57px;
+  letter-spacing: -.025em;
+  margin-bottom: var(--spacing-8);
+}
+
+.section-title {
+  color: var(--gray-dark);
+  font-size: 32px;
+  font-weight: normal;
+  margin-bottom: var(--spacing-24);
+}
+
+.divider {
+  border: 1px solid var(--gray-lighter);
+  margin: var(--spacing-64) 0;
+}
+
+/*
+ * === CAROUSEL ===
+*/
+
 .c-carousel-container {
-  background: #3d9970;
-  color: #fff;
+  background: var(--demo-green);
+  color: var(--white);
   height: 400px;
   margin: 0 auto;
   width: 960px;
@@ -76,9 +104,9 @@ body {
 }
 
 .c-carousel-container .c-carousel-item:nth-child(odd) {
-  background: #f94144;
+  background: var(--demo-red);
 }
 
 .c-carousel-container .c-carousel-item:nth-child(even) {
-  background: #7fdbff;
+  background: var(--demo-blue);
 }
