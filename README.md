@@ -1,6 +1,6 @@
 # Continuous Carousel ∞
 
-_Timed continuous carousel that uses vanilla JavaScript & CSS animations. It supports both horizontal and vertical scrolling. It's useful if you need a UI element to continuously scroll._
+_Timed continuous carousel that uses vanilla JavaScript & CSS animations. It supports both horizontal and vertical scrolling._
 
 ## Markup
 

@@ -1,6 +1,6 @@
 {
   "name": "continuous-carousel",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Timed continuous carousel that uses vanilla JavaScript & CSS animations.",
   "main": "continuous-carousel.js",
   "repository": {
@@ -10,7 +10,7 @@
   "homepage": "https://github.com/jonchretien/continuous-carousel",
   "scripts": {
     "copy": "./bin/copy-files.sh",
-    "dist": "npm run test && npm run copy && npm run lint && npm run minify-js && npm run minify-css",
+    "dist": "npm run lint && npm run test && npm run copy && npm run minify-js && npm run minify-css",
     "lint": "eslint continuous-carousel.js",
     "minify-css": "postcss continuous-carousel.css -o dist/continuous-carousel.min.css",
     "minify-js": "terser dist/continuous-carousel.js --mangle --compress --comments -o dist/continuous-carousel.min.js",

@@ -1,5 +1,5 @@
 /*!
- * Continuous Carousel ∞ v0.2.0
+ * Continuous Carousel ∞ v0.2.1
  * Continuous carousel that uses vanilla JavaScript & CSS animations.
  *
  * @author Jon Chretien
