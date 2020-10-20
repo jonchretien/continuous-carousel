@@ -11,8 +11,10 @@
 
   const DIRECTION_HORIZONTAL = 'horizontal';
   const DIRECTION_VERTICAL = 'vertical';
-  const CLASS_NAME_ITEM = '.c-carousel-item';
   const CLASS_NAME_GROUP = '.c-carousel-group';
+  const CLASS_NAME_HIDDEN = 'c-carousel-visuallyhidden';
+  const CLASS_NAME_ITEM = '.c-carousel-item';
+  const CLASS_NAME_LIVE_REGION = 'c-carousel-liveregion';
   const SELECTOR_DIRECTION = 'data-direction';
   const SELECTOR_NUM_VISIBLE = 'data-num-visible';
   const TRANSITION_DURATION_INITIAL = '1s';
@@ -48,12 +50,12 @@
       const liveRegion = document.createElement('div');
       liveRegion.setAttribute('aria-live', 'polite');
       liveRegion.setAttribute('aria-atomic', 'true');
-      liveRegion.setAttribute('class', 'c-carousel-liveregion visuallyhidden');
+      liveRegion.setAttribute('class', `${CLASS_NAME_LIVE_REGION} ${CLASS_NAME_HIDDEN}`);
       container.appendChild(liveRegion);
     }
 
     function updateLiveRegion() {
-      container.querySelector('.c-carousel-liveregion').textContent = `Item ${
+      container.querySelector(`.${CLASS_NAME_LIVE_REGION}`).textContent = `Item ${
         activeSlideIndex
       } of ${itemsLength}`;
     }
