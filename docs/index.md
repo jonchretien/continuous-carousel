@@ -3,7 +3,7 @@ layout: home
 
 hero:
   name: Continuous Carousel
-  text: Lightweight vanilla JS carousel
+  text: Lightweight vanilla JS carousel 🎠
   tagline: CSS animations, zero dependencies, 60fps performance
   actions:
     - theme: brand

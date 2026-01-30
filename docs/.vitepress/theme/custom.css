@@ -1,5 +1,3 @@
-@import '../../../dist/continuous-carousel.css';
-
 .carousel-demo-wrapper {
   border: 1px solid var(--vp-c-divider);
   border-radius: 8px;
