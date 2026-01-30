@@ -1,6 +1,6 @@
-const domTestingLib = require('@testing-library/dom');
-const { screen } = domTestingLib;
-const ContinuousCarousel = require('../dist/continuous-carousel');
+import { describe, test, expect, beforeEach, afterEach, vi } from 'vitest';
+import { screen } from '@testing-library/dom';
+import ContinuousCarousel from '../dist/continuous-carousel.esm.js';
 
 const CLASS_NAME_ITEM = '.c-carousel-item';
 
@@ -24,7 +24,7 @@ describe('Continuous Carousel', () => {
   beforeEach(() => {
     // Clear body and reset timers
     document.body.innerHTML = '';
-    jest.clearAllTimers();
+    vi.clearAllTimers();
   });
 
   afterEach(() => {
@@ -221,7 +221,7 @@ describe('Continuous Carousel', () => {
         1
       );
 
-      const onSlideChange = jest.fn();
+      const onSlideChange = vi.fn();
       const carousel = ContinuousCarousel('carouselCallback', {
         interval: 100,
         autoplay: true,
@@ -244,7 +244,7 @@ describe('Continuous Carousel', () => {
         1
       );
 
-      const onPause = jest.fn();
+      const onPause = vi.fn();
       const carousel = ContinuousCarousel('carouselCallback', {
         autoplay: false,
         onPause
@@ -264,7 +264,7 @@ describe('Continuous Carousel', () => {
         1
       );
 
-      const onPlay = jest.fn();
+      const onPlay = vi.fn();
       const carousel = ContinuousCarousel('carouselCallback', {
         autoplay: false,
         onPlay
