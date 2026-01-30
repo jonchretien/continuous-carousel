@@ -1,0 +1,7 @@
+/*!
+ * Continuous Carousel ∞ v0.2.1
+ * Continuous carousel that uses vanilla JavaScript & CSS animations.
+ *
+ * @author Jon Chretien
+ * @license Released under the MIT license.
+ */.c-carousel-container{overflow:hidden;transform-style:preserve-3d}.c-carousel-group{display:flex;flex-wrap:nowrap;height:100%;list-style-type:none;margin:0;padding:0}.c-carousel-container[data-direction=horizontal] .c-carousel-group{flex-direction:row}.c-carousel-container[data-direction=vertical] .c-carousel-group{flex-direction:column}.c-carousel-visuallyhidden{display:none}
