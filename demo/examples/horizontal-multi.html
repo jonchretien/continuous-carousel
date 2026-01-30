@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Horizontal Carousel - Multiple Items | Continuous Carousel</title>
+  <link rel="stylesheet" href="../dist/continuous-carousel.css">
+  <link rel="stylesheet" href="../css/demo.css">
+  <style>
+    nav {
+      margin-bottom: var(--spacing-32);
+    }
+
+    .nav-link {
+      color: var(--demo-green);
+      font-size: 16px;
+      text-decoration: none;
+    }
+
+    .nav-link:hover {
+      text-decoration: underline;
+    }
+
+    .example-section {
+      margin-bottom: var(--spacing-64);
+    }
+
+    .example-title {
+      color: var(--gray-dark);
+      font-size: 24px;
+      margin-bottom: var(--spacing-16);
+    }
+
+    .example-description {
+      color: var(--gray);
+      font-size: 16px;
+      margin-bottom: var(--spacing-24);
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="../index.html" class="nav-link">← Back to Demos</a>
+  </nav>
+
+  <h1 class="page-title">Horizontal Carousel - Multiple Items</h1>
+
+  <section class="example-section">
+    <h2 class="example-title">2 Visible Items</h2>
+    <p class="example-description">
+      Carousel showing 2 items at a time, scrolling by 2 items.
+    </p>
+    <div id="carousel1" class="c-carousel-container" data-direction="horizontal" data-num-visible="2">
+      <ul class="c-carousel-group">
+        <li class="c-carousel-item">1</li>
+        <li class="c-carousel-item">2</li>
+        <li class="c-carousel-item">3</li>
+        <li class="c-carousel-item">4</li>
+        <li class="c-carousel-item">5</li>
+        <li class="c-carousel-item">6</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="example-section">
+    <h2 class="example-title">3 Visible Items</h2>
+    <p class="example-description">
+      Carousel showing 3 items at a time, scrolling by 3 items.
+    </p>
+    <div id="carousel2" class="c-carousel-container" data-direction="horizontal" data-num-visible="3">
+      <ul class="c-carousel-group">
+        <li class="c-carousel-item">A</li>
+        <li class="c-carousel-item">B</li>
+        <li class="c-carousel-item">C</li>
+        <li class="c-carousel-item">D</li>
+        <li class="c-carousel-item">E</li>
+        <li class="c-carousel-item">F</li>
+        <li class="c-carousel-item">G</li>
+        <li class="c-carousel-item">H</li>
+        <li class="c-carousel-item">I</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="example-section">
+    <h2 class="example-title">4 Visible Items</h2>
+    <p class="example-description">
+      Carousel showing 4 items at a time, scrolling by 4 items.
+    </p>
+    <div id="carousel3" class="c-carousel-container" data-direction="horizontal" data-num-visible="4">
+      <ul class="c-carousel-group">
+        <li class="c-carousel-item">🎯</li>
+        <li class="c-carousel-item">🎨</li>
+        <li class="c-carousel-item">🎭</li>
+        <li class="c-carousel-item">🎪</li>
+        <li class="c-carousel-item">🎬</li>
+        <li class="c-carousel-item">🎮</li>
+        <li class="c-carousel-item">🎲</li>
+        <li class="c-carousel-item">🎰</li>
+      </ul>
+    </div>
+  </section>
+
+  <script type="module">
+    import ContinuousCarousel from '../dist/continuous-carousel.esm.js';
+
+    const carousel1 = ContinuousCarousel('carousel1');
+    const carousel2 = ContinuousCarousel('carousel2');
+    const carousel3 = ContinuousCarousel('carousel3');
+  </script>
+</body>
+</html>
