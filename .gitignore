@@ -8,3 +8,7 @@ Thumbs.db
 *.ico
 .htaccess
 npm-debug.log
+
+# vitepress
+docs/.vitepress/dist/
+docs/.vitepress/cache/

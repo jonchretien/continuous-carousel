@@ -16,13 +16,14 @@
   },
   "homepage": "https://github.com/jonchretien/continuous-carousel",
   "scripts": {
-    "build": "npm run build:js && npm run copy && npm run build:css && npm run copy:demo",
+    "build": "npm run build:js && npm run copy && npm run build:css",
     "build:js": "rolldown -c",
     "build:css": "postcss src/continuous-carousel.css -o dist/continuous-carousel.min.css",
     "copy": "./bin/copy-files.sh",
-    "copy:demo": "cp -r dist/* demo/dist/",
-    "demo": "npm run build && npx http-server -p 8080 -o /demo",
     "dev": "rolldown -c -w",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs",
     "dist": "npm run lint && npm run test && npm run copy && npm run minify-js && npm run minify-css",
     "lint": "eslint src/**/*.js",
     "minify-css": "postcss src/continuous-carousel.css -o dist/continuous-carousel.min.css",
@@ -45,6 +46,7 @@
     "postcss-cli": "^8.1.0",
     "rolldown": "^0.15.1",
     "terser": "^5.3.7",
+    "vitepress": "^1.6.4",
     "vitest": "^3.0.0"
   }
 }

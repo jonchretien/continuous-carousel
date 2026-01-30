@@ -1,0 +1,23 @@
+@import '../../../dist/continuous-carousel.css';
+
+.carousel-demo-wrapper {
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 8px;
+  padding: 24px;
+  margin: 16px 0;
+  overflow: hidden;
+}
+
+.carousel-demo-wrapper .c-carousel-container {
+  height: 200px;
+}
+
+.carousel-demo-wrapper .c-carousel-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  font-weight: bold;
+  background: var(--vp-c-bg-soft);
+  border-radius: 8px;
+}
