@@ -1,7 +1,7 @@
 /*!
- * Continuous Carousel ∞ v0.2.1
+ * Continuous Carousel ∞ v0.3.0
  * Continuous carousel that uses vanilla JavaScript & CSS animations.
  *
  * @author Jon Chretien
  * @license Released under the MIT license.
- */.c-carousel-container{overflow:hidden;transform-style:preserve-3d}.c-carousel-group{display:flex;flex-wrap:nowrap;height:100%;list-style-type:none;margin:0;padding:0}.c-carousel-container[data-direction=horizontal] .c-carousel-group{flex-direction:row}.c-carousel-container[data-direction=vertical] .c-carousel-group{flex-direction:column}.c-carousel-visuallyhidden{display:none}
+ */.c-carousel-container{overflow:hidden;position:relative;transform-style:preserve-3d}.c-carousel-group{display:flex;flex-wrap:nowrap;height:100%;list-style-type:none;margin:0;padding:0;transition-duration:var(--carousel-transition-duration,1s);transition-property:transform;transition-timing-function:ease-in-out;will-change:transform}.c-carousel-container[data-direction=horizontal] .c-carousel-group{flex-direction:row;width:calc(var(--carousel-item-count, 1)*var(--carousel-item-width, 100%))}.c-carousel-container[data-direction=vertical] .c-carousel-group{flex-direction:column;height:calc(var(--carousel-item-count, 1)*var(--carousel-item-height, 100%))}.c-carousel-container[data-direction=horizontal] .c-carousel-item{flex-shrink:0;width:var(--carousel-item-width,100%)}.c-carousel-container[data-direction=vertical] .c-carousel-item{flex-shrink:0;height:var(--carousel-item-height,100%)}.c-carousel-container[data-paused=true] .c-carousel-group{transition-play-state:paused}.c-carousel-visuallyhidden{clip:rect(0,0,0,0);border:0;height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px}
