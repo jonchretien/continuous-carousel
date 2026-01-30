@@ -15,7 +15,8 @@ export default defineConfig([
   {
     input: 'src/ContinuousCarousel.js',
     output: {
-      file: 'dist/continuous-carousel.js',
+      dir: 'dist',
+      entryFileNames: 'continuous-carousel.js',
       format: 'umd',
       name: 'ContinuousCarousel',
       banner
@@ -32,7 +33,8 @@ export default defineConfig([
   {
     input: 'src/ContinuousCarousel.js',
     output: {
-      file: 'dist/continuous-carousel.min.js',
+      dir: 'dist',
+      entryFileNames: 'continuous-carousel.min.js',
       format: 'umd',
       name: 'ContinuousCarousel',
       banner
@@ -50,7 +52,8 @@ export default defineConfig([
   {
     input: 'src/ContinuousCarousel.js',
     output: {
-      file: 'dist/continuous-carousel.esm.js',
+      dir: 'dist',
+      entryFileNames: 'continuous-carousel.esm.js',
       format: 'esm',
       banner
     },
@@ -60,7 +63,8 @@ export default defineConfig([
   {
     input: 'src/ContinuousCarousel.js',
     output: {
-      file: 'dist/continuous-carousel.esm.min.js',
+      dir: 'dist',
+      entryFileNames: 'continuous-carousel.esm.min.js',
       format: 'esm',
       banner
     },
