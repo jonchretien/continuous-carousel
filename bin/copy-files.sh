@@ -1,18 +1,9 @@
 #!/bin/bash
 
-# declare variables
-items='continuous-carousel.css continuous-carousel.js'
+# create dist directory if it doesn't exist
+mkdir -p dist
 
-# remove directory contents
-rm -rf dist
-
-# create directory
-mkdir dist
-
-# copy items
-for item in $items
-do
-    cp $item dist/$item
-done
+# copy unminified CSS to dist
+cp src/continuous-carousel.css dist/continuous-carousel.css
 
 echo Copying done

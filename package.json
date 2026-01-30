@@ -18,14 +18,14 @@
   "scripts": {
     "build": "npm run build:js && npm run copy && npm run build:css && npm run copy:demo",
     "build:js": "rolldown -c",
-    "build:css": "postcss continuous-carousel.css -o dist/continuous-carousel.min.css",
+    "build:css": "postcss src/continuous-carousel.css -o dist/continuous-carousel.min.css",
     "copy": "./bin/copy-files.sh",
     "copy:demo": "cp -r dist/* demo/dist/",
     "demo": "npm run build && npx http-server -p 8080 -o /demo",
     "dev": "rolldown -c -w",
     "dist": "npm run lint && npm run test && npm run copy && npm run minify-js && npm run minify-css",
     "lint": "eslint src/**/*.js",
-    "minify-css": "postcss continuous-carousel.css -o dist/continuous-carousel.min.css",
+    "minify-css": "postcss src/continuous-carousel.css -o dist/continuous-carousel.min.css",
     "minify-js": "terser dist/continuous-carousel.js --mangle --compress --comments -o dist/continuous-carousel.min.js",
     "pretest": "npm run build",
     "test": "vitest run"
