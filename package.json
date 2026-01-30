@@ -16,10 +16,11 @@
   },
   "homepage": "https://github.com/jonchretien/continuous-carousel",
   "scripts": {
-    "build": "npm run build:js && npm run build:css",
+    "build": "npm run build:js && npm run copy && npm run build:css && npm run copy:demo",
     "build:js": "rolldown -c",
     "build:css": "postcss continuous-carousel.css -o dist/continuous-carousel.min.css",
     "copy": "./bin/copy-files.sh",
+    "copy:demo": "cp -r dist/* demo/dist/",
     "demo": "npm run build && npx http-server -p 8080 -o /demo",
     "dev": "rolldown -c -w",
     "dist": "npm run lint && npm run test && npm run copy && npm run minify-js && npm run minify-css",
