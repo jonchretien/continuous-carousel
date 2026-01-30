@@ -1,8 +1,8 @@
-import { describe, test, expect, beforeEach, afterEach, vi } from 'vitest';
-import { screen } from '@testing-library/dom';
-import ContinuousCarousel from '../dist/continuous-carousel.esm.js';
+import { describe, test, expect, beforeEach, afterEach, vi } from "vitest";
+import { screen } from "@testing-library/dom";
+import ContinuousCarousel from "../dist/continuous-carousel.esm.js";
 
-const CLASS_NAME_ITEM = '.c-carousel-item';
+const CLASS_NAME_ITEM = ".c-carousel-item";
 
 const renderComponent = (id, direction, numVisible) =>
   [
@@ -15,30 +15,30 @@ const renderComponent = (id, direction, numVisible) =>
     '<li class="c-carousel-item">4</li>',
     '<li class="c-carousel-item">5</li>',
     '<li class="c-carousel-item">6</li>',
-    '</ul>',
-    '</div>',
-    '</div>',
-  ].join('');
+    "</ul>",
+    "</div>",
+    "</div>",
+  ].join("");
 
-describe('Continuous Carousel', () => {
+describe("Continuous Carousel", () => {
   beforeEach(() => {
     // Clear body and reset timers
-    document.body.innerHTML = '';
+    document.body.innerHTML = "";
     vi.clearAllTimers();
   });
 
   afterEach(() => {
     // Clean up any running carousels
-    document.body.innerHTML = '';
+    document.body.innerHTML = "";
   });
 
-  test('it should render and return carousel instance', () => {
+  test("it should render and return carousel instance", () => {
     document.body.innerHTML = renderComponent(
-      'carouselExampleHorizontal',
-      'horizontal',
-      1
+      "carouselExampleHorizontal",
+      "horizontal",
+      1,
     );
-    const carousel = ContinuousCarousel('carouselExampleHorizontal');
+    const carousel = ContinuousCarousel("carouselExampleHorizontal");
 
     expect(carousel).toBeDefined();
     expect(carousel.container).toBeDefined();
@@ -46,19 +46,19 @@ describe('Continuous Carousel', () => {
     expect(carousel.pause).toBeInstanceOf(Function);
     expect(carousel.destroy).toBeInstanceOf(Function);
 
-    screen.getByTestId('carousel');
+    screen.getByTestId("carousel");
     carousel.destroy();
   });
 
-  test('it should accept options parameter', () => {
+  test("it should accept options parameter", () => {
     document.body.innerHTML = renderComponent(
-      'carouselExampleHorizontal',
-      'horizontal',
-      1
+      "carouselExampleHorizontal",
+      "horizontal",
+      1,
     );
-    const carousel = ContinuousCarousel('carouselExampleHorizontal', {
+    const carousel = ContinuousCarousel("carouselExampleHorizontal", {
       autoplay: false,
-      interval: 3000
+      interval: 3000,
     });
 
     expect(carousel.config.autoplay).toBe(false);
@@ -66,33 +66,33 @@ describe('Continuous Carousel', () => {
     carousel.destroy();
   });
 
-  test('it should throw an error if given an incorrect direction', () => {
+  test("it should throw an error if given an incorrect direction", () => {
     document.body.innerHTML = renderComponent(
-      'carouselExampleHorizontal',
-      'lorem-ipsum-dolor',
-      2
+      "carouselExampleHorizontal",
+      "lorem-ipsum-dolor",
+      2,
     );
     expect(() => {
-      ContinuousCarousel('carouselExampleHorizontal');
+      ContinuousCarousel("carouselExampleHorizontal");
     }).toThrow('Direction must be either "horizontal" or "vertical"');
   });
 
-  test('it should throw an error if container not found', () => {
+  test("it should throw an error if container not found", () => {
     expect(() => {
-      ContinuousCarousel('non-existent-id');
+      ContinuousCarousel("non-existent-id");
     }).toThrow('Carousel container with id "non-existent-id" not found');
   });
 
-  describe('Public API', () => {
+  describe("Public API", () => {
     let carousel;
 
     beforeEach(() => {
       document.body.innerHTML = renderComponent(
-        'carouselTest',
-        'horizontal',
-        1
+        "carouselTest",
+        "horizontal",
+        1,
       );
-      carousel = ContinuousCarousel('carouselTest', { autoplay: false });
+      carousel = ContinuousCarousel("carouselTest", { autoplay: false });
     });
 
     afterEach(() => {
@@ -101,132 +101,140 @@ describe('Continuous Carousel', () => {
       }
     });
 
-    test('play() should start animation', () => {
+    test("play() should start animation", () => {
       carousel.pause(); // First pause it
       carousel.play(); // Then play
-      const container = document.getElementById('carouselTest');
-      expect(container.getAttribute('data-paused')).toBe('false');
+      const container = document.getElementById("carouselTest");
+      expect(container.getAttribute("data-paused")).toBe("false");
     });
 
-    test('pause() should pause animation', () => {
+    test("pause() should pause animation", () => {
       carousel.play();
       carousel.pause();
-      const container = document.getElementById('carouselTest');
-      expect(container.getAttribute('data-paused')).toBe('true');
+      const container = document.getElementById("carouselTest");
+      expect(container.getAttribute("data-paused")).toBe("true");
     });
 
-    test('destroy() should cleanup', () => {
-      const container = document.getElementById('carouselTest');
-      const liveRegion = container.querySelector('.c-carousel-liveregion');
+    test("destroy() should cleanup", () => {
+      const container = document.getElementById("carouselTest");
+      const liveRegion = container.querySelector(".c-carousel-liveregion");
 
       expect(liveRegion).toBeTruthy();
 
       carousel.destroy();
 
-      const liveRegionAfter = container.querySelector('.c-carousel-liveregion');
+      const liveRegionAfter = container.querySelector(".c-carousel-liveregion");
       expect(liveRegionAfter).toBeFalsy();
     });
 
-    test('updateConfig() should update configuration', () => {
+    test("updateConfig() should update configuration", () => {
       carousel.updateConfig({ interval: 5000 });
       expect(carousel.config.interval).toBe(5000);
     });
   });
 
-  describe('horizontal carousel', () => {
-    test('it should clone 1 node', () => {
+  describe("horizontal carousel", () => {
+    test("it should clone 1 node", () => {
       document.body.innerHTML = renderComponent(
-        'carouselExampleHorizontal',
-        'horizontal',
-        1
+        "carouselExampleHorizontal",
+        "horizontal",
+        1,
       );
-      const carousel = ContinuousCarousel('carouselExampleHorizontal');
-      const el = screen.getByTestId('carousel');
+      const carousel = ContinuousCarousel("carouselExampleHorizontal");
+      const el = screen.getByTestId("carousel");
       expect(el.querySelectorAll(CLASS_NAME_ITEM).length).toBe(7);
       carousel.destroy();
     });
 
-    test('it should clone 3 nodes', () => {
+    test("it should clone 3 nodes", () => {
       document.body.innerHTML = renderComponent(
-        'carouselExampleHorizontal',
-        'horizontal',
-        3
+        "carouselExampleHorizontal",
+        "horizontal",
+        3,
       );
-      const carousel = ContinuousCarousel('carouselExampleHorizontal');
-      const el = screen.getByTestId('carousel');
+      const carousel = ContinuousCarousel("carouselExampleHorizontal");
+      const el = screen.getByTestId("carousel");
       expect(el.querySelectorAll(CLASS_NAME_ITEM).length).toBe(9);
       carousel.destroy();
     });
 
-    test('it should set CSS custom properties', () => {
+    test("it should set CSS custom properties", () => {
       document.body.innerHTML = renderComponent(
-        'carouselExampleHorizontal',
-        'horizontal',
-        2
+        "carouselExampleHorizontal",
+        "horizontal",
+        2,
       );
-      const carousel = ContinuousCarousel('carouselExampleHorizontal');
-      const container = document.getElementById('carouselExampleHorizontal');
+      const carousel = ContinuousCarousel("carouselExampleHorizontal");
+      const container = document.getElementById("carouselExampleHorizontal");
 
-      expect(container.style.getPropertyValue('--carousel-item-width')).toBeTruthy();
-      expect(container.style.getPropertyValue('--carousel-transition-duration')).toBeTruthy();
+      expect(
+        container.style.getPropertyValue("--carousel-item-width"),
+      ).toBeTruthy();
+      expect(
+        container.style.getPropertyValue("--carousel-transition-duration"),
+      ).toBeTruthy();
       carousel.destroy();
     });
   });
 
-  describe('vertical carousel', () => {
-    test('it should clone 1 node', () => {
+  describe("vertical carousel", () => {
+    test("it should clone 1 node", () => {
       document.body.innerHTML = renderComponent(
-        'carouselExampleVertical',
-        'vertical',
-        1
+        "carouselExampleVertical",
+        "vertical",
+        1,
       );
-      const carousel = ContinuousCarousel('carouselExampleVertical');
-      const el = screen.getByTestId('carousel');
+      const carousel = ContinuousCarousel("carouselExampleVertical");
+      const el = screen.getByTestId("carousel");
       expect(el.querySelectorAll(CLASS_NAME_ITEM).length).toBe(7);
       carousel.destroy();
     });
 
-    test('it should clone 3 nodes', () => {
+    test("it should clone 3 nodes", () => {
       document.body.innerHTML = renderComponent(
-        'carouselExampleVertical',
-        'vertical',
-        3
+        "carouselExampleVertical",
+        "vertical",
+        3,
       );
-      const carousel = ContinuousCarousel('carouselExampleVertical');
-      const el = screen.getByTestId('carousel');
+      const carousel = ContinuousCarousel("carouselExampleVertical");
+      const el = screen.getByTestId("carousel");
       expect(el.querySelectorAll(CLASS_NAME_ITEM).length).toBe(9);
       carousel.destroy();
     });
 
-    test('it should set CSS custom properties', () => {
+    test("it should set CSS custom properties", () => {
       document.body.innerHTML = renderComponent(
-        'carouselExampleVertical',
-        'vertical',
-        2
+        "carouselExampleVertical",
+        "vertical",
+        2,
       );
-      const carousel = ContinuousCarousel('carouselExampleVertical');
-      const container = document.getElementById('carouselExampleVertical');
+      const carousel = ContinuousCarousel("carouselExampleVertical");
+      const container = document.getElementById("carouselExampleVertical");
 
-      expect(container.style.getPropertyValue('--carousel-item-height')).toBeTruthy();
-      expect(container.style.getPropertyValue('--carousel-transition-duration')).toBeTruthy();
+      expect(
+        container.style.getPropertyValue("--carousel-item-height"),
+      ).toBeTruthy();
+      expect(
+        container.style.getPropertyValue("--carousel-transition-duration"),
+      ).toBeTruthy();
       carousel.destroy();
     });
   });
 
-  describe('Callbacks', () => {
-    test('onSlideChange callback should be called', (done) => {
+  describe("Callbacks", () => {
+    test("onSlideChange callback should be called", (done) => {
       document.body.innerHTML = renderComponent(
-        'carouselCallback',
-        'horizontal',
-        1
+        "carouselCallback",
+        "horizontal",
+        1,
       );
 
       const onSlideChange = vi.fn();
-      const carousel = ContinuousCarousel('carouselCallback', {
+      const carousel = ContinuousCarousel("carouselCallback", {
         interval: 100,
         autoplay: true,
         observeVisibility: false, // Disable to ensure it runs in test
-        onSlideChange
+        onSlideChange,
       });
 
       setTimeout(() => {
@@ -237,17 +245,17 @@ describe('Continuous Carousel', () => {
       }, 150);
     });
 
-    test('onPause callback should be called', () => {
+    test("onPause callback should be called", () => {
       document.body.innerHTML = renderComponent(
-        'carouselCallback',
-        'horizontal',
-        1
+        "carouselCallback",
+        "horizontal",
+        1,
       );
 
       const onPause = vi.fn();
-      const carousel = ContinuousCarousel('carouselCallback', {
+      const carousel = ContinuousCarousel("carouselCallback", {
         autoplay: false,
-        onPause
+        onPause,
       });
 
       carousel.play();
@@ -257,17 +265,17 @@ describe('Continuous Carousel', () => {
       carousel.destroy();
     });
 
-    test('onPlay callback should be called', () => {
+    test("onPlay callback should be called", () => {
       document.body.innerHTML = renderComponent(
-        'carouselCallback',
-        'horizontal',
-        1
+        "carouselCallback",
+        "horizontal",
+        1,
       );
 
       const onPlay = vi.fn();
-      const carousel = ContinuousCarousel('carouselCallback', {
+      const carousel = ContinuousCarousel("carouselCallback", {
         autoplay: false,
-        onPlay
+        onPlay,
       });
 
       carousel.pause();

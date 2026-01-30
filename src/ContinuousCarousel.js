@@ -1,5 +1,5 @@
 /**
- * Continuous Carousel
+ * Continuous Carousel 🎠
  */
 
 import {

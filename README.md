@@ -1,4 +1,4 @@
-# Continuous Carousel ∞
+# Continuous Carousel 🎠
 
 [![npm version](https://img.shields.io/npm/v/continuous-carousel.svg)](https://www.npmjs.com/package/continuous-carousel)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
