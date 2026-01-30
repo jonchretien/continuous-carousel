@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advanced Features | Continuous Carousel</title>
+  <link rel="stylesheet" href="../dist/continuous-carousel.css">
+  <link rel="stylesheet" href="../css/demo.css">
+  <style>
+    nav {
+      margin-bottom: var(--spacing-32);
+    }
+
+    .nav-link {
+      color: var(--demo-green);
+      font-size: 16px;
+      text-decoration: none;
+    }
+
+    .nav-link:hover {
+      text-decoration: underline;
+    }
+
+    .example-section {
+      margin-bottom: var(--spacing-64);
+    }
+
+    .example-title {
+      color: var(--gray-dark);
+      font-size: 24px;
+      margin-bottom: var(--spacing-16);
+    }
+
+    .example-description {
+      color: var(--gray);
+      font-size: 16px;
+      margin-bottom: var(--spacing-24);
+    }
+
+    .controls {
+      display: flex;
+      gap: var(--spacing-12);
+      margin-bottom: var(--spacing-24);
+    }
+
+    .btn {
+      background: var(--demo-green);
+      border: none;
+      border-radius: 4px;
+      color: var(--white);
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: bold;
+      padding: 12px 24px;
+      transition: background 0.2s;
+    }
+
+    .btn:hover {
+      background: #27ae60;
+    }
+
+    .btn:disabled {
+      background: var(--gray);
+      cursor: not-allowed;
+    }
+
+    .btn-secondary {
+      background: var(--gray-dark);
+    }
+
+    .btn-secondary:hover {
+      background: var(--black);
+    }
+
+    .btn-danger {
+      background: #e74c3c;
+    }
+
+    .btn-danger:hover {
+      background: #c0392b;
+    }
+
+    .config-display {
+      background: var(--gray-light);
+      border-left: 4px solid var(--demo-green);
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      margin-bottom: var(--spacing-24);
+      padding: var(--spacing-16);
+    }
+
+    .config-display pre {
+      margin: 0;
+    }
+
+    .status-indicator {
+      align-items: center;
+      display: flex;
+      gap: var(--spacing-8);
+      margin-bottom: var(--spacing-16);
+    }
+
+    .status-dot {
+      border-radius: 50%;
+      height: 12px;
+      width: 12px;
+    }
+
+    .status-dot.playing {
+      animation: pulse 2s infinite;
+      background: #27ae60;
+    }
+
+    .status-dot.paused {
+      background: #f39c12;
+    }
+
+    .status-dot.destroyed {
+      background: #e74c3c;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .code-snippet {
+      background: var(--black);
+      border-radius: 4px;
+      color: var(--white);
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      margin-bottom: var(--spacing-24);
+      overflow-x: auto;
+      padding: var(--spacing-16);
+    }
+
+    .code-snippet pre {
+      margin: 0;
+    }
+
+    .code-comment {
+      color: #6a9955;
+    }
+
+    .code-keyword {
+      color: #569cd6;
+    }
+
+    .code-string {
+      color: #ce9178;
+    }
+
+    .code-function {
+      color: #dcdcaa;
+    }
+
+    .fast-carousel {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      height: 150px;
+    }
+
+    .fast-carousel .c-carousel-item {
+      align-items: center;
+      color: var(--white);
+      display: flex;
+      font-size: 48px;
+      font-weight: bold;
+      justify-content: center;
+    }
+
+    .callback-carousel {
+      background: var(--gray-light);
+      height: 200px;
+    }
+
+    .callback-carousel .c-carousel-item {
+      align-items: center;
+      display: flex;
+      justify-content: center;
+    }
+
+    .event-log {
+      background: var(--black);
+      border-radius: 4px;
+      color: var(--demo-green);
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      height: 200px;
+      margin-bottom: var(--spacing-24);
+      overflow-y: auto;
+      padding: var(--spacing-16);
+    }
+
+    .event-log-entry {
+      margin-bottom: 4px;
+    }
+
+    .event-timestamp {
+      color: var(--gray);
+    }
+
+    .visibility-test {
+      background: var(--white);
+      border: 2px dashed var(--gray);
+      border-radius: 8px;
+      height: 150px;
+      margin-bottom: var(--spacing-24);
+    }
+
+    .visibility-test .c-carousel-item {
+      align-items: center;
+      display: flex;
+      font-size: 24px;
+      justify-content: center;
+    }
+
+    .scroll-hint {
+      background: var(--demo-green);
+      border-radius: 4px;
+      color: var(--white);
+      margin-bottom: var(--spacing-16);
+      padding: var(--spacing-12);
+      text-align: center;
+    }
+
+    .spacer {
+      height: 1500px;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="../index.html" class="nav-link">← Back to Demos</a>
+  </nav>
+
+  <h1 class="page-title">Advanced Features</h1>
+
+  <section class="example-section">
+    <h2 class="example-title">Interactive Controls</h2>
+    <p class="example-description">
+      Programmatically control the carousel using the public API.
+    </p>
+
+    <div class="status-indicator">
+      <div class="status-dot playing" id="status1"></div>
+      <span id="statusText1">Playing</span>
+    </div>
+
+    <div class="controls">
+      <button class="btn" id="playBtn1">Play</button>
+      <button class="btn btn-secondary" id="pauseBtn1">Pause</button>
+      <button class="btn btn-danger" id="destroyBtn1">Destroy</button>
+      <button class="btn" id="recreateBtn1" disabled>Recreate</button>
+    </div>
+
+    <div id="carousel1" class="c-carousel-container" data-direction="horizontal" data-num-visible="3">
+      <ul class="c-carousel-group">
+        <li class="c-carousel-item">1</li>
+        <li class="c-carousel-item">2</li>
+        <li class="c-carousel-item">3</li>
+        <li class="c-carousel-item">4</li>
+        <li class="c-carousel-item">5</li>
+        <li class="c-carousel-item">6</li>
+        <li class="c-carousel-item">7</li>
+        <li class="c-carousel-item">8</li>
+        <li class="c-carousel-item">9</li>
+      </ul>
+    </div>
+
+    <div class="code-snippet">
+<pre><span class="code-comment">// Create carousel instance</span>
+<span class="code-keyword">const</span> carousel = <span class="code-function">ContinuousCarousel</span>(<span class="code-string">'carousel1'</span>);
+
+<span class="code-comment">// Control playback</span>
+carousel.<span class="code-function">play</span>();   <span class="code-comment">// Resume animation</span>
+carousel.<span class="code-function">pause</span>();  <span class="code-comment">// Pause animation</span>
+carousel.<span class="code-function">destroy</span>(); <span class="code-comment">// Cleanup and remove</span></pre>
+    </div>
+  </section>
+
+  <section class="example-section">
+    <h2 class="example-title">Configuration Display</h2>
+    <p class="example-description">
+      View the current configuration of a carousel instance.
+    </p>
+
+    <div class="config-display" id="configDisplay">
+      <pre>Loading configuration...</pre>
+    </div>
+
+    <div id="carousel2" class="c-carousel-container" data-direction="vertical" data-num-visible="2">
+      <ul class="c-carousel-group">
+        <li class="c-carousel-item">Item A</li>
+        <li class="c-carousel-item">Item B</li>
+        <li class="c-carousel-item">Item C</li>
+        <li class="c-carousel-item">Item D</li>
+        <li class="c-carousel-item">Item E</li>
+        <li class="c-carousel-item">Item F</li>
+      </ul>
+    </div>
+
+    <div class="code-snippet">
+<pre><span class="code-comment">// Create with custom options</span>
+<span class="code-keyword">const</span> carousel = <span class="code-function">ContinuousCarousel</span>(<span class="code-string">'carousel2'</span>, {
+  interval: <span class="code-string">3000</span>,
+  pauseOnHover: <span class="code-keyword">true</span>
+});</pre>
+    </div>
+  </section>
+
+  <section class="example-section">
+    <h2 class="example-title">Fast Carousel</h2>
+    <p class="example-description">
+      Custom timing with 1 second interval and 500ms transition.
+    </p>
+
+    <div id="carousel3" class="c-carousel-container fast-carousel" data-direction="horizontal" data-num-visible="1">
+      <ul class="c-carousel-group">
+        <li class="c-carousel-item">⚡</li>
+        <li class="c-carousel-item">🚀</li>
+        <li class="c-carousel-item">💨</li>
+        <li class="c-carousel-item">⭐</li>
+        <li class="c-carousel-item">✨</li>
+      </ul>
+    </div>
+
+    <div class="code-snippet">
+<pre><span class="code-keyword">const</span> fastCarousel = <span class="code-function">ContinuousCarousel</span>(<span class="code-string">'carousel3'</span>, {
+  interval: <span class="code-string">1000</span>,              <span class="code-comment">// 1 second between slides</span>
+  transitionDuration: <span class="code-string">500</span>   <span class="code-comment">// 500ms transition</span>
+});</pre>
+    </div>
+  </section>
+
+  <section class="example-section">
+    <h2 class="example-title">Event Callbacks</h2>
+    <p class="example-description">
+      Listen to carousel events with callback functions.
+    </p>
+
+    <div class="event-log" id="eventLog">
+      <div class="event-log-entry">Event log initialized...</div>
+    </div>
+
+    <div id="carousel4" class="c-carousel-container callback-carousel" data-direction="horizontal" data-num-visible="2">
+      <ul class="c-carousel-group">
+        <li class="c-carousel-item">🎯 Slide 1</li>
+        <li class="c-carousel-item">🎨 Slide 2</li>
+        <li class="c-carousel-item">🎭 Slide 3</li>
+        <li class="c-carousel-item">🎪 Slide 4</li>
+        <li class="c-carousel-item">🎬 Slide 5</li>
+        <li class="c-carousel-item">🎮 Slide 6</li>
+      </ul>
+    </div>
+
+    <div class="code-snippet">
+<pre><span class="code-keyword">const</span> carousel = <span class="code-function">ContinuousCarousel</span>(<span class="code-string">'carousel4'</span>, {
+  <span class="code-function">onSlideChange</span>: <span class="code-keyword">function</span>(index) {
+    console.<span class="code-function">log</span>(<span class="code-string">'Changed to slide:'</span>, index);
+  }
+});</pre>
+    </div>
+  </section>
+
+  <section class="example-section">
+    <h2 class="example-title">Pause on Hover</h2>
+    <p class="example-description">
+      Automatically pauses when the user hovers over the carousel.
+    </p>
+
+    <div id="carousel5" class="c-carousel-container" data-direction="horizontal" data-num-visible="3">
+      <ul class="c-carousel-group">
+        <li class="c-carousel-item">Hover me!</li>
+        <li class="c-carousel-item">Pauses</li>
+        <li class="c-carousel-item">On hover</li>
+        <li class="c-carousel-item">Move away</li>
+        <li class="c-carousel-item">To resume</li>
+        <li class="c-carousel-item">Animation</li>
+      </ul>
+    </div>
+
+    <div class="code-snippet">
+<pre><span class="code-keyword">const</span> carousel = <span class="code-function">ContinuousCarousel</span>(<span class="code-string">'carousel5'</span>, {
+  pauseOnHover: <span class="code-keyword">true</span>  <span class="code-comment">// Enable pause on hover</span>
+});</pre>
+    </div>
+  </section>
+
+  <section class="example-section">
+    <h2 class="example-title">Visibility Detection</h2>
+    <p class="example-description">
+      Scroll down to see the carousel pause when it goes off-screen. This uses IntersectionObserver for better performance and battery life.
+    </p>
+
+    <div class="scroll-hint">
+      ⬇️ Scroll down past this carousel to see it pause automatically
+    </div>
+
+    <div id="carousel6" class="c-carousel-container visibility-test" data-direction="horizontal" data-num-visible="1">
+      <ul class="c-carousel-group">
+        <li class="c-carousel-item">👁️ Visible</li>
+        <li class="c-carousel-item">🔍 Watching</li>
+        <li class="c-carousel-item">📍 Detected</li>
+        <li class="c-carousel-item">⚡ Active</li>
+      </ul>
+    </div>
+
+    <div class="spacer"></div>
+
+    <div class="scroll-hint">
+      ⬆️ Scroll back up to see the carousel resume
+    </div>
+
+    <div class="code-snippet">
+<pre><span class="code-comment">// Visibility detection is automatic in modern browsers</span>
+<span class="code-comment">// The carousel pauses when off-screen and resumes when visible</span>
+<span class="code-comment">// This happens automatically via IntersectionObserver</span></pre>
+    </div>
+  </section>
+
+  <section class="example-section">
+    <h2 class="example-title">All Configuration Options</h2>
+    <p class="example-description">
+      Complete list of available configuration options.
+    </p>
+
+    <div class="code-snippet">
+<pre><span class="code-keyword">const</span> carousel = <span class="code-function">ContinuousCarousel</span>(<span class="code-string">'myCarousel'</span>, {
+  <span class="code-comment">// Core options</span>
+  direction: <span class="code-string">'horizontal'</span>,     <span class="code-comment">// 'horizontal' or 'vertical'</span>
+  numVisible: <span class="code-string">1</span>,               <span class="code-comment">// Number of items visible at once</span>
+
+  <span class="code-comment">// Timing options</span>
+  interval: <span class="code-string">2000</span>,              <span class="code-comment">// Time between transitions (ms)</span>
+  transitionDuration: <span class="code-string">1000</span>,   <span class="code-comment">// Transition animation length (ms)</span>
+
+  <span class="code-comment">// Feature options</span>
+  pauseOnHover: <span class="code-keyword">false</span>,        <span class="code-comment">// Pause when mouse hovers</span>
+
+  <span class="code-comment">// Callbacks</span>
+  <span class="code-function">onSlideChange</span>: <span class="code-keyword">function</span>(index) {
+    console.<span class="code-function">log</span>(<span class="code-string">'Slide changed to:'</span>, index);
+  }
+});</pre>
+    </div>
+  </section>
+
+  <section class="example-section">
+    <h2 class="example-title">Extending the Carousel</h2>
+    <p class="example-description">
+      Examples of how to extend and customize carousel behavior.
+    </p>
+
+    <div class="code-snippet">
+<pre><span class="code-comment">// Example: Add custom navigation buttons</span>
+<span class="code-keyword">const</span> carousel = <span class="code-function">ContinuousCarousel</span>(<span class="code-string">'myCarousel'</span>);
+
+document.<span class="code-function">getElementById</span>(<span class="code-string">'nextBtn'</span>).<span class="code-function">addEventListener</span>(<span class="code-string">'click'</span>, () => {
+  carousel.<span class="code-function">pause</span>();
+  <span class="code-comment">// Implement custom next logic</span>
+  <span class="code-function">setTimeout</span>(() => carousel.<span class="code-function">play</span>(), <span class="code-string">3000</span>);
+});
+
+<span class="code-comment">// Example: Track carousel state</span>
+<span class="code-keyword">let</span> currentSlide = <span class="code-string">0</span>;
+<span class="code-keyword">const</span> trackedCarousel = <span class="code-function">ContinuousCarousel</span>(<span class="code-string">'myCarousel'</span>, {
+  <span class="code-function">onSlideChange</span>: <span class="code-keyword">function</span>(index) {
+    currentSlide = index;
+    document.<span class="code-function">getElementById</span>(<span class="code-string">'indicator'</span>).textContent = index;
+  }
+});
+
+<span class="code-comment">// Example: Pause on visibility change</span>
+document.<span class="code-function">addEventListener</span>(<span class="code-string">'visibilitychange'</span>, () => {
+  <span class="code-keyword">if</span> (document.hidden) {
+    carousel.<span class="code-function">pause</span>();
+  } <span class="code-keyword">else</span> {
+    carousel.<span class="code-function">play</span>();
+  }
+});</pre>
+    </div>
+  </section>
+
+  <script type="module">
+    import ContinuousCarousel from '../dist/continuous-carousel.esm.js';
+
+    // Carousel 1: Interactive controls
+    let carousel1 = ContinuousCarousel('carousel1', {
+      interval: 2500
+    });
+
+    const status1 = document.getElementById('status1');
+    const statusText1 = document.getElementById('statusText1');
+    const playBtn1 = document.getElementById('playBtn1');
+    const pauseBtn1 = document.getElementById('pauseBtn1');
+    const destroyBtn1 = document.getElementById('destroyBtn1');
+    const recreateBtn1 = document.getElementById('recreateBtn1');
+
+    playBtn1.addEventListener('click', () => {
+      if (carousel1) {
+        carousel1.play();
+        status1.className = 'status-dot playing';
+        statusText1.textContent = 'Playing';
+      }
+    });
+
+    pauseBtn1.addEventListener('click', () => {
+      if (carousel1) {
+        carousel1.pause();
+        status1.className = 'status-dot paused';
+        statusText1.textContent = 'Paused';
+      }
+    });
+
+    destroyBtn1.addEventListener('click', () => {
+      if (carousel1) {
+        carousel1.destroy();
+        carousel1 = null;
+        status1.className = 'status-dot destroyed';
+        statusText1.textContent = 'Destroyed';
+        playBtn1.disabled = true;
+        pauseBtn1.disabled = true;
+        destroyBtn1.disabled = true;
+        recreateBtn1.disabled = false;
+      }
+    });
+
+    recreateBtn1.addEventListener('click', () => {
+      carousel1 = ContinuousCarousel('carousel1', { interval: 2500 });
+      status1.className = 'status-dot playing';
+      statusText1.textContent = 'Playing';
+      playBtn1.disabled = false;
+      pauseBtn1.disabled = false;
+      destroyBtn1.disabled = false;
+      recreateBtn1.disabled = true;
+    });
+
+    // Carousel 2: Configuration display
+    const carousel2 = ContinuousCarousel('carousel2', {
+      interval: 3000,
+      pauseOnHover: true
+    });
+
+    const configDisplay = document.getElementById('configDisplay');
+    configDisplay.innerHTML = `<pre>{
+  direction: "vertical",
+  numVisible: 2,
+  interval: 3000,
+  pauseOnHover: true,
+  transitionDuration: 1000
+}</pre>`;
+
+    // Carousel 3: Fast carousel
+    const carousel3 = ContinuousCarousel('carousel3', {
+      interval: 1000,
+      transitionDuration: 500
+    });
+
+    // Carousel 4: Event callbacks
+    const eventLog = document.getElementById('eventLog');
+    let eventCount = 0;
+
+    function logEvent(message) {
+      const timestamp = new Date().toLocaleTimeString();
+      const entry = document.createElement('div');
+      entry.className = 'event-log-entry';
+      entry.innerHTML = `<span class="event-timestamp">[${timestamp}]</span> ${message}`;
+      eventLog.appendChild(entry);
+      eventLog.scrollTop = eventLog.scrollHeight;
+      eventCount++;
+      if (eventCount > 50) {
+        eventLog.removeChild(eventLog.firstChild);
+      }
+    }
+
+    const carousel4 = ContinuousCarousel('carousel4', {
+      interval: 2000,
+      onSlideChange: function(index) {
+        logEvent(`onSlideChange fired - Current index: ${index}`);
+      }
+    });
+
+    // Carousel 5: Pause on hover
+    const carousel5 = ContinuousCarousel('carousel5', {
+      pauseOnHover: true,
+      interval: 2000
+    });
+
+    // Carousel 6: Visibility detection (automatic)
+    const carousel6 = ContinuousCarousel('carousel6', {
+      interval: 1500
+    });
+  </script>
+</body>
+</html>
