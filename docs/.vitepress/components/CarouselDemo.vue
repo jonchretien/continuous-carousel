@@ -11,7 +11,7 @@
         <li
           v-for="(item, i) in items"
           :key="i"
-          class="c-carousel-item"
+          :class="['c-carousel-item', `slide-color-${(i % 6) + 1}`]"
         >
           {{ item }}
         </li>

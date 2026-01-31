@@ -1,3 +1,7 @@
+.VPHero .name {
+  max-width: 100%;
+}
+
 .carousel-demo-wrapper {
   border: 1px solid var(--vp-c-divider);
   border-radius: 8px;
@@ -10,6 +14,16 @@
   height: 200px;
 }
 
+.carousel-demo-wrapper .c-carousel-group {
+  padding-left: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.carousel-demo-wrapper .c-carousel-item + .c-carousel-item {
+  margin-top: 0;
+}
+
 .carousel-demo-wrapper .c-carousel-item {
   display: flex;
   align-items: center;
@@ -17,5 +31,39 @@
   font-size: 48px;
   font-weight: bold;
   background: var(--vp-c-bg-soft);
+  color: var(--vp-c-text-1);
   border-radius: 8px;
+  box-sizing: border-box;
+}
+
+/* 6-color palette — applied via .slide-color-N classes in CarouselDemo.vue
+   to avoid nth-child issues when the carousel JS clones DOM nodes */
+.carousel-demo-wrapper .slide-color-1 {
+  background: #e8eaf6;
+  color: #3949ab;
+}
+
+.carousel-demo-wrapper .slide-color-2 {
+  background: #e0f2f1;
+  color: #00796b;
+}
+
+.carousel-demo-wrapper .slide-color-3 {
+  background: #fce4ec;
+  color: #c2185b;
+}
+
+.carousel-demo-wrapper .slide-color-4 {
+  background: #fff3e0;
+  color: #e65100;
+}
+
+.carousel-demo-wrapper .slide-color-5 {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.carousel-demo-wrapper .slide-color-6 {
+  background: #ede7f6;
+  color: #6a1b9a;
 }
