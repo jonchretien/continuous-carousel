@@ -1,6 +1,6 @@
 {
   "name": "continuous-carousel",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Timed continuous carousel that uses vanilla JavaScript & CSS animations.",
   "main": "dist/continuous-carousel.js",
   "module": "dist/continuous-carousel.esm.js",
@@ -17,7 +17,7 @@
   "homepage": "https://github.com/jonchretien/continuous-carousel",
   "scripts": {
     "build": "npm run build:js && npm run copy && npm run build:css",
-    "build:js": "rolldown -c",
+    "build:js": "node bin/build-js.mjs",
     "build:css": "postcss src/continuous-carousel.css -o dist/continuous-carousel.min.css",
     "copy": "./bin/copy-files.sh",
     "dev": "rolldown -c -w",

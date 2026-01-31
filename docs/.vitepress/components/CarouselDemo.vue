@@ -5,6 +5,7 @@
       class="c-carousel-container"
       :data-direction="direction"
       :data-num-visible="String(numVisible)"
+      :data-reverse="reverse ? 'true' : undefined"
     >
       <ul class="c-carousel-group">
         <li
@@ -30,6 +31,7 @@ const props = defineProps({
   interval: { type: Number, default: 2000 },
   pauseOnHover: { type: Boolean, default: false },
   autoplay: { type: Boolean, default: true },
+  reverse: { type: Boolean, default: false },
 });
 
 let carousel = null;
@@ -44,6 +46,7 @@ onMounted(async () => {
     interval: props.interval,
     pauseOnHover: props.pauseOnHover,
     autoplay: props.autoplay,
+    reverse: props.reverse,
   });
 });
 

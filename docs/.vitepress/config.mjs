@@ -38,6 +38,7 @@ export default defineConfig({
         items: [
           { text: "Horizontal", link: "/examples/horizontal" },
           { text: "Vertical", link: "/examples/vertical" },
+          { text: "Reverse", link: "/examples/reverse" },
           { text: "Advanced", link: "/examples/advanced" },
         ],
       },

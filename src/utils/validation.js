@@ -80,6 +80,18 @@ export function validateCallback(callback, name) {
 }
 
 /**
+ * Validates reverse option
+ * @param {*} value - Value to coerce to boolean
+ * @returns {boolean} The validated boolean
+ */
+export function validateReverse(value) {
+  if (typeof value === 'string') {
+    return value.toLowerCase() === 'true';
+  }
+  return Boolean(value);
+}
+
+/**
  * Validates timing values (interval, duration)
  * @param {number} value - Timing value in milliseconds
  * @param {string} name - Name of the timing value

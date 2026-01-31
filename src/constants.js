@@ -21,6 +21,7 @@ export const SELECTOR_ITEM = '.c-carousel-item';
 export const ATTR_DIRECTION = 'data-direction';
 export const ATTR_NUM_VISIBLE = 'data-num-visible';
 export const ATTR_PAUSED = 'data-paused';
+export const ATTR_REVERSE = 'data-reverse';
 
 // Animation timing defaults
 export const DEFAULT_INTERVAL = 2000; // ms between slides
@@ -48,5 +49,6 @@ export const DEFAULT_CONFIG = {
   onSlideChange: null,
   onPause: null,
   onPlay: null,
+  reverse: false,
   onDestroy: null
 };

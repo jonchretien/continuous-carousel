@@ -1,5 +1,5 @@
 /*!
- * Continuous Carousel ∞ v0.3.0
+ * Continuous Carousel 🎠 v0.4.0
  * Continuous carousel that uses vanilla JavaScript & CSS animations.
  * @author Jon Chretien
  * @license Released under the MIT license.
@@ -15,6 +15,7 @@ const SELECTOR_ITEM = ".c-carousel-item";
 const ATTR_DIRECTION = "data-direction";
 const ATTR_NUM_VISIBLE = "data-num-visible";
 const ATTR_PAUSED = "data-paused";
+const ATTR_REVERSE = "data-reverse";
 const DEFAULT_INTERVAL = 2e3;
 const DEFAULT_TRANSITION_DURATION = 1e3;
 const DEFAULT_RESET_DURATION = 1;
@@ -35,6 +36,7 @@ const DEFAULT_CONFIG = {
 	onSlideChange: null,
 	onPause: null,
 	onPlay: null,
+	reverse: false,
 	onDestroy: null
 };
 
@@ -58,6 +60,10 @@ function validateNumVisible(numVisible) {
 	const num = Number(numVisible);
 	if (isNaN(num) || num < 1 || !Number.isInteger(num)) throw new Error("numVisible must be a positive integer");
 	return num;
+}
+function validateReverse(value) {
+	if (typeof value === "string") return value.toLowerCase() === "true";
+	return Boolean(value);
 }
 
 //#endregion
@@ -333,10 +339,12 @@ function ContinuousCarousel(element, userOptions = {}) {
 	const container = validateElement(element);
 	const dataDirection = container.getAttribute(ATTR_DIRECTION);
 	const dataNumVisible = container.getAttribute(ATTR_NUM_VISIBLE);
+	const dataReverse = container.getAttribute(ATTR_REVERSE);
 	const config = {
 		...DEFAULT_CONFIG,
 		...dataDirection && { direction: validateDirection(dataDirection) },
 		...dataNumVisible && { numVisible: validateNumVisible(dataNumVisible) },
+		...dataReverse !== null && { reverse: validateReverse(dataReverse) },
 		...userOptions
 	};
 	const direction = validateDirection(config.direction);
@@ -384,34 +392,66 @@ function ContinuousCarousel(element, userOptions = {}) {
 	*/
 	function advanceSlide() {
 		const { itemSize } = recalculateDimensions();
-		const endPosition = -(itemSize * itemsLength);
-		if (position === endPosition) {
-			position = 0;
-			activeSlideIndex = 1;
-			applyTransform(position, config.resetDuration);
-			setTimeout(() => {
-				position = position - itemSize * numVisible;
-				activeSlideIndex++;
+		if (config.reverse) {
+			const endPosition = 0;
+			if (position === endPosition) {
+				position = -(itemSize * itemsLength);
+				activeSlideIndex = itemsLength;
+				applyTransform(position, config.resetDuration);
+				setTimeout(() => {
+					position = position + itemSize * numVisible;
+					activeSlideIndex--;
+					if (activeSlideIndex < 1) activeSlideIndex = itemsLength;
+					applyTransform(position, config.transitionDuration);
+					if (liveRegion) updateLiveRegion(liveRegion, activeSlideIndex, itemsLength);
+					if (config.onSlideChange) config.onSlideChange(activeSlideIndex);
+				}, config.resetDuration + 50);
+			} else {
+				position = position + itemSize * numVisible;
+				activeSlideIndex--;
+				if (activeSlideIndex < 1) activeSlideIndex = itemsLength;
 				applyTransform(position, config.transitionDuration);
 				if (liveRegion) updateLiveRegion(liveRegion, activeSlideIndex, itemsLength);
 				if (config.onSlideChange) config.onSlideChange(activeSlideIndex);
-			}, config.resetDuration + 50);
+			}
 		} else {
-			position = position - itemSize * numVisible;
-			activeSlideIndex++;
-			if (activeSlideIndex > itemsLength) activeSlideIndex = 1;
-			applyTransform(position, config.transitionDuration);
-			if (liveRegion) updateLiveRegion(liveRegion, activeSlideIndex, itemsLength);
-			if (config.onSlideChange) config.onSlideChange(activeSlideIndex);
+			const endPosition = -(itemSize * itemsLength);
+			if (position === endPosition) {
+				position = 0;
+				activeSlideIndex = 1;
+				applyTransform(position, config.resetDuration);
+				setTimeout(() => {
+					position = position - itemSize * numVisible;
+					activeSlideIndex++;
+					applyTransform(position, config.transitionDuration);
+					if (liveRegion) updateLiveRegion(liveRegion, activeSlideIndex, itemsLength);
+					if (config.onSlideChange) config.onSlideChange(activeSlideIndex);
+				}, config.resetDuration + 50);
+			} else {
+				position = position - itemSize * numVisible;
+				activeSlideIndex++;
+				if (activeSlideIndex > itemsLength) activeSlideIndex = 1;
+				applyTransform(position, config.transitionDuration);
+				if (liveRegion) updateLiveRegion(liveRegion, activeSlideIndex, itemsLength);
+				if (config.onSlideChange) config.onSlideChange(activeSlideIndex);
+			}
 		}
 	}
 	/**
 	* Initialize the carousel
 	*/
 	function init() {
-		const clonedFragment = cloneNodesToFragment(items.slice(0, numVisible));
-		itemGroup.appendChild(clonedFragment);
-		recalculateDimensions();
+		if (config.reverse) {
+			const clonedFragment = cloneNodesToFragment(items.slice(-numVisible));
+			itemGroup.insertBefore(clonedFragment, itemGroup.firstChild);
+			const { itemSize } = recalculateDimensions();
+			position = -(itemSize * numVisible);
+			applyTransform(position, 0);
+		} else {
+			const clonedFragment = cloneNodesToFragment(items.slice(0, numVisible));
+			itemGroup.appendChild(clonedFragment);
+			recalculateDimensions();
+		}
 		if (config.announceSlides) {
 			liveRegion = createLiveRegion(container, config.ariaLive);
 			updateLiveRegion(liveRegion, activeSlideIndex, itemsLength);

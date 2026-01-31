@@ -7,6 +7,7 @@ import {
   ATTR_DIRECTION,
   ATTR_NUM_VISIBLE,
   ATTR_PAUSED,
+  ATTR_REVERSE,
   SELECTOR_GROUP,
   SELECTOR_ITEM,
 } from "./constants.js";
@@ -14,6 +15,7 @@ import {
   validateElement,
   validateDirection,
   validateNumVisible,
+  validateReverse,
 } from "./utils/validation.js";
 import {
   createLiveRegion,
@@ -39,12 +41,14 @@ export default function ContinuousCarousel(element, userOptions = {}) {
   // Read data attributes from HTML (for backward compatibility)
   const dataDirection = container.getAttribute(ATTR_DIRECTION);
   const dataNumVisible = container.getAttribute(ATTR_NUM_VISIBLE);
+  const dataReverse = container.getAttribute(ATTR_REVERSE);
 
   // Merge configuration: defaults < data attributes < user options
   const config = {
     ...DEFAULT_CONFIG,
     ...(dataDirection && { direction: validateDirection(dataDirection) }),
     ...(dataNumVisible && { numVisible: validateNumVisible(dataNumVisible) }),
+    ...(dataReverse !== null && { reverse: validateReverse(dataReverse) }),
     ...userOptions,
   };
 
@@ -110,19 +114,40 @@ export default function ContinuousCarousel(element, userOptions = {}) {
    */
   function advanceSlide() {
     const { itemSize } = recalculateDimensions();
-    const endPosition = -(itemSize * itemsLength);
 
-    // Check if we've reached the end
-    if (position === endPosition) {
-      // Reset to beginning with instant transition
-      position = 0;
-      activeSlideIndex = 1;
-      applyTransform(position, config.resetDuration);
+    if (config.reverse) {
+      const endPosition = 0;
 
-      // Schedule normal advance after reset
-      setTimeout(() => {
-        position = position - itemSize * numVisible;
-        activeSlideIndex++;
+      if (position === endPosition) {
+        // Reset to end with instant transition
+        position = -(itemSize * itemsLength);
+        activeSlideIndex = itemsLength;
+        applyTransform(position, config.resetDuration);
+
+        // Schedule normal advance after reset
+        setTimeout(() => {
+          position = position + itemSize * numVisible;
+          activeSlideIndex--;
+          if (activeSlideIndex < 1) {
+            activeSlideIndex = itemsLength;
+          }
+          applyTransform(position, config.transitionDuration);
+          if (liveRegion) {
+            updateLiveRegion(liveRegion, activeSlideIndex, itemsLength);
+          }
+          if (config.onSlideChange) {
+            config.onSlideChange(activeSlideIndex);
+          }
+        }, config.resetDuration + 50);
+      } else {
+        // Normal reverse animation
+        position = position + itemSize * numVisible;
+        activeSlideIndex--;
+
+        if (activeSlideIndex < 1) {
+          activeSlideIndex = itemsLength;
+        }
+
         applyTransform(position, config.transitionDuration);
         if (liveRegion) {
           updateLiveRegion(liveRegion, activeSlideIndex, itemsLength);
@@ -130,22 +155,45 @@ export default function ContinuousCarousel(element, userOptions = {}) {
         if (config.onSlideChange) {
           config.onSlideChange(activeSlideIndex);
         }
-      }, config.resetDuration + 50);
+      }
     } else {
-      // Normal animation
-      position = position - itemSize * numVisible;
-      activeSlideIndex++;
+      const endPosition = -(itemSize * itemsLength);
 
-      if (activeSlideIndex > itemsLength) {
+      // Check if we've reached the end
+      if (position === endPosition) {
+        // Reset to beginning with instant transition
+        position = 0;
         activeSlideIndex = 1;
-      }
+        applyTransform(position, config.resetDuration);
 
-      applyTransform(position, config.transitionDuration);
-      if (liveRegion) {
-        updateLiveRegion(liveRegion, activeSlideIndex, itemsLength);
-      }
-      if (config.onSlideChange) {
-        config.onSlideChange(activeSlideIndex);
+        // Schedule normal advance after reset
+        setTimeout(() => {
+          position = position - itemSize * numVisible;
+          activeSlideIndex++;
+          applyTransform(position, config.transitionDuration);
+          if (liveRegion) {
+            updateLiveRegion(liveRegion, activeSlideIndex, itemsLength);
+          }
+          if (config.onSlideChange) {
+            config.onSlideChange(activeSlideIndex);
+          }
+        }, config.resetDuration + 50);
+      } else {
+        // Normal animation
+        position = position - itemSize * numVisible;
+        activeSlideIndex++;
+
+        if (activeSlideIndex > itemsLength) {
+          activeSlideIndex = 1;
+        }
+
+        applyTransform(position, config.transitionDuration);
+        if (liveRegion) {
+          updateLiveRegion(liveRegion, activeSlideIndex, itemsLength);
+        }
+        if (config.onSlideChange) {
+          config.onSlideChange(activeSlideIndex);
+        }
       }
     }
   }
@@ -154,12 +202,23 @@ export default function ContinuousCarousel(element, userOptions = {}) {
    * Initialize the carousel
    */
   function init() {
-    // Clone first N items for infinite loop
-    const clonedFragment = cloneNodesToFragment(items.slice(0, numVisible));
-    itemGroup.appendChild(clonedFragment);
+    if (config.reverse) {
+      // Clone last N items and prepend for reverse infinite loop
+      const clonedFragment = cloneNodesToFragment(items.slice(-numVisible));
+      itemGroup.insertBefore(clonedFragment, itemGroup.firstChild);
 
-    // Calculate initial dimensions and set CSS variables
-    recalculateDimensions();
+      // Set initial position so real items are visible
+      const { itemSize } = recalculateDimensions();
+      position = -(itemSize * numVisible);
+      applyTransform(position, 0);
+    } else {
+      // Clone first N items for infinite loop
+      const clonedFragment = cloneNodesToFragment(items.slice(0, numVisible));
+      itemGroup.appendChild(clonedFragment);
+
+      // Calculate initial dimensions and set CSS variables
+      recalculateDimensions();
+    }
 
     // Create live region for accessibility
     if (config.announceSlides) {

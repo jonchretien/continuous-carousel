@@ -221,6 +221,80 @@ describe("Continuous Carousel", () => {
     });
   });
 
+  describe("reverse option", () => {
+    test("it should accept reverse: true config", () => {
+      document.body.innerHTML = renderComponent(
+        "carouselReverse",
+        "horizontal",
+        1,
+      );
+      const carousel = ContinuousCarousel("carouselReverse", {
+        autoplay: false,
+        reverse: true,
+      });
+
+      expect(carousel.config.reverse).toBe(true);
+      carousel.destroy();
+    });
+
+    test("reverse horizontal should clone last N items and prepend", () => {
+      document.body.innerHTML = renderComponent(
+        "carouselReverse",
+        "horizontal",
+        1,
+      );
+      const carousel = ContinuousCarousel("carouselReverse", {
+        autoplay: false,
+        reverse: true,
+      });
+      const el = screen.getByTestId("carousel");
+      const items = el.querySelectorAll(CLASS_NAME_ITEM);
+      // 6 original + 1 cloned = 7
+      expect(items.length).toBe(7);
+      // First item should be the clone of the last item
+      expect(items[0].textContent).toBe("6");
+      carousel.destroy();
+    });
+
+    test("reverse vertical should clone last N items and prepend", () => {
+      document.body.innerHTML = renderComponent(
+        "carouselReverse",
+        "vertical",
+        1,
+      );
+      const carousel = ContinuousCarousel("carouselReverse", {
+        autoplay: false,
+        reverse: true,
+      });
+      const el = screen.getByTestId("carousel");
+      const items = el.querySelectorAll(CLASS_NAME_ITEM);
+      expect(items.length).toBe(7);
+      expect(items[0].textContent).toBe("6");
+      carousel.destroy();
+    });
+
+    test("reverse with numVisible > 1 should clone correct count", () => {
+      document.body.innerHTML = renderComponent(
+        "carouselReverse",
+        "horizontal",
+        3,
+      );
+      const carousel = ContinuousCarousel("carouselReverse", {
+        autoplay: false,
+        reverse: true,
+      });
+      const el = screen.getByTestId("carousel");
+      const items = el.querySelectorAll(CLASS_NAME_ITEM);
+      // 6 original + 3 cloned = 9
+      expect(items.length).toBe(9);
+      // First 3 items should be clones of last 3
+      expect(items[0].textContent).toBe("4");
+      expect(items[1].textContent).toBe("5");
+      expect(items[2].textContent).toBe("6");
+      carousel.destroy();
+    });
+  });
+
   describe("Callbacks", () => {
     test("onSlideChange callback should be called", (done) => {
       document.body.innerHTML = renderComponent(

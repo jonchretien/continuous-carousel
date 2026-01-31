@@ -1,5 +1,5 @@
 /*!
- * Continuous Carousel ∞ v0.3.0
+ * Continuous Carousel 🎠 v0.4.0
  * Continuous carousel that uses vanilla JavaScript & CSS animations.
  * @author Jon Chretien
  * @license Released under the MIT license.
@@ -171,6 +171,7 @@ var SELECTOR_ITEM = ".c-carousel-item";
 var ATTR_DIRECTION = "data-direction";
 var ATTR_NUM_VISIBLE = "data-num-visible";
 var ATTR_PAUSED = "data-paused";
+var ATTR_REVERSE = "data-reverse";
 var DEFAULT_INTERVAL = 2e3;
 var DEFAULT_TRANSITION_DURATION = 1e3;
 var DEFAULT_RESET_DURATION = 1;
@@ -191,6 +192,7 @@ var DEFAULT_CONFIG = {
 	onSlideChange: null,
 	onPause: null,
 	onPlay: null,
+	reverse: false,
 	onDestroy: null
 };
 
@@ -214,6 +216,10 @@ function validateNumVisible(numVisible) {
 	var num = Number(numVisible);
 	if (isNaN(num) || num < 1 || !Number.isInteger(num)) throw new Error("numVisible must be a positive integer");
 	return num;
+}
+function validateReverse(value) {
+	if (typeof value === "string") return value.toLowerCase() === "true";
+	return Boolean(value);
 }
 
 //#endregion
@@ -496,7 +502,8 @@ function ContinuousCarousel(element) {
 	var container = validateElement(element);
 	var dataDirection = container.getAttribute(ATTR_DIRECTION);
 	var dataNumVisible = container.getAttribute(ATTR_NUM_VISIBLE);
-	var config = _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, DEFAULT_CONFIG), dataDirection && { direction: validateDirection(dataDirection) }), dataNumVisible && { numVisible: validateNumVisible(dataNumVisible) }), userOptions);
+	var dataReverse = container.getAttribute(ATTR_REVERSE);
+	var config = _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, DEFAULT_CONFIG), dataDirection && { direction: validateDirection(dataDirection) }), dataNumVisible && { numVisible: validateNumVisible(dataNumVisible) }), dataReverse !== null && { reverse: validateReverse(dataReverse) }), userOptions);
 	var direction = validateDirection(config.direction);
 	var numVisible = validateNumVisible(config.numVisible);
 	var itemGroup = container.querySelector(SELECTOR_GROUP);
@@ -542,34 +549,66 @@ function ContinuousCarousel(element) {
 	*/
 	function advanceSlide() {
 		var _recalculateDimension = recalculateDimensions(), itemSize = _recalculateDimension.itemSize;
-		var endPosition = -(itemSize * itemsLength);
-		if (position === endPosition) {
-			position = 0;
-			activeSlideIndex = 1;
-			applyTransform(position, config.resetDuration);
-			setTimeout(function() {
-				position = position - itemSize * numVisible;
-				activeSlideIndex++;
+		if (config.reverse) {
+			var endPosition = 0;
+			if (position === endPosition) {
+				position = -(itemSize * itemsLength);
+				activeSlideIndex = itemsLength;
+				applyTransform(position, config.resetDuration);
+				setTimeout(function() {
+					position = position + itemSize * numVisible;
+					activeSlideIndex--;
+					if (activeSlideIndex < 1) activeSlideIndex = itemsLength;
+					applyTransform(position, config.transitionDuration);
+					if (liveRegion) updateLiveRegion(liveRegion, activeSlideIndex, itemsLength);
+					if (config.onSlideChange) config.onSlideChange(activeSlideIndex);
+				}, config.resetDuration + 50);
+			} else {
+				position = position + itemSize * numVisible;
+				activeSlideIndex--;
+				if (activeSlideIndex < 1) activeSlideIndex = itemsLength;
 				applyTransform(position, config.transitionDuration);
 				if (liveRegion) updateLiveRegion(liveRegion, activeSlideIndex, itemsLength);
 				if (config.onSlideChange) config.onSlideChange(activeSlideIndex);
-			}, config.resetDuration + 50);
+			}
 		} else {
-			position = position - itemSize * numVisible;
-			activeSlideIndex++;
-			if (activeSlideIndex > itemsLength) activeSlideIndex = 1;
-			applyTransform(position, config.transitionDuration);
-			if (liveRegion) updateLiveRegion(liveRegion, activeSlideIndex, itemsLength);
-			if (config.onSlideChange) config.onSlideChange(activeSlideIndex);
+			var _endPosition = -(itemSize * itemsLength);
+			if (position === _endPosition) {
+				position = 0;
+				activeSlideIndex = 1;
+				applyTransform(position, config.resetDuration);
+				setTimeout(function() {
+					position = position - itemSize * numVisible;
+					activeSlideIndex++;
+					applyTransform(position, config.transitionDuration);
+					if (liveRegion) updateLiveRegion(liveRegion, activeSlideIndex, itemsLength);
+					if (config.onSlideChange) config.onSlideChange(activeSlideIndex);
+				}, config.resetDuration + 50);
+			} else {
+				position = position - itemSize * numVisible;
+				activeSlideIndex++;
+				if (activeSlideIndex > itemsLength) activeSlideIndex = 1;
+				applyTransform(position, config.transitionDuration);
+				if (liveRegion) updateLiveRegion(liveRegion, activeSlideIndex, itemsLength);
+				if (config.onSlideChange) config.onSlideChange(activeSlideIndex);
+			}
 		}
 	}
 	/**
 	* Initialize the carousel
 	*/
 	function init() {
-		var clonedFragment = cloneNodesToFragment(items.slice(0, numVisible));
-		itemGroup.appendChild(clonedFragment);
-		recalculateDimensions();
+		if (config.reverse) {
+			var clonedFragment = cloneNodesToFragment(items.slice(-numVisible));
+			itemGroup.insertBefore(clonedFragment, itemGroup.firstChild);
+			var _recalculateDimension2 = recalculateDimensions(), itemSize = _recalculateDimension2.itemSize;
+			position = -(itemSize * numVisible);
+			applyTransform(position, 0);
+		} else {
+			var _clonedFragment = cloneNodesToFragment(items.slice(0, numVisible));
+			itemGroup.appendChild(_clonedFragment);
+			recalculateDimensions();
+		}
 		if (config.announceSlides) {
 			liveRegion = createLiveRegion(container, config.ariaLive);
 			updateLiveRegion(liveRegion, activeSlideIndex, itemsLength);
