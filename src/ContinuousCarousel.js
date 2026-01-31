@@ -15,6 +15,7 @@ import {
   validateElement,
   validateDirection,
   validateNumVisible,
+  validateNumVisibleCount,
   validateReverse,
 } from "./utils/validation.js";
 import {
@@ -60,6 +61,9 @@ export default function ContinuousCarousel(element, userOptions = {}) {
   const itemGroup = container.querySelector(SELECTOR_GROUP);
   const items = Array.from(container.querySelectorAll(SELECTOR_ITEM));
   const itemsLength = items.length;
+
+  // Validate numVisible against item count
+  validateNumVisibleCount(numVisible, itemsLength);
 
   // State
   let activeSlideIndex = 1;

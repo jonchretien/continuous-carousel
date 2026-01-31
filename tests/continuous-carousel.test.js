@@ -295,6 +295,43 @@ describe("Continuous Carousel", () => {
     });
   });
 
+  describe("numVisible validation", () => {
+    test("it should warn when numVisible >= item count", () => {
+      document.body.innerHTML = renderComponent(
+        "carouselNumVisible",
+        "horizontal",
+        6,
+      );
+
+      const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+      const carousel = ContinuousCarousel("carouselNumVisible");
+
+      expect(warnSpy).toHaveBeenCalledWith(
+        expect.stringContaining("numVisible (6) must be less than item count (6)"),
+      );
+      warnSpy.mockRestore();
+      carousel.destroy();
+    });
+
+    test("it should not warn when numVisible < item count", () => {
+      document.body.innerHTML = renderComponent(
+        "carouselNumVisible",
+        "horizontal",
+        1,
+      );
+
+      const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+      const carousel = ContinuousCarousel("carouselNumVisible");
+
+      const numVisibleWarns = warnSpy.mock.calls.filter((call) =>
+        call[0].includes("numVisible"),
+      );
+      expect(numVisibleWarns).toHaveLength(0);
+      warnSpy.mockRestore();
+      carousel.destroy();
+    });
+  });
+
   describe("Callbacks", () => {
     test("onSlideChange callback should be called", (done) => {
       document.body.innerHTML = renderComponent(

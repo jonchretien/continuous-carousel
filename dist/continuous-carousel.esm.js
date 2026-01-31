@@ -65,6 +65,9 @@ function validateReverse(value) {
 	if (typeof value === "string") return value.toLowerCase() === "true";
 	return Boolean(value);
 }
+function validateNumVisibleCount(numVisible, itemCount) {
+	if (numVisible >= itemCount) console.warn(`numVisible (${numVisible}) must be less than item count (${itemCount}). Carousel may not behave correctly.`);
+}
 
 //#endregion
 //#region src/utils/dom.js
@@ -352,6 +355,7 @@ function ContinuousCarousel(element, userOptions = {}) {
 	const itemGroup = container.querySelector(SELECTOR_GROUP);
 	const items = Array.from(container.querySelectorAll(SELECTOR_ITEM));
 	const itemsLength = items.length;
+	validateNumVisibleCount(numVisible, itemsLength);
 	let activeSlideIndex = 1;
 	let position = 0;
 	let liveRegion = null;
