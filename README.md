@@ -81,6 +81,7 @@ const carousel = ContinuousCarousel('myCarousel', {
 | `numVisible` | number | `1` | Number of items visible at once |
 | `interval` | number | `2000` | Time between transitions (ms) |
 | `transitionDuration` | number | `1000` | Transition animation length (ms) |
+| `reverse` | boolean | `false` | Scroll in opposite direction (right-to-left or bottom-to-top) |
 | `pauseOnHover` | boolean | `false` | Pause animation on mouse hover |
 | `pauseOnFocus` | boolean | `false` | Pause animation when element focused |
 | `autoplay` | boolean | `true` | Start animation automatically |
@@ -178,6 +179,27 @@ const carousel = ContinuousCarousel('myCarousel', {
 });
 ```
 
+### Reverse Scroll Direction
+
+```javascript
+// Scroll right instead of left
+ContinuousCarousel('myCarousel', { reverse: true });
+
+// Scroll down instead of up
+ContinuousCarousel('myCarousel', {
+  direction: 'vertical',
+  reverse: true
+});
+```
+
+Or via HTML attribute:
+
+```html
+<div id="myCarousel" class="c-carousel-container" data-direction="horizontal" data-num-visible="1" data-reverse="true">
+  ...
+</div>
+```
+
 ### Image Gallery
 
 ```html
@@ -238,15 +260,13 @@ For older browsers, use the transpiled UMD build (`continuous-carousel.min.js`).
 
 Check out the [live demos](https://jonchretien.github.io/continuous-carousel/) for more examples:
 
-- Basic horizontal and vertical carousels
-- Image galleries with captions
-- Card showcases and testimonials
-- News tickers and text scrollers
+- Horizontal and vertical carousels
+- Reverse scroll direction
 - Advanced features and API usage
 
-## Migration from v0.2.x
+## Migration
 
-See [MIGRATION.md](./MIGRATION.md) for upgrade instructions from v0.2.x to v0.3.0.
+See [MIGRATION.md](./MIGRATION.md) for upgrade instructions from earlier versions.
 
 ## Contributing
 
