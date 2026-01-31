@@ -1,9 +1,12 @@
 import { defineConfig } from "rolldown";
+import { readFileSync } from "node:fs";
 import babel from "@rollup/plugin-babel";
 import terser from "@rollup/plugin-terser";
 
+const { version } = JSON.parse(readFileSync("./package.json", "utf8"));
+
 const banner = `/*!
- * Continuous Carousel 🎠 v0.4.0
+ * Continuous Carousel 🎠 v${version}
  * Continuous carousel that uses vanilla JavaScript & CSS animations.
  * @author Jon Chretien
  * @license Released under the MIT license.
