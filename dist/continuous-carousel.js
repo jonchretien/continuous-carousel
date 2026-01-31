@@ -1,5 +1,5 @@
 /*!
- * Continuous Carousel 🎠 v1.0.0
+ * Continuous Carousel 🎠 v1.0.1
  * Continuous carousel that uses vanilla JavaScript & CSS animations.
  * @author Jon Chretien
  * @license Released under the MIT license.
@@ -223,7 +223,7 @@ function validateReverse(value) {
 	return Boolean(value);
 }
 function validateNumVisibleCount(numVisible, itemCount) {
-	if (numVisible >= itemCount) console.warn("numVisible (".concat(numVisible, ") must be less than item count (").concat(itemCount, "). Carousel may not behave correctly."));
+	if (numVisible >= itemCount) throw new Error("numVisible (".concat(numVisible, ") must be less than item count (").concat(itemCount, ")."));
 }
 
 //#endregion

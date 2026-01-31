@@ -6,7 +6,7 @@ This file provides context for AI assistants working on the continuous-carousel 
 
 Continuous Carousel is a lightweight, vanilla JavaScript carousel library with CSS animations. The library supports both horizontal and vertical scrolling with configurable options.
 
-**Current Version:** 1.0.0
+**Current Version:** 1.0.1
 
 ## Architecture
 

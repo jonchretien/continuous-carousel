@@ -98,8 +98,8 @@ export function validateReverse(value) {
  */
 export function validateNumVisibleCount(numVisible, itemCount) {
   if (numVisible >= itemCount) {
-    console.warn(
-      `numVisible (${numVisible}) must be less than item count (${itemCount}). Carousel may not behave correctly.`
+    throw new Error(
+      `numVisible (${numVisible}) must be less than item count (${itemCount}).`
     );
   }
 }

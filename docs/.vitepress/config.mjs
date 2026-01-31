@@ -11,7 +11,7 @@ export default defineConfig({
       { text: "Examples", link: "/examples/horizontal" },
       { text: "API", link: "/guide/api" },
       {
-        text: "v1.0.0",
+        text: "v1.0.1",
         items: [
           { text: "Changelog", link: "/changelog" },
           { text: "Migration", link: "/migration" },
