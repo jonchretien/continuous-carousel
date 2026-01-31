@@ -1,6 +1,6 @@
 {
   "name": "continuous-carousel",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Timed continuous carousel that uses vanilla JavaScript & CSS animations.",
   "main": "dist/continuous-carousel.js",
   "module": "dist/continuous-carousel.esm.js",

@@ -6,7 +6,7 @@ This file provides context for AI assistants working on the continuous-carousel 
 
 Continuous Carousel is a lightweight, vanilla JavaScript carousel library with CSS animations. The library supports both horizontal and vertical scrolling with configurable options.
 
-**Current Version:** 0.4.0
+**Current Version:** 0.4.1
 
 ## Architecture
 
@@ -226,4 +226,4 @@ Potential features (not yet implemented):
 
 ## Project Context
 
-v0.3.0 modernized the library into a modular ES6 factory function architecture. v0.4.0 added reverse scroll direction support. The goal is to provide good performance, developer experience, and extensibility while keeping the library lightweight and dependency-free.
+v0.3.0 modernized the library into a modular ES6 factory function architecture. v0.4.0 added reverse scroll direction support. v0.4.1 moved hero emoji to name, added VitePress hero CSS override. The goal is to provide good performance, developer experience, and extensibility while keeping the library lightweight and dependency-free.
