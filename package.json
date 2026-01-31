@@ -24,6 +24,7 @@
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
+    "postversion": "node bin/post-version.mjs",
     "dist": "npm run lint && npm run test && npm run copy && npm run build",
     "lint": "eslint src/**/*.js",
     "pretest": "npm run build",
