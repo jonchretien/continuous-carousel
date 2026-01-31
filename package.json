@@ -39,6 +39,12 @@
     "url": "git://github.com/jonchretien/continuous-carousel.git"
   },
   "homepage": "https://github.com/jonchretien/continuous-carousel",
+  "bugs": {
+    "url": "https://github.com/jonchretien/continuous-carousel/issues"
+  },
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "build": "npm run build:js && npm run copy && npm run build:css",
     "build:js": "node bin/build-js.mjs",
