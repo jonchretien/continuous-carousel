@@ -332,6 +332,93 @@ describe("Continuous Carousel", () => {
     });
   });
 
+  describe("keyboard navigation", () => {
+    test("sets tabindex, role, aria-roledescription when enabled", () => {
+      document.body.innerHTML = renderComponent(
+        "carouselKb",
+        "horizontal",
+        1,
+      );
+      const carousel = ContinuousCarousel("carouselKb", {
+        autoplay: false,
+        keyboardNav: true,
+      });
+      const container = document.getElementById("carouselKb");
+
+      expect(container.getAttribute("tabindex")).toBe("0");
+      expect(container.getAttribute("role")).toBe("region");
+      expect(container.getAttribute("aria-roledescription")).toBe("carousel");
+      carousel.destroy();
+    });
+
+    test("does not set ARIA attrs when keyboardNav is false", () => {
+      document.body.innerHTML = renderComponent(
+        "carouselKb",
+        "horizontal",
+        1,
+      );
+      const carousel = ContinuousCarousel("carouselKb", {
+        autoplay: false,
+        keyboardNav: false,
+      });
+      const container = document.getElementById("carouselKb");
+
+      expect(container.getAttribute("tabindex")).toBeNull();
+      expect(container.getAttribute("aria-roledescription")).toBeNull();
+      carousel.destroy();
+    });
+
+    test("space toggles pause", () => {
+      document.body.innerHTML = renderComponent(
+        "carouselKb",
+        "horizontal",
+        1,
+      );
+      const carousel = ContinuousCarousel("carouselKb", {
+        autoplay: false,
+        keyboardNav: true,
+      });
+      const container = document.getElementById("carouselKb");
+
+      // Play first, then space to pause
+      carousel.play();
+      container.dispatchEvent(
+        new KeyboardEvent("keydown", { key: " ", bubbles: true }),
+      );
+      expect(container.getAttribute("data-paused")).toBe("true");
+
+      // Space again to resume
+      container.dispatchEvent(
+        new KeyboardEvent("keydown", { key: " ", bubbles: true }),
+      );
+      expect(container.getAttribute("data-paused")).toBe("false");
+      carousel.destroy();
+    });
+
+    test("cleanup on destroy removes keydown listener", () => {
+      document.body.innerHTML = renderComponent(
+        "carouselKb",
+        "horizontal",
+        1,
+      );
+      const carousel = ContinuousCarousel("carouselKb", {
+        autoplay: false,
+        keyboardNav: true,
+      });
+      const container = document.getElementById("carouselKb");
+
+      carousel.play();
+      carousel.destroy();
+
+      // After destroy, space should not toggle pause
+      container.dispatchEvent(
+        new KeyboardEvent("keydown", { key: " ", bubbles: true }),
+      );
+      // data-paused should not have been set to "true" since handler is disconnected
+      expect(container.getAttribute("data-paused")).not.toBe("true");
+    });
+  });
+
   describe("Callbacks", () => {
     test("onSlideChange callback should be called", (done) => {
       document.body.innerHTML = renderComponent(

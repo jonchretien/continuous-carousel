@@ -28,6 +28,7 @@ import { createTransformStrategy } from "./animation/TransformStrategy.js";
 import { createAnimationController } from "./animation/AnimationController.js";
 import { createVisibilityObserver } from "./observers/VisibilityObserver.js";
 import { createResizeHandler } from "./observers/ResizeHandler.js";
+import { createKeyboardHandler } from "./observers/KeyboardHandler.js";
 
 /**
  * Creates a continuous carousel instance
@@ -78,6 +79,7 @@ export default function ContinuousCarousel(element, userOptions = {}) {
   let animationController = null;
   let visibilityObserver = null;
   let resizeHandler = null;
+  let keyboardHandler = null;
 
   /**
    * Calculate and update CSS custom properties for layout
@@ -115,11 +117,13 @@ export default function ContinuousCarousel(element, userOptions = {}) {
 
   /**
    * Advance to next slide
+   * @param {boolean} [forward] - Override direction. If omitted, uses config.reverse.
    */
-  function advanceSlide() {
+  function advanceSlide(forward) {
     const { itemSize } = recalculateDimensions();
+    const goReverse = forward !== undefined ? !forward : config.reverse;
 
-    if (config.reverse) {
+    if (goReverse) {
       const endPosition = 0;
 
       if (position === endPosition) {
@@ -251,6 +255,16 @@ export default function ContinuousCarousel(element, userOptions = {}) {
       visibilityObserver.observe();
     }
 
+    // Create keyboard handler
+    if (config.keyboardNav) {
+      keyboardHandler = createKeyboardHandler({
+        advanceSlide,
+        togglePause,
+        container,
+      });
+      keyboardHandler.observe();
+    }
+
     // Setup pause on hover
     if (config.pauseOnHover) {
       container.addEventListener("mouseenter", pause);
@@ -310,6 +324,17 @@ export default function ContinuousCarousel(element, userOptions = {}) {
   }
 
   /**
+   * Toggle between play and pause
+   */
+  function togglePause() {
+    if (isPaused) {
+      play();
+    } else {
+      pause();
+    }
+  }
+
+  /**
    * Destroy the carousel and cleanup
    */
   function destroy() {
@@ -325,6 +350,10 @@ export default function ContinuousCarousel(element, userOptions = {}) {
 
     if (resizeHandler) {
       resizeHandler.disconnect();
+    }
+
+    if (keyboardHandler) {
+      keyboardHandler.disconnect();
     }
 
     // Remove event listeners
