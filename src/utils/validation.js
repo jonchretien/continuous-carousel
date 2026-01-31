@@ -92,6 +92,19 @@ export function validateReverse(value) {
 }
 
 /**
+ * Validates numVisible is less than item count
+ * @param {number} numVisible - Number of visible items
+ * @param {number} itemCount - Total number of items
+ */
+export function validateNumVisibleCount(numVisible, itemCount) {
+  if (numVisible >= itemCount) {
+    console.warn(
+      `numVisible (${numVisible}) must be less than item count (${itemCount}). Carousel may not behave correctly.`
+    );
+  }
+}
+
+/**
  * Validates timing values (interval, duration)
  * @param {number} value - Timing value in milliseconds
  * @param {string} name - Name of the timing value
