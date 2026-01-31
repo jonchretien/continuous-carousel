@@ -6,7 +6,7 @@ This file provides context for AI assistants working on the continuous-carousel 
 
 Continuous Carousel is a lightweight, vanilla JavaScript carousel library with CSS animations. The library supports both horizontal and vertical scrolling with configurable options.
 
-**Current Version:** 0.3.0 (in development)
+**Current Version:** 0.4.0
 
 ## Architecture
 
@@ -47,29 +47,20 @@ npm run build       # Build both JS and CSS
 npm run build:js    # Build JS only (Rolldown)
 npm run build:css   # Build CSS only (PostCSS)
 npm run dev         # Watch mode
-npm run demo        # Build and serve demo locally
+npm run docs:dev    # Serve VitePress docs locally
+npm run docs:build  # Build VitePress docs
 ```
 
-### Demo Pages
+### Documentation Site
 
-All demo pages located in `demo/examples/`:
+VitePress-powered docs in `docs/`:
 
-**Basic Examples:**
-- `horizontal-single.html` - Single item horizontal carousel
-- `horizontal-multi.html` - 2-4 visible items horizontal
-- `vertical-single.html` - Single item vertical carousel
-- `vertical-multi.html` - 2-3 visible items vertical
-
-**Content Examples:**
-- `image-gallery.html` - Photo gallery with captions
-- `card-showcase.html` - Cards, testimonials, team members
-- `text-ticker.html` - News tickers, announcements, quotes
-
-**Advanced:**
-- `advanced-features.html` - Interactive controls, callbacks, all config options
-
-**Hub:**
-- `demo/index.html` - Main demo hub with navigation to all examples
+- `docs/examples/horizontal.md` - Horizontal carousel demos
+- `docs/examples/vertical.md` - Vertical carousel demos
+- `docs/examples/reverse.md` - Reverse scroll direction demos
+- `docs/examples/advanced.md` - Advanced features and config
+- `docs/.vitepress/components/CarouselDemo.vue` - Reusable demo component
+- `docs/.vitepress/config.mjs` - Sidebar and nav config
 
 ### Key Modernizations (v0.3.0)
 
@@ -113,6 +104,7 @@ ContinuousCarousel('id', {
   transitionDuration: 1000,     // Transition animation length (ms)
 
   // Features
+  reverse: false,               // Scroll in opposite direction
   pauseOnHover: false,          // Pause when mouse hovers
   pauseOnFocus: false,          // Pause when element focused
   autoplay: true,               // Start automatically
@@ -133,7 +125,7 @@ ContinuousCarousel('id', {
 1. **Code changes** - Edit files in `src/`
 2. **Build** - Run `npm run build`
 3. **Test** - Run `npm test`
-4. **Demo locally** - Run `npm run demo`
+4. **Docs locally** - Run `npm run docs:dev`
 5. **Commit** - Use conventional commits (see below)
 
 ### Commit Convention
@@ -161,23 +153,24 @@ Format: `type: description`
 
 - Tests located in `tests/`
 - Run with `npm test`
-- Uses Jasmine framework
+- Uses Vitest framework
 - Tests updated for ES6 class structure
 
 ## Critical Files
 
 - `src/ContinuousCarousel.js` - Main entry point
-- `continuous-carousel.css` - Core styles with CSS custom properties
+- `src/continuous-carousel.css` - Core styles with CSS custom properties
 - `package.json` - Dependencies, scripts, exports config
-- `rolldown.config.js` - Build configuration
-- `demo/index.html` - Demo hub
+- `rolldown.config.js` - Build configuration (used by watch mode)
+- `bin/build-js.mjs` - Sequential build script (production)
+- `bin/build-one.mjs` - Single-config build worker
 - `tests/continuous-carousel.test.js` - Test suite
 
 ## GitHub Pages Deployment
 
 - **Workflow:** `.github/workflows/deploy.yml`
 - **Trigger:** Push to main branch or manual dispatch
-- **Process:** Build dist files → deploy demo/ directory
+- **Process:** Build dist files → deploy docs site
 - **Note:** `.nojekyll` file prevents Jekyll processing
 
 ## Performance Targets
@@ -215,7 +208,7 @@ Potential features (not yet implemented):
 3. Implement logic in relevant module
 4. Add tests
 5. Update README
-6. Add example in advanced-features.html
+6. Add example in docs or `docs/examples/advanced.md`
 
 **Fix bug:**
 1. Write failing test
@@ -224,13 +217,13 @@ Potential features (not yet implemented):
 4. Update CHANGELOG
 5. Commit with `fix:` prefix
 
-**Add demo page:**
-1. Create HTML in `demo/examples/`
-2. Link from `demo/index.html`
-3. Use ES6 module import: `import ContinuousCarousel from '../dist/continuous-carousel.esm.js'`
-4. Follow existing styling patterns
+**Add docs example page:**
+1. Create markdown in `docs/examples/`
+2. Use `<CarouselDemo>` Vue component for live demos
+3. Add link in `docs/.vitepress/config.mjs` sidebar
+4. Follow existing page patterns
 5. Commit with `docs:` prefix
 
 ## Project Context
 
-This modernization (v0.3.0) transforms the library from a simple monolithic implementation to a robust, modular ES6 factory function architecture with separated concerns. The goal is to provide better performance, developer experience, and extensibility while keeping the library lightweight and dependency-free.
+v0.3.0 modernized the library into a modular ES6 factory function architecture. v0.4.0 added reverse scroll direction support. The goal is to provide good performance, developer experience, and extensibility while keeping the library lightweight and dependency-free.
