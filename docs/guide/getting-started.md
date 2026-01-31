@@ -2,10 +2,17 @@
 
 ## Installation
 
-**npm:**
-```bash
+::: code-group
+```bash [npm]
 npm install continuous-carousel
 ```
+```bash [pnpm]
+pnpm add continuous-carousel
+```
+```bash [bun]
+bun add continuous-carousel
+```
+:::
 
 **CDN:**
 ```html

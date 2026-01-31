@@ -20,9 +20,12 @@ A lightweight, performant carousel library using vanilla JavaScript and CSS anim
 
 ## Installation
 
-**npm:**
 ```bash
 npm install continuous-carousel
+# or
+pnpm add continuous-carousel
+# or
+bun add continuous-carousel
 ```
 
 **CDN:**
@@ -270,7 +273,7 @@ See [MIGRATION.md](./MIGRATION.md) for upgrade instructions from earlier version
 
 ## Contributing
 
-Contributions are welcome! Please read the [contribution guidelines](./CONTRIBUTING.md) first.
+Contributions are welcome! Please read the [contribution guidelines](./.github/CONTRIBUTING.md) first.
 
 ## License
 
