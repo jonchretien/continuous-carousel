@@ -28,6 +28,7 @@ const carousel = ContinuousCarousel('myCarousel', {
 | `autoplay` | boolean | `true` | Start automatically |
 | `observeVisibility` | boolean | `true` | Pause when off-screen |
 | `observeResize` | boolean | `true` | Recalculate on resize |
+| `keyboardNav` | boolean | `true` | Enable keyboard navigation |
 | `announceSlides` | boolean | `true` | Announce slides for screen readers |
 | `onSlideChange` | function | `null` | Fired on slide change |
 | `onPause` | function | `null` | Fired when paused |
@@ -169,6 +170,24 @@ Uses `ResizeObserver` to recalculate carousel dimensions when the container is r
 ```javascript
 ContinuousCarousel('myCarousel', {
   observeResize: false // Disable resize handling
+});
+```
+
+### `keyboardNav`
+
+- **Type:** `boolean`
+- **Default:** `true`
+
+Enables keyboard navigation. When the carousel has focus:
+- **Arrow Right / Down** — advance forward
+- **Arrow Left / Up** — advance backward
+- **Space / Enter** — toggle pause/play
+
+Sets `tabindex="0"`, `role="region"`, and `aria-roledescription="carousel"` on the container.
+
+```javascript
+ContinuousCarousel('myCarousel', {
+  keyboardNav: false // Disable keyboard navigation
 });
 ```
 

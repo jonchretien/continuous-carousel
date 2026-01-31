@@ -71,6 +71,22 @@ carousel.updateConfig({ interval: 500 });
 carousel.updateConfig({ interval: 5000 });
 ```
 
+## Keyboard Navigation
+
+Tab to the carousel and use arrow keys to advance slides. Press Space or Enter to toggle pause.
+
+<CarouselDemo id="adv-keyboard" direction="horizontal" :num-visible="1" :interval="3000" />
+
+```javascript
+ContinuousCarousel('myCarousel', {
+  keyboardNav: true // enabled by default
+});
+```
+
+::: tip
+Click the carousel above, then use **Arrow Right** to advance or **Space** to pause.
+:::
+
 ## Image Gallery
 
 ```html

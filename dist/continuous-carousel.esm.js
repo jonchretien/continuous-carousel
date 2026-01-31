@@ -37,6 +37,7 @@ const DEFAULT_CONFIG = {
 	onPause: null,
 	onPlay: null,
 	reverse: false,
+	keyboardNav: true,
 	onDestroy: null
 };
 
@@ -337,6 +338,44 @@ function createResizeHandler(carousel, options = {}) {
 }
 
 //#endregion
+//#region src/observers/KeyboardHandler.js
+function createKeyboardHandler(carousel) {
+	function handleKeydown(event) {
+		switch (event.key) {
+			case "ArrowRight":
+			case "ArrowDown":
+				event.preventDefault();
+				carousel.advanceSlide(true);
+				break;
+			case "ArrowLeft":
+			case "ArrowUp":
+				event.preventDefault();
+				carousel.advanceSlide(false);
+				break;
+			case " ":
+			case "Enter":
+				event.preventDefault();
+				carousel.togglePause();
+				break;
+		}
+	}
+	function observe() {
+		const el = carousel.container;
+		el.setAttribute("tabindex", "0");
+		el.setAttribute("role", "region");
+		el.setAttribute("aria-roledescription", "carousel");
+		el.addEventListener("keydown", handleKeydown);
+	}
+	function disconnect() {
+		carousel.container.removeEventListener("keydown", handleKeydown);
+	}
+	return {
+		observe,
+		disconnect
+	};
+}
+
+//#endregion
 //#region src/ContinuousCarousel.js
 function ContinuousCarousel(element, userOptions = {}) {
 	const container = validateElement(element);
@@ -364,6 +403,7 @@ function ContinuousCarousel(element, userOptions = {}) {
 	let animationController = null;
 	let visibilityObserver = null;
 	let resizeHandler = null;
+	let keyboardHandler = null;
 	/**
 	* Calculate and update CSS custom properties for layout
 	*/
@@ -393,10 +433,12 @@ function ContinuousCarousel(element, userOptions = {}) {
 	}
 	/**
 	* Advance to next slide
+	* @param {boolean} [forward] - Override direction. If omitted, uses config.reverse.
 	*/
-	function advanceSlide() {
+	function advanceSlide(forward) {
 		const { itemSize } = recalculateDimensions();
-		if (config.reverse) {
+		const goReverse = forward !== undefined ? !forward : config.reverse;
+		if (goReverse) {
 			const endPosition = 0;
 			if (position === endPosition) {
 				position = -(itemSize * itemsLength);
@@ -479,6 +521,14 @@ function ContinuousCarousel(element, userOptions = {}) {
 			}, { threshold: .5 });
 			visibilityObserver.observe();
 		}
+		if (config.keyboardNav) {
+			keyboardHandler = createKeyboardHandler({
+				advanceSlide,
+				togglePause,
+				container
+			});
+			keyboardHandler.observe();
+		}
 		if (config.pauseOnHover) {
 			container.addEventListener("mouseenter", pause);
 			container.addEventListener("mouseleave", play);
@@ -515,12 +565,20 @@ else if (!animationController.getIsRunning()) animationController.start();
 		}
 	}
 	/**
+	* Toggle between play and pause
+	*/
+	function togglePause() {
+		if (isPaused) play();
+else pause();
+	}
+	/**
 	* Destroy the carousel and cleanup
 	*/
 	function destroy() {
 		if (animationController) animationController.stop();
 		if (visibilityObserver) visibilityObserver.disconnect();
 		if (resizeHandler) resizeHandler.disconnect();
+		if (keyboardHandler) keyboardHandler.disconnect();
 		if (config.pauseOnHover) {
 			container.removeEventListener("mouseenter", pause);
 			container.removeEventListener("mouseleave", play);

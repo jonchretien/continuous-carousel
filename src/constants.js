@@ -50,5 +50,6 @@ export const DEFAULT_CONFIG = {
   onPause: null,
   onPlay: null,
   reverse: false,
+  keyboardNav: true,
   onDestroy: null
 };
