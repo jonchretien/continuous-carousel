@@ -199,6 +199,32 @@ Potential features (not yet implemented):
 6. **Documentation** - Update README/docs when adding features
 7. **Commit Messages** - Follow conventional commit format
 8. **Code Style** - Match existing style (see .editorconfig if present)
+   - **Early returns / guard clauses** — prefer `if (!condition) return;` over wrapping the function body in `if (condition) { … }`
+   - **Function extraction** — break complex multi-branch functions into small single-responsibility helpers
+   - **Flat control flow** — use early returns to eliminate `else` blocks and reduce nesting
+
+   ```js
+   // Bad
+   function process(items) {
+     if (items.length > 0) {
+       if (items[0].isValid) {
+         doWork(items);
+       } else {
+         handleInvalid(items[0]);
+       }
+     }
+   }
+
+   // Good
+   function process(items) {
+     if (items.length === 0) return;
+     if (!items[0].isValid) {
+       handleInvalid(items[0]);
+       return;
+     }
+     doWork(items);
+   }
+   ```
 
 ## Common Tasks
 
