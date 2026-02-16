@@ -502,24 +502,31 @@ function createResizeHandler(carousel) {
 //#endregion
 //#region src/observers/KeyboardHandler.js
 function createKeyboardHandler(carousel) {
-	function handleKeydown(event) {
-		switch (event.key) {
-			case "ArrowRight":
-			case "ArrowDown":
-				event.preventDefault();
-				carousel.advanceSlide(true);
-				break;
-			case "ArrowLeft":
-			case "ArrowUp":
-				event.preventDefault();
-				carousel.advanceSlide(false);
-				break;
-			case " ":
-			case "Enter":
-				event.preventDefault();
-				carousel.togglePause();
-				break;
+	var KEY_ACTIONS = {
+		ArrowRight: function ArrowRight() {
+			return carousel.advanceSlide(true);
+		},
+		ArrowDown: function ArrowDown() {
+			return carousel.advanceSlide(true);
+		},
+		ArrowLeft: function ArrowLeft() {
+			return carousel.advanceSlide(false);
+		},
+		ArrowUp: function ArrowUp() {
+			return carousel.advanceSlide(false);
+		},
+		" ": function _() {
+			return carousel.togglePause();
+		},
+		Enter: function Enter() {
+			return carousel.togglePause();
 		}
+	};
+	function handleKeydown(event) {
+		var action = KEY_ACTIONS[event.key];
+		if (!action) return;
+		event.preventDefault();
+		action();
 	}
 	function observe() {
 		var el = carousel.container;
