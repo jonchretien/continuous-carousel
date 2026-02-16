@@ -116,100 +116,101 @@ export default function ContinuousCarousel(element, userOptions = {}) {
   }
 
   /**
+   * Notify listeners of a slide change
+   */
+  function notifySlideChange() {
+    if (liveRegion) {
+      updateLiveRegion(liveRegion, activeSlideIndex, itemsLength);
+    }
+    if (config.onSlideChange) {
+      config.onSlideChange(activeSlideIndex);
+    }
+  }
+
+  /**
+   * Advance forward by one step
+   * @param {number} itemSize - Size of each item in pixels
+   */
+  function advanceForward(itemSize) {
+    const endPosition = -(itemSize * itemsLength);
+
+    // Reset to beginning with instant transition
+    if (position === endPosition) {
+      position = 0;
+      activeSlideIndex = 1;
+      applyTransform(position, config.resetDuration);
+
+      setTimeout(() => {
+        position = position - itemSize * numVisible;
+        activeSlideIndex++;
+        applyTransform(position, config.transitionDuration);
+        notifySlideChange();
+      }, config.resetDuration + 50);
+      return;
+    }
+
+    // Normal animation
+    position = position - itemSize * numVisible;
+    activeSlideIndex++;
+
+    if (activeSlideIndex > itemsLength) {
+      activeSlideIndex = 1;
+    }
+
+    applyTransform(position, config.transitionDuration);
+    notifySlideChange();
+  }
+
+  /**
+   * Advance in reverse by one step
+   * @param {number} itemSize - Size of each item in pixels
+   */
+  function advanceReverse(itemSize) {
+    // Reset to end with instant transition
+    if (position === 0) {
+      position = -(itemSize * itemsLength);
+      activeSlideIndex = itemsLength;
+      applyTransform(position, config.resetDuration);
+
+      setTimeout(() => {
+        position = position + itemSize * numVisible;
+        activeSlideIndex--;
+        if (activeSlideIndex < 1) {
+          activeSlideIndex = itemsLength;
+        }
+        applyTransform(position, config.transitionDuration);
+        notifySlideChange();
+      }, config.resetDuration + 50);
+      return;
+    }
+
+    // Normal reverse animation
+    position = position + itemSize * numVisible;
+    activeSlideIndex--;
+
+    if (activeSlideIndex < 1) {
+      activeSlideIndex = itemsLength;
+    }
+
+    applyTransform(position, config.transitionDuration);
+    notifySlideChange();
+  }
+
+  /**
    * Advance to next slide
    * @param {boolean} [forward] - Override direction. If omitted, uses config.reverse.
    */
   function advanceSlide(forward) {
     const { itemSize } = recalculateDimensions();
     const goReverse = forward !== undefined ? !forward : config.reverse;
-
-    if (goReverse) {
-      const endPosition = 0;
-
-      if (position === endPosition) {
-        // Reset to end with instant transition
-        position = -(itemSize * itemsLength);
-        activeSlideIndex = itemsLength;
-        applyTransform(position, config.resetDuration);
-
-        // Schedule normal advance after reset
-        setTimeout(() => {
-          position = position + itemSize * numVisible;
-          activeSlideIndex--;
-          if (activeSlideIndex < 1) {
-            activeSlideIndex = itemsLength;
-          }
-          applyTransform(position, config.transitionDuration);
-          if (liveRegion) {
-            updateLiveRegion(liveRegion, activeSlideIndex, itemsLength);
-          }
-          if (config.onSlideChange) {
-            config.onSlideChange(activeSlideIndex);
-          }
-        }, config.resetDuration + 50);
-      } else {
-        // Normal reverse animation
-        position = position + itemSize * numVisible;
-        activeSlideIndex--;
-
-        if (activeSlideIndex < 1) {
-          activeSlideIndex = itemsLength;
-        }
-
-        applyTransform(position, config.transitionDuration);
-        if (liveRegion) {
-          updateLiveRegion(liveRegion, activeSlideIndex, itemsLength);
-        }
-        if (config.onSlideChange) {
-          config.onSlideChange(activeSlideIndex);
-        }
-      }
-    } else {
-      const endPosition = -(itemSize * itemsLength);
-
-      // Check if we've reached the end
-      if (position === endPosition) {
-        // Reset to beginning with instant transition
-        position = 0;
-        activeSlideIndex = 1;
-        applyTransform(position, config.resetDuration);
-
-        // Schedule normal advance after reset
-        setTimeout(() => {
-          position = position - itemSize * numVisible;
-          activeSlideIndex++;
-          applyTransform(position, config.transitionDuration);
-          if (liveRegion) {
-            updateLiveRegion(liveRegion, activeSlideIndex, itemsLength);
-          }
-          if (config.onSlideChange) {
-            config.onSlideChange(activeSlideIndex);
-          }
-        }, config.resetDuration + 50);
-      } else {
-        // Normal animation
-        position = position - itemSize * numVisible;
-        activeSlideIndex++;
-
-        if (activeSlideIndex > itemsLength) {
-          activeSlideIndex = 1;
-        }
-
-        applyTransform(position, config.transitionDuration);
-        if (liveRegion) {
-          updateLiveRegion(liveRegion, activeSlideIndex, itemsLength);
-        }
-        if (config.onSlideChange) {
-          config.onSlideChange(activeSlideIndex);
-        }
-      }
-    }
+    if (goReverse) return advanceReverse(itemSize);
+    advanceForward(itemSize);
   }
 
   /**
-   * Initialize the carousel
+   * Clone items and set initial position based on direction
    */
-  function init() {
+  function setupClones() {
     if (config.reverse) {
       // Clone last N items and prepend for reverse infinite loop
       const clonedFragment = cloneNodesToFragment(items.slice(-numVisible));
@@ -219,14 +220,22 @@ export default function ContinuousCarousel(element, userOptions = {}) {
       const { itemSize } = recalculateDimensions();
       position = -(itemSize * numVisible);
       applyTransform(position, 0);
-    } else {
-      // Clone first N items for infinite loop
-      const clonedFragment = cloneNodesToFragment(items.slice(0, numVisible));
-      itemGroup.appendChild(clonedFragment);
-
-      // Calculate initial dimensions and set CSS variables
-      recalculateDimensions();
+      return;
     }
+
+    // Clone first N items for infinite loop
+    const clonedFragment = cloneNodesToFragment(items.slice(0, numVisible));
+    itemGroup.appendChild(clonedFragment);
+
+    // Calculate initial dimensions and set CSS variables
+    recalculateDimensions();
+  }
+
+  /**
+   * Initialize the carousel
+   */
+  function init() {
+    setupClones();
 
     // Create live region for accessibility
     if (config.announceSlides) {
@@ -287,21 +296,21 @@ export default function ContinuousCarousel(element, userOptions = {}) {
    * Play/resume the carousel
    */
   function play() {
-    if (isPaused) {
-      isPaused = false;
-      container.setAttribute(ATTR_PAUSED, "false");
+    if (!isPaused) return;
 
-      if (animationController) {
-        if (animationController.getIsPaused()) {
-          animationController.resume();
-        } else if (!animationController.getIsRunning()) {
-          animationController.start();
-        }
-      }
+    isPaused = false;
+    container.setAttribute(ATTR_PAUSED, "false");
 
-      if (config.onPlay) {
-        config.onPlay();
+    if (animationController) {
+      if (animationController.getIsPaused()) {
+        animationController.resume();
+      } else if (!animationController.getIsRunning()) {
+        animationController.start();
       }
+    }
+
+    if (config.onPlay) {
+      config.onPlay();
     }
   }
 
@@ -309,17 +318,17 @@ export default function ContinuousCarousel(element, userOptions = {}) {
    * Pause the carousel
    */
   function pause() {
-    if (!isPaused) {
-      isPaused = true;
-      container.setAttribute(ATTR_PAUSED, "true");
+    if (isPaused) return;
 
-      if (animationController) {
-        animationController.pause();
-      }
+    isPaused = true;
+    container.setAttribute(ATTR_PAUSED, "true");
 
-      if (config.onPause) {
-        config.onPause();
-      }
+    if (animationController) {
+      animationController.pause();
+    }
+
+    if (config.onPause) {
+      config.onPause();
     }
   }
 
@@ -327,11 +336,8 @@ export default function ContinuousCarousel(element, userOptions = {}) {
    * Toggle between play and pause
    */
   function togglePause() {
-    if (isPaused) {
-      play();
-    } else {
-      pause();
-    }
+    if (isPaused) return play();
+    pause();
   }
 
   /**

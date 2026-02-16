@@ -589,72 +589,91 @@ function ContinuousCarousel(element) {
 		if (duration !== undefined) setCSSProperties(container, { "--carousel-transition-duration": "".concat(duration, "ms") });
 	}
 	/**
+	* Notify listeners of a slide change
+	*/
+	function notifySlideChange() {
+		if (liveRegion) updateLiveRegion(liveRegion, activeSlideIndex, itemsLength);
+		if (config.onSlideChange) config.onSlideChange(activeSlideIndex);
+	}
+	/**
+	* Advance forward by one step
+	* @param {number} itemSize - Size of each item in pixels
+	*/
+	function advanceForward(itemSize) {
+		var endPosition = -(itemSize * itemsLength);
+		if (position === endPosition) {
+			position = 0;
+			activeSlideIndex = 1;
+			applyTransform(position, config.resetDuration);
+			setTimeout(function() {
+				position = position - itemSize * numVisible;
+				activeSlideIndex++;
+				applyTransform(position, config.transitionDuration);
+				notifySlideChange();
+			}, config.resetDuration + 50);
+			return;
+		}
+		position = position - itemSize * numVisible;
+		activeSlideIndex++;
+		if (activeSlideIndex > itemsLength) activeSlideIndex = 1;
+		applyTransform(position, config.transitionDuration);
+		notifySlideChange();
+	}
+	/**
+	* Advance in reverse by one step
+	* @param {number} itemSize - Size of each item in pixels
+	*/
+	function advanceReverse(itemSize) {
+		if (position === 0) {
+			position = -(itemSize * itemsLength);
+			activeSlideIndex = itemsLength;
+			applyTransform(position, config.resetDuration);
+			setTimeout(function() {
+				position = position + itemSize * numVisible;
+				activeSlideIndex--;
+				if (activeSlideIndex < 1) activeSlideIndex = itemsLength;
+				applyTransform(position, config.transitionDuration);
+				notifySlideChange();
+			}, config.resetDuration + 50);
+			return;
+		}
+		position = position + itemSize * numVisible;
+		activeSlideIndex--;
+		if (activeSlideIndex < 1) activeSlideIndex = itemsLength;
+		applyTransform(position, config.transitionDuration);
+		notifySlideChange();
+	}
+	/**
 	* Advance to next slide
 	* @param {boolean} [forward] - Override direction. If omitted, uses config.reverse.
 	*/
 	function advanceSlide(forward) {
 		var _recalculateDimension = recalculateDimensions(), itemSize = _recalculateDimension.itemSize;
 		var goReverse = forward !== undefined ? !forward : config.reverse;
-		if (goReverse) {
-			var endPosition = 0;
-			if (position === endPosition) {
-				position = -(itemSize * itemsLength);
-				activeSlideIndex = itemsLength;
-				applyTransform(position, config.resetDuration);
-				setTimeout(function() {
-					position = position + itemSize * numVisible;
-					activeSlideIndex--;
-					if (activeSlideIndex < 1) activeSlideIndex = itemsLength;
-					applyTransform(position, config.transitionDuration);
-					if (liveRegion) updateLiveRegion(liveRegion, activeSlideIndex, itemsLength);
-					if (config.onSlideChange) config.onSlideChange(activeSlideIndex);
-				}, config.resetDuration + 50);
-			} else {
-				position = position + itemSize * numVisible;
-				activeSlideIndex--;
-				if (activeSlideIndex < 1) activeSlideIndex = itemsLength;
-				applyTransform(position, config.transitionDuration);
-				if (liveRegion) updateLiveRegion(liveRegion, activeSlideIndex, itemsLength);
-				if (config.onSlideChange) config.onSlideChange(activeSlideIndex);
-			}
-		} else {
-			var _endPosition = -(itemSize * itemsLength);
-			if (position === _endPosition) {
-				position = 0;
-				activeSlideIndex = 1;
-				applyTransform(position, config.resetDuration);
-				setTimeout(function() {
-					position = position - itemSize * numVisible;
-					activeSlideIndex++;
-					applyTransform(position, config.transitionDuration);
-					if (liveRegion) updateLiveRegion(liveRegion, activeSlideIndex, itemsLength);
-					if (config.onSlideChange) config.onSlideChange(activeSlideIndex);
-				}, config.resetDuration + 50);
-			} else {
-				position = position - itemSize * numVisible;
-				activeSlideIndex++;
-				if (activeSlideIndex > itemsLength) activeSlideIndex = 1;
-				applyTransform(position, config.transitionDuration);
-				if (liveRegion) updateLiveRegion(liveRegion, activeSlideIndex, itemsLength);
-				if (config.onSlideChange) config.onSlideChange(activeSlideIndex);
-			}
+		if (goReverse) return advanceReverse(itemSize);
+		advanceForward(itemSize);
+	}
+	/**
+	* Clone items and set initial position based on direction
+	*/
+	function setupClones() {
+		if (config.reverse) {
+			var _clonedFragment = cloneNodesToFragment(items.slice(-numVisible));
+			itemGroup.insertBefore(_clonedFragment, itemGroup.firstChild);
+			var _recalculateDimension2 = recalculateDimensions(), itemSize = _recalculateDimension2.itemSize;
+			position = -(itemSize * numVisible);
+			applyTransform(position, 0);
+			return;
 		}
+		var clonedFragment = cloneNodesToFragment(items.slice(0, numVisible));
+		itemGroup.appendChild(clonedFragment);
+		recalculateDimensions();
 	}
 	/**
 	* Initialize the carousel
 	*/
 	function init() {
-		if (config.reverse) {
-			var clonedFragment = cloneNodesToFragment(items.slice(-numVisible));
-			itemGroup.insertBefore(clonedFragment, itemGroup.firstChild);
-			var _recalculateDimension2 = recalculateDimensions(), itemSize = _recalculateDimension2.itemSize;
-			position = -(itemSize * numVisible);
-			applyTransform(position, 0);
-		} else {
-			var _clonedFragment = cloneNodesToFragment(items.slice(0, numVisible));
-			itemGroup.appendChild(_clonedFragment);
-			recalculateDimensions();
-		}
+		setupClones();
 		if (config.announceSlides) {
 			liveRegion = createLiveRegion(container, config.ariaLive);
 			updateLiveRegion(liveRegion, activeSlideIndex, itemsLength);
@@ -700,33 +719,31 @@ function ContinuousCarousel(element) {
 	* Play/resume the carousel
 	*/
 	function play() {
-		if (isPaused) {
-			isPaused = false;
-			container.setAttribute(ATTR_PAUSED, "false");
-			if (animationController) {
-				if (animationController.getIsPaused()) animationController.resume();
+		if (!isPaused) return;
+		isPaused = false;
+		container.setAttribute(ATTR_PAUSED, "false");
+		if (animationController) {
+			if (animationController.getIsPaused()) animationController.resume();
 else if (!animationController.getIsRunning()) animationController.start();
-			}
-			if (config.onPlay) config.onPlay();
 		}
+		if (config.onPlay) config.onPlay();
 	}
 	/**
 	* Pause the carousel
 	*/
 	function pause() {
-		if (!isPaused) {
-			isPaused = true;
-			container.setAttribute(ATTR_PAUSED, "true");
-			if (animationController) animationController.pause();
-			if (config.onPause) config.onPause();
-		}
+		if (isPaused) return;
+		isPaused = true;
+		container.setAttribute(ATTR_PAUSED, "true");
+		if (animationController) animationController.pause();
+		if (config.onPause) config.onPause();
 	}
 	/**
 	* Toggle between play and pause
 	*/
 	function togglePause() {
-		if (isPaused) play();
-else pause();
+		if (isPaused) return play();
+		pause();
 	}
 	/**
 	* Destroy the carousel and cleanup
