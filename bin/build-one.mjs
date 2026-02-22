@@ -14,19 +14,19 @@ const banner = `/*!
  * @license Released under the MIT license.
  */`;
 
-const input = "src/ContinuousCarousel.js";
+const input = "src/ContinuousCarousel.ts";
 const name = process.argv[2];
 
 const configs = {
   umd: {
     input,
     output: { dir: "dist", entryFileNames: "continuous-carousel.js", format: "umd", name: "ContinuousCarousel", banner },
-    plugins: [babel({ babelHelpers: "bundled", presets: [["@babel/preset-env", { modules: false }]] })],
+    plugins: [babel({ babelHelpers: "bundled", extensions: ['.ts', '.js'], presets: ["@babel/preset-typescript", ["@babel/preset-env", { modules: false }]] })],
   },
   "umd-min": {
     input,
     output: { dir: "dist", entryFileNames: "continuous-carousel.min.js", format: "umd", name: "ContinuousCarousel", banner },
-    plugins: [babel({ babelHelpers: "bundled", presets: [["@babel/preset-env", { modules: false }]] }), terser({ format: { comments: /^!/ } })],
+    plugins: [babel({ babelHelpers: "bundled", extensions: ['.ts', '.js'], presets: ["@babel/preset-typescript", ["@babel/preset-env", { modules: false }]] }), terser({ format: { comments: /^!/ } })],
   },
   esm: {
     input,

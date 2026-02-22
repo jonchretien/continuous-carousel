@@ -1,3 +1,26 @@
+# Migration Guide
+
+## v1.0.x to v1.1.0 (TypeScript Migration)
+
+v1.1.0 rewrites all source from JavaScript to TypeScript. **No breaking changes** — the public API is identical.
+
+### What Changed
+- Source files renamed `.js` → `.ts` with full type annotations
+- Type declarations now generated from source (previously hand-written in `types/index.d.ts`)
+- Declaration maps (`.d.ts.map`) enable "Go to Definition" → actual `.ts` source
+
+### For TypeScript Users
+You can now import types directly:
+```typescript
+import ContinuousCarousel from 'continuous-carousel';
+import type { ContinuousCarouselConfig, ContinuousCarouselInstance } from 'continuous-carousel';
+```
+
+### For JavaScript Users
+No changes required. The library works exactly as before.
+
+---
+
 # Migration Guide: v0.2.x to v0.3.0
 
 This guide helps you upgrade from Continuous Carousel v0.2.x to v0.3.0.

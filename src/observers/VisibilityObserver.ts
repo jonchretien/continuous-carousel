@@ -3,22 +3,23 @@
  * Uses IntersectionObserver to pause/play carousel based on viewport visibility
  */
 
+import type { Observer, VisibilityCarouselContext } from '../types';
+
+interface VisibilityObserverOptions {
+  threshold?: number;
+}
+
 /**
  * Creates a visibility observer for a carousel
- * @param {Object} carousel - Carousel instance with play() and pause() methods
- * @param {Object} options - Observer options
- * @param {number} options.threshold - Visibility threshold (0-1)
- * @returns {Object} Observer interface with observe() and disconnect() methods
  */
-export function createVisibilityObserver(carousel, options = {}) {
+export function createVisibilityObserver(carousel: VisibilityCarouselContext, options: VisibilityObserverOptions = {}): Observer {
   const { threshold = 0.5 } = options;
-  let observer = null;
+  let observer: IntersectionObserver | null = null;
 
   /**
    * Callback for intersection changes
-   * @param {IntersectionObserverEntry[]} entries - Observer entries
    */
-  function handleIntersection(entries) {
+  function handleIntersection(entries: IntersectionObserverEntry[]): void {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         carousel.play();
@@ -31,7 +32,7 @@ export function createVisibilityObserver(carousel, options = {}) {
   /**
    * Start observing the carousel container
    */
-  function observe() {
+  function observe(): void {
     // Check if IntersectionObserver is supported
     if (!('IntersectionObserver' in window)) {
       console.warn('IntersectionObserver not supported. Carousel will run continuously.');
@@ -52,7 +53,7 @@ export function createVisibilityObserver(carousel, options = {}) {
   /**
    * Stop observing and cleanup
    */
-  function disconnect() {
+  function disconnect(): void {
     if (observer) {
       observer.disconnect();
       observer = null;

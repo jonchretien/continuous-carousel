@@ -2,16 +2,14 @@
  * Validation utilities
  */
 
-import { DIRECTION_HORIZONTAL, DIRECTION_VERTICAL } from '../constants.js';
+import { DIRECTION_HORIZONTAL, DIRECTION_VERTICAL } from '../constants';
+import type { Direction } from '../types';
 
 /**
  * Validates that an element exists
- * @param {HTMLElement|string} element - Element or ID string
- * @returns {HTMLElement} The validated element
- * @throws {Error} If element is not found
  */
-export function validateElement(element) {
-  let el = element;
+export function validateElement(element: HTMLElement | string): HTMLElement {
+  let el: HTMLElement | null = element as HTMLElement;
 
   if (typeof element === 'string') {
     el = document.getElementById(element);
@@ -29,11 +27,8 @@ export function validateElement(element) {
 
 /**
  * Validates carousel direction
- * @param {string} direction - Direction value
- * @returns {string} The validated direction
- * @throws {Error} If direction is invalid
  */
-export function validateDirection(direction) {
+export function validateDirection(direction: string): Direction {
   const normalizedDirection = direction.toLowerCase().trim();
 
   if (normalizedDirection !== DIRECTION_HORIZONTAL && normalizedDirection !== DIRECTION_VERTICAL) {
@@ -42,16 +37,13 @@ export function validateDirection(direction) {
     );
   }
 
-  return normalizedDirection;
+  return normalizedDirection as Direction;
 }
 
 /**
  * Validates numVisible value
- * @param {number|string} numVisible - Number of visible items
- * @returns {number} The validated number
- * @throws {Error} If numVisible is invalid
  */
-export function validateNumVisible(numVisible) {
+export function validateNumVisible(numVisible: number | string): number {
   const num = Number(numVisible);
 
   if (isNaN(num) || num < 1 || !Number.isInteger(num)) {
@@ -63,11 +55,8 @@ export function validateNumVisible(numVisible) {
 
 /**
  * Validates a callback function
- * @param {*} callback - Potential callback function
- * @param {string} name - Name of the callback for error messages
- * @returns {Function|null} The validated callback or null
  */
-export function validateCallback(callback, name) {
+export function validateCallback(callback: unknown, name: string): ((...args: unknown[]) => void) | null {
   if (callback === null || callback === undefined) {
     return null;
   }
@@ -76,15 +65,13 @@ export function validateCallback(callback, name) {
     throw new Error(`${name} must be a function`);
   }
 
-  return callback;
+  return callback as (...args: unknown[]) => void;
 }
 
 /**
  * Validates reverse option
- * @param {*} value - Value to coerce to boolean
- * @returns {boolean} The validated boolean
  */
-export function validateReverse(value) {
+export function validateReverse(value: unknown): boolean {
   if (typeof value === 'string') {
     return value.toLowerCase() === 'true';
   }
@@ -93,10 +80,8 @@ export function validateReverse(value) {
 
 /**
  * Validates numVisible is less than item count
- * @param {number} numVisible - Number of visible items
- * @param {number} itemCount - Total number of items
  */
-export function validateNumVisibleCount(numVisible, itemCount) {
+export function validateNumVisibleCount(numVisible: number, itemCount: number): void {
   if (numVisible >= itemCount) {
     throw new Error(
       `numVisible (${numVisible}) must be less than item count (${itemCount}).`
@@ -106,12 +91,8 @@ export function validateNumVisibleCount(numVisible, itemCount) {
 
 /**
  * Validates timing values (interval, duration)
- * @param {number} value - Timing value in milliseconds
- * @param {string} name - Name of the timing value
- * @returns {number} The validated value
- * @throws {Error} If value is invalid
  */
-export function validateTiming(value, name) {
+export function validateTiming(value: number | string, name: string): number {
   const num = Number(value);
 
   if (isNaN(num) || num < 0) {

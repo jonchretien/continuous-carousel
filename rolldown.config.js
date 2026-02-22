@@ -14,7 +14,7 @@ const banner = `/*!
 
 // UMD build
 const umd = defineConfig({
-  input: "src/ContinuousCarousel.js",
+  input: "src/ContinuousCarousel.ts",
   output: {
     dir: "dist",
     entryFileNames: "continuous-carousel.js",
@@ -25,14 +25,15 @@ const umd = defineConfig({
   plugins: [
     babel({
       babelHelpers: "bundled",
-      presets: [["@babel/preset-env", { modules: false }]],
+      extensions: ['.ts', '.js'],
+      presets: ["@babel/preset-typescript", ["@babel/preset-env", { modules: false }]],
     }),
   ],
 });
 
 // UMD minified
 const umdMin = defineConfig({
-  input: "src/ContinuousCarousel.js",
+  input: "src/ContinuousCarousel.ts",
   output: {
     dir: "dist",
     entryFileNames: "continuous-carousel.min.js",
@@ -43,7 +44,8 @@ const umdMin = defineConfig({
   plugins: [
     babel({
       babelHelpers: "bundled",
-      presets: [["@babel/preset-env", { modules: false }]],
+      extensions: ['.ts', '.js'],
+      presets: ["@babel/preset-typescript", ["@babel/preset-env", { modules: false }]],
     }),
     terser({ format: { comments: /^!/ } }),
   ],
@@ -51,7 +53,7 @@ const umdMin = defineConfig({
 
 // ES module build
 const esm = defineConfig({
-  input: "src/ContinuousCarousel.js",
+  input: "src/ContinuousCarousel.ts",
   output: {
     dir: "dist",
     entryFileNames: "continuous-carousel.esm.js",
@@ -63,7 +65,7 @@ const esm = defineConfig({
 
 // ES module minified
 const esmMin = defineConfig({
-  input: "src/ContinuousCarousel.js",
+  input: "src/ContinuousCarousel.ts",
   output: {
     dir: "dist",
     entryFileNames: "continuous-carousel.esm.min.js",

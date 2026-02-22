@@ -1,11 +1,11 @@
 /*!
- * Continuous Carousel 🎠 v1.0.1
+ * Continuous Carousel 🎠 v1.1.0
  * Continuous carousel that uses vanilla JavaScript & CSS animations.
  * @author Jon Chretien
  * @license Released under the MIT license.
  */
 
-//#region src/constants.js
+//#region src/constants.ts
 const DIRECTION_HORIZONTAL = "horizontal";
 const DIRECTION_VERTICAL = "vertical";
 const CLASS_NAME_HIDDEN = "c-carousel-visuallyhidden";
@@ -42,7 +42,7 @@ const DEFAULT_CONFIG = {
 };
 
 //#endregion
-//#region src/utils/validation.js
+//#region src/utils/validation.ts
 function validateElement(element) {
 	let el = element;
 	if (typeof element === "string") {
@@ -71,7 +71,7 @@ function validateNumVisibleCount(numVisible, itemCount) {
 }
 
 //#endregion
-//#region src/utils/dom.js
+//#region src/utils/dom.ts
 function createLiveRegion(container, ariaLive = "polite") {
 	const liveRegion = document.createElement("div");
 	liveRegion.setAttribute("aria-live", ariaLive);
@@ -93,7 +93,7 @@ function cloneNodesToFragment(nodes) {
 }
 function setCSSProperties(element, properties) {
 	Object.entries(properties).forEach(([key, value]) => {
-		element.style.setProperty(key, value);
+		element.style.setProperty(key, String(value));
 	});
 }
 function debounce(fn, delay) {
@@ -105,7 +105,7 @@ function debounce(fn, delay) {
 }
 
 //#endregion
-//#region src/animation/TransformStrategy.js
+//#region src/animation/TransformStrategy.ts
 /**
 * Horizontal transform strategy
 * Handles left-to-right carousel movement
@@ -153,7 +153,7 @@ function createTransformStrategy(direction) {
 }
 
 //#endregion
-//#region src/animation/AnimationController.js
+//#region src/animation/AnimationController.ts
 function createAnimationController(carousel, options = {}) {
 	const { interval = 2e3 } = options;
 	let animationFrameId = null;
@@ -162,7 +162,6 @@ function createAnimationController(carousel, options = {}) {
 	let isRunning = false;
 	/**
 	* Animation loop using requestAnimationFrame
-	* @param {number} timestamp - High-resolution timestamp from rAF
 	*/
 	function animate(timestamp) {
 		if (isPaused) {
@@ -216,14 +215,12 @@ function createAnimationController(carousel, options = {}) {
 	}
 	/**
 	* Check if animation is currently running
-	* @returns {boolean}
 	*/
 	function getIsRunning() {
 		return isRunning;
 	}
 	/**
 	* Check if animation is currently paused
-	* @returns {boolean}
 	*/
 	function getIsPaused() {
 		return isPaused;
@@ -239,13 +236,12 @@ function createAnimationController(carousel, options = {}) {
 }
 
 //#endregion
-//#region src/observers/VisibilityObserver.js
+//#region src/observers/VisibilityObserver.ts
 function createVisibilityObserver(carousel, options = {}) {
 	const { threshold = .5 } = options;
 	let observer = null;
 	/**
 	* Callback for intersection changes
-	* @param {IntersectionObserverEntry[]} entries - Observer entries
 	*/
 	function handleIntersection(entries) {
 		entries.forEach((entry) => {
@@ -280,7 +276,7 @@ else carousel.pause();
 }
 
 //#endregion
-//#region src/observers/ResizeHandler.js
+//#region src/observers/ResizeHandler.ts
 function createResizeHandler(carousel, options = {}) {
 	const { debounceDelay = 150 } = options;
 	let observer = null;
@@ -338,7 +334,7 @@ function createResizeHandler(carousel, options = {}) {
 }
 
 //#endregion
-//#region src/observers/KeyboardHandler.js
+//#region src/observers/KeyboardHandler.ts
 function createKeyboardHandler(carousel) {
 	const KEY_ACTIONS = {
 		ArrowRight: () => carousel.advanceSlide(true),
@@ -371,7 +367,7 @@ function createKeyboardHandler(carousel) {
 }
 
 //#endregion
-//#region src/ContinuousCarousel.js
+//#region src/ContinuousCarousel.ts
 function ContinuousCarousel(element, userOptions = {}) {
 	const container = validateElement(element);
 	const dataDirection = container.getAttribute(ATTR_DIRECTION);
@@ -419,8 +415,6 @@ function ContinuousCarousel(element, userOptions = {}) {
 	}
 	/**
 	* Apply transform to item group
-	* @param {number} pos - Position in pixels
-	* @param {number} duration - Transition duration in ms
 	*/
 	function applyTransform(pos, duration) {
 		itemGroup.style.transform = transformStrategy.getTransform(pos);
@@ -435,7 +429,6 @@ function ContinuousCarousel(element, userOptions = {}) {
 	}
 	/**
 	* Advance forward by one step
-	* @param {number} itemSize - Size of each item in pixels
 	*/
 	function advanceForward(itemSize) {
 		const endPosition = -(itemSize * itemsLength);
@@ -459,7 +452,6 @@ function ContinuousCarousel(element, userOptions = {}) {
 	}
 	/**
 	* Advance in reverse by one step
-	* @param {number} itemSize - Size of each item in pixels
 	*/
 	function advanceReverse(itemSize) {
 		if (position === 0) {
@@ -483,7 +475,6 @@ function ContinuousCarousel(element, userOptions = {}) {
 	}
 	/**
 	* Advance to next slide
-	* @param {boolean} [forward] - Override direction. If omitted, uses config.reverse.
 	*/
 	function advanceSlide(forward) {
 		const { itemSize } = recalculateDimensions();
@@ -506,52 +497,6 @@ function ContinuousCarousel(element, userOptions = {}) {
 		const clonedFragment = cloneNodesToFragment(items.slice(0, numVisible));
 		itemGroup.appendChild(clonedFragment);
 		recalculateDimensions();
-	}
-	/**
-	* Initialize the carousel
-	*/
-	function init() {
-		setupClones();
-		if (config.announceSlides) {
-			liveRegion = createLiveRegion(container, config.ariaLive);
-			updateLiveRegion(liveRegion, activeSlideIndex, itemsLength);
-		}
-		animationController = createAnimationController({
-			advanceSlide,
-			container
-		}, { interval: config.interval });
-		if (config.observeResize) {
-			resizeHandler = createResizeHandler({
-				recalculateDimensions,
-				container
-			});
-			resizeHandler.observe();
-		}
-		if (config.observeVisibility) {
-			visibilityObserver = createVisibilityObserver({
-				play,
-				pause,
-				container
-			}, { threshold: .5 });
-			visibilityObserver.observe();
-		}
-		if (config.keyboardNav) {
-			keyboardHandler = createKeyboardHandler({
-				advanceSlide,
-				togglePause,
-				container
-			});
-			keyboardHandler.observe();
-		}
-		if (config.pauseOnHover) {
-			container.addEventListener("mouseenter", pause);
-			container.addEventListener("mouseleave", play);
-		}
-		if (config.pauseOnFocus) {
-			container.addEventListener("focusin", pause);
-			container.addEventListener("focusout", play);
-		}
-		if (config.autoplay) animationController.start();
 	}
 	/**
 	* Play/resume the carousel
@@ -604,11 +549,56 @@ else if (!animationController.getIsRunning()) animationController.start();
 	}
 	/**
 	* Update configuration
-	* @param {Object} newOptions - New options to merge
 	*/
 	function updateConfig(newOptions) {
 		Object.assign(config, newOptions);
 		if (newOptions.transitionDuration !== undefined) recalculateDimensions();
+	}
+	/**
+	* Initialize the carousel
+	*/
+	function init() {
+		setupClones();
+		if (config.announceSlides) {
+			liveRegion = createLiveRegion(container, config.ariaLive);
+			updateLiveRegion(liveRegion, activeSlideIndex, itemsLength);
+		}
+		animationController = createAnimationController({
+			advanceSlide,
+			container
+		}, { interval: config.interval });
+		if (config.observeResize) {
+			resizeHandler = createResizeHandler({
+				recalculateDimensions,
+				container
+			});
+			resizeHandler.observe();
+		}
+		if (config.observeVisibility) {
+			visibilityObserver = createVisibilityObserver({
+				play,
+				pause,
+				container
+			}, { threshold: .5 });
+			visibilityObserver.observe();
+		}
+		if (config.keyboardNav) {
+			keyboardHandler = createKeyboardHandler({
+				advanceSlide,
+				togglePause,
+				container
+			});
+			keyboardHandler.observe();
+		}
+		if (config.pauseOnHover) {
+			container.addEventListener("mouseenter", pause);
+			container.addEventListener("mouseleave", play);
+		}
+		if (config.pauseOnFocus) {
+			container.addEventListener("focusin", pause);
+			container.addEventListener("focusout", play);
+		}
+		if (config.autoplay) animationController.start();
 	}
 	init();
 	return {

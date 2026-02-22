@@ -1,17 +1,16 @@
 {
   "name": "continuous-carousel",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Timed continuous carousel that uses vanilla JavaScript & CSS animations.",
   "main": "dist/continuous-carousel.js",
   "module": "dist/continuous-carousel.esm.js",
-  "types": "./types/index.d.ts",
+  "types": "./dist/ContinuousCarousel.d.ts",
   "sideEffects": [
     "*.css"
   ],
   "files": [
     "dist/",
-    "src/",
-    "types/"
+    "src/"
   ],
   "keywords": [
     "carousel",
@@ -19,16 +18,17 @@
     "vanilla-js",
     "css-animations",
     "continuous",
-    "a11y"
+    "a11y",
+    "typescript"
   ],
   "exports": {
     ".": {
       "import": {
-        "types": "./types/index.d.ts",
+        "types": "./dist/ContinuousCarousel.d.ts",
         "default": "./dist/continuous-carousel.esm.js"
       },
       "require": {
-        "types": "./types/index.d.ts",
+        "types": "./dist/ContinuousCarousel.d.ts",
         "default": "./dist/continuous-carousel.js"
       }
     },
@@ -46,8 +46,9 @@
     "node": ">=18"
   },
   "scripts": {
-    "build": "npm run build:js && npm run copy && npm run build:css",
+    "build": "npm run build:js && npm run build:types && npm run copy && npm run build:css",
     "build:js": "node bin/build-js.mjs",
+    "build:types": "tsc --emitDeclarationOnly --outDir dist",
     "build:css": "postcss src/continuous-carousel.css -o dist/continuous-carousel.min.css",
     "copy": "./bin/copy-files.sh",
     "dev": "rolldown -c -w",
@@ -56,7 +57,8 @@
     "docs:preview": "vitepress preview docs",
     "postversion": "node bin/post-version.mjs",
     "dist": "npm run lint && npm run test && npm run copy && npm run build",
-    "lint": "eslint src/**/*.js",
+    "lint": "eslint 'src/**/*.{js,ts}'",
+    "typecheck": "tsc --noEmit",
     "pretest": "npm run build",
     "test": "vitest run"
   },
@@ -65,15 +67,19 @@
   "devDependencies": {
     "@babel/core": "^7.28.6",
     "@babel/preset-env": "^7.28.6",
+    "@babel/preset-typescript": "^7.28.5",
     "@rollup/plugin-babel": "^6.1.0",
     "@rollup/plugin-node-resolve": "^16.0.3",
     "@rollup/plugin-terser": "^0.4.4",
     "@testing-library/dom": "^10.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.56.0",
+    "@typescript-eslint/parser": "^8.56.0",
     "cssnano": "^5.1.14",
-    "eslint": "^7.11.0",
+    "eslint": "^8.57.1",
     "jsdom": "^25.0.0",
     "postcss-cli": "^8.1.0",
     "rolldown": "^0.15.1",
+    "typescript": "^5.9.3",
     "vitepress": "^1.6.4",
     "vitest": "^3.0.0"
   }

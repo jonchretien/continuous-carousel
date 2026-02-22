@@ -1,0 +1,1 @@
+{"version":3,"file":"ResizeHandler.d.ts","sourceRoot":"","sources":["../../src/observers/ResizeHandler.ts"],"names":[],"mappings":"AAAA;;;GAGG;AAGH,OAAO,KAAK,EAAE,QAAQ,EAAE,qBAAqB,EAAE,MAAM,UAAU,CAAC;AAEhE,UAAU,oBAAoB;IAC5B,aAAa,CAAC,EAAE,MAAM,CAAC;CACxB;AAED;;GAEG;AACH,wBAAgB,mBAAmB,CAAC,QAAQ,EAAE,qBAAqB,EAAE,OAAO,GAAE,oBAAyB,GAAG,QAAQ,CAqEjH"}

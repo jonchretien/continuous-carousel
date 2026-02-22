@@ -17,6 +17,7 @@ A lightweight, performant carousel library using vanilla JavaScript and CSS anim
 - 🎨 **Customizable** - CSS custom properties for easy styling
 - 📦 **Zero dependencies** - Pure vanilla JavaScript
 - 🔧 **Flexible API** - Programmatic control with play/pause/destroy
+- 🔒 **TypeScript** - Written in TypeScript with full type declarations
 
 ## Installation
 
@@ -37,6 +38,17 @@ bun add continuous-carousel
 **ES Module:**
 ```javascript
 import ContinuousCarousel from 'continuous-carousel';
+```
+
+**TypeScript:**
+```typescript
+import ContinuousCarousel from 'continuous-carousel';
+import type { ContinuousCarouselConfig, ContinuousCarouselInstance } from 'continuous-carousel';
+
+const carousel: ContinuousCarouselInstance = ContinuousCarousel('myCarousel', {
+  interval: 3000,
+  pauseOnHover: true,
+});
 ```
 
 ## Quick Start

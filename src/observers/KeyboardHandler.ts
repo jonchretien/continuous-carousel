@@ -3,16 +3,13 @@
  * Adds keyboard navigation to carousel (arrows, space/enter)
  */
 
+import type { KeyboardCarouselContext, Observer } from '../types';
+
 /**
  * Creates a keyboard handler for a carousel
- * @param {Object} carousel - Carousel interface
- * @param {Function} carousel.advanceSlide - Advance slide (forward=true, reverse=false)
- * @param {Function} carousel.togglePause - Toggle pause/play
- * @param {HTMLElement} carousel.container - Carousel container element
- * @returns {Object} Handler interface with observe() and disconnect()
  */
-export function createKeyboardHandler(carousel) {
-  const KEY_ACTIONS = {
+export function createKeyboardHandler(carousel: KeyboardCarouselContext): Observer {
+  const KEY_ACTIONS: Record<string, () => void> = {
     ArrowRight: () => carousel.advanceSlide(true),
     ArrowDown: () => carousel.advanceSlide(true),
     ArrowLeft: () => carousel.advanceSlide(false),
@@ -21,14 +18,14 @@ export function createKeyboardHandler(carousel) {
     Enter: () => carousel.togglePause(),
   };
 
-  function handleKeydown(event) {
+  function handleKeydown(event: KeyboardEvent): void {
     const action = KEY_ACTIONS[event.key];
     if (!action) return;
     event.preventDefault();
     action();
   }
 
-  function observe() {
+  function observe(): void {
     const el = carousel.container;
     el.setAttribute('tabindex', '0');
     el.setAttribute('role', 'region');
@@ -36,7 +33,7 @@ export function createKeyboardHandler(carousel) {
     el.addEventListener('keydown', handleKeydown);
   }
 
-  function disconnect() {
+  function disconnect(): void {
     carousel.container.removeEventListener('keydown', handleKeydown);
   }
 

@@ -16,7 +16,7 @@ Types: `feat:`, `fix:`, `refactor:`, `docs:`, `test:`, `chore:`, `ci:`
 ## Common Tasks
 
 **Add new configuration option:**
-1. Add to `src/constants.js`
+1. Add to `src/constants.ts` and `src/types.ts`
 2. Update `ContinuousCarousel` constructor
 3. Implement logic in relevant module
 4. Add tests

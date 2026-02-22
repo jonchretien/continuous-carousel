@@ -1,0 +1,1 @@
+{"version":3,"file":"VisibilityObserver.d.ts","sourceRoot":"","sources":["../../src/observers/VisibilityObserver.ts"],"names":[],"mappings":"AAAA;;;GAGG;AAEH,OAAO,KAAK,EAAE,QAAQ,EAAE,yBAAyB,EAAE,MAAM,UAAU,CAAC;AAEpE,UAAU,yBAAyB;IACjC,SAAS,CAAC,EAAE,MAAM,CAAC;CACpB;AAED;;GAEG;AACH,wBAAgB,wBAAwB,CAAC,QAAQ,EAAE,yBAAyB,EAAE,OAAO,GAAE,yBAA8B,GAAG,QAAQ,CAoD/H"}

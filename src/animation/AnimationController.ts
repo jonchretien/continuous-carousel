@@ -3,26 +3,27 @@
  * Uses requestAnimationFrame with timestamp tracking for smooth, frame-rate independent animation
  */
 
+import type { AnimationController, CarouselContext } from '../types';
+
+interface AnimationControllerOptions {
+  interval?: number;
+}
+
 /**
  * Creates an animation controller for a carousel
- * @param {Object} carousel - Carousel instance
- * @param {Object} options - Controller options
- * @param {number} options.interval - Time between slides (ms)
- * @returns {Object} Controller interface with start(), stop(), pause(), resume() methods
  */
-export function createAnimationController(carousel, options = {}) {
+export function createAnimationController(carousel: CarouselContext, options: AnimationControllerOptions = {}): AnimationController {
   const { interval = 2000 } = options;
 
-  let animationFrameId = null;
+  let animationFrameId: number | null = null;
   let lastTimestamp = 0;
   let isPaused = false;
   let isRunning = false;
 
   /**
    * Animation loop using requestAnimationFrame
-   * @param {number} timestamp - High-resolution timestamp from rAF
    */
-  function animate(timestamp) {
+  function animate(timestamp: number): void {
     // Don't proceed if paused
     if (isPaused) {
       animationFrameId = requestAnimationFrame(animate);
@@ -52,7 +53,7 @@ export function createAnimationController(carousel, options = {}) {
   /**
    * Start the animation loop
    */
-  function start() {
+  function start(): void {
     if (isRunning) {
       return;
     }
@@ -66,7 +67,7 @@ export function createAnimationController(carousel, options = {}) {
   /**
    * Stop the animation loop and reset state
    */
-  function stop() {
+  function stop(): void {
     if (animationFrameId) {
       cancelAnimationFrame(animationFrameId);
       animationFrameId = null;
@@ -79,14 +80,14 @@ export function createAnimationController(carousel, options = {}) {
   /**
    * Pause the animation (keeps loop running but doesn't advance slides)
    */
-  function pause() {
+  function pause(): void {
     isPaused = true;
   }
 
   /**
    * Resume the animation from paused state
    */
-  function resume() {
+  function resume(): void {
     if (isPaused) {
       isPaused = false;
       // Reset timestamp to prevent immediate slide advance after resume
@@ -96,17 +97,15 @@ export function createAnimationController(carousel, options = {}) {
 
   /**
    * Check if animation is currently running
-   * @returns {boolean}
    */
-  function getIsRunning() {
+  function getIsRunning(): boolean {
     return isRunning;
   }
 
   /**
    * Check if animation is currently paused
-   * @returns {boolean}
    */
-  function getIsPaused() {
+  function getIsPaused(): boolean {
     return isPaused;
   }
 

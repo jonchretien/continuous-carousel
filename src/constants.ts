@@ -2,9 +2,11 @@
  * Constants for Continuous Carousel
  */
 
+import type { ContinuousCarouselConfig } from './types';
+
 // Direction constants
-export const DIRECTION_HORIZONTAL = 'horizontal';
-export const DIRECTION_VERTICAL = 'vertical';
+export const DIRECTION_HORIZONTAL = 'horizontal' as const;
+export const DIRECTION_VERTICAL = 'vertical' as const;
 
 // CSS class names
 export const CLASS_NAME_CONTAINER = 'c-carousel-container';
@@ -33,7 +35,7 @@ export const ARIA_LIVE_POLITE = 'polite';
 export const ARIA_ATOMIC_TRUE = 'true';
 
 // Default configuration
-export const DEFAULT_CONFIG = {
+export const DEFAULT_CONFIG: ContinuousCarouselConfig = {
   direction: DIRECTION_HORIZONTAL,
   numVisible: 1,
   interval: DEFAULT_INTERVAL,
