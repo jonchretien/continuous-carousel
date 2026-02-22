@@ -13,5 +13,16 @@ module.exports = {
         "sourceType": "module",
     },
     "rules": {
-    }
+    },
+    "overrides": [
+        {
+            "files": ["*.ts"],
+            "parser": "@typescript-eslint/parser",
+            "plugins": ["@typescript-eslint"],
+            "extends": [
+                "eslint:recommended",
+                "plugin:@typescript-eslint/recommended"
+            ]
+        }
+    ]
 };

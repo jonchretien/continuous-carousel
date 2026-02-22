@@ -1,10 +1,11 @@
 import { describe, test, expect, beforeEach, afterEach, vi } from "vitest";
 import { screen } from "@testing-library/dom";
 import ContinuousCarousel from "../dist/continuous-carousel.esm.js";
+import type { ContinuousCarouselInstance } from "../src/types";
 
 const CLASS_NAME_ITEM = ".c-carousel-item";
 
-const renderComponent = (id, direction, numVisible) =>
+const renderComponent = (id: string, direction: string, numVisible: number): string =>
   [
     '<div style="width: 800px; height: 400px;">',
     `<div id=${id} class="c-carousel-container" data-direction=${direction} data-num-visible="${numVisible}" data-testid="carousel">`,
@@ -84,7 +85,7 @@ describe("Continuous Carousel", () => {
   });
 
   describe("Public API", () => {
-    let carousel;
+    let carousel: ContinuousCarouselInstance;
 
     beforeEach(() => {
       document.body.innerHTML = renderComponent(

@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-02-22
+
+### Changed
+- **TypeScript Migration** - Rewrote all source files from JavaScript to TypeScript with strict mode
+- **Generated Declarations** - Type declarations now generated from source (replaces hand-written `types/index.d.ts`)
+- **Declaration Maps** - Added `.d.ts.map` files so consumers can "Go to Definition" → actual `.ts` source
+
+### Added
+- `src/types.ts` — central type definitions for all internal and public interfaces
+- `build:types` script — generates `.d.ts` files via `tsc --emitDeclarationOnly`
+- `typecheck` script — runs `tsc --noEmit` for type checking
+- TypeScript type checking in CI workflow
+
+---
+
 ## [1.0.1] - 2026-01-31
 
 ### Changed
@@ -187,6 +202,7 @@ For older browsers, use UMD build which is transpiled to ES5.
 
 ---
 
+[1.1.0]: https://github.com/jonchretien/continuous-carousel/compare/v1.0.1...v1.1.0
 [1.0.1]: https://github.com/jonchretien/continuous-carousel/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/jonchretien/continuous-carousel/compare/v0.4.1...v1.0.0
 [0.4.1]: https://github.com/jonchretien/continuous-carousel/compare/v0.4.0...v0.4.1

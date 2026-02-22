@@ -3,24 +3,25 @@
  * Uses ResizeObserver to recalculate carousel dimensions on container resize
  */
 
-import { debounce } from '../utils/dom.js';
+import { debounce } from '../utils/dom';
+import type { Observer, ResizeCarouselContext } from '../types';
+
+interface ResizeHandlerOptions {
+  debounceDelay?: number;
+}
 
 /**
  * Creates a resize handler for a carousel
- * @param {Object} carousel - Carousel instance with recalculateDimensions() method
- * @param {Object} options - Handler options
- * @param {number} options.debounceDelay - Delay for window resize fallback (ms)
- * @returns {Object} Handler interface with observe() and disconnect() methods
  */
-export function createResizeHandler(carousel, options = {}) {
+export function createResizeHandler(carousel: ResizeCarouselContext, options: ResizeHandlerOptions = {}): Observer {
   const { debounceDelay = 150 } = options;
-  let observer = null;
-  let debouncedResize = null;
+  let observer: ResizeObserver | null = null;
+  let debouncedResize: (() => void) | null = null;
 
   /**
    * Callback for resize events
    */
-  function handleResize() {
+  function handleResize(): void {
     if (carousel.recalculateDimensions) {
       carousel.recalculateDimensions();
     }
@@ -29,7 +30,7 @@ export function createResizeHandler(carousel, options = {}) {
   /**
    * Setup fallback using window resize event
    */
-  function setupWindowResizeFallback() {
+  function setupWindowResizeFallback(): void {
     debouncedResize = debounce(handleResize, debounceDelay);
     window.addEventListener('resize', debouncedResize);
   }
@@ -37,7 +38,7 @@ export function createResizeHandler(carousel, options = {}) {
   /**
    * Cleanup window resize fallback
    */
-  function cleanupWindowResizeFallback() {
+  function cleanupWindowResizeFallback(): void {
     if (debouncedResize) {
       window.removeEventListener('resize', debouncedResize);
       debouncedResize = null;
@@ -47,7 +48,7 @@ export function createResizeHandler(carousel, options = {}) {
   /**
    * Start observing the carousel container for resize
    */
-  function observe() {
+  function observe(): void {
     // Check if ResizeObserver is supported
     if (!('ResizeObserver' in window)) {
       console.warn('ResizeObserver not supported. Using window resize fallback.');
@@ -69,7 +70,7 @@ export function createResizeHandler(carousel, options = {}) {
   /**
    * Stop observing and cleanup
    */
-  function disconnect() {
+  function disconnect(): void {
     if (observer) {
       observer.disconnect();
       observer = null;

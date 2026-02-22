@@ -4,17 +4,19 @@
 
 ```
 src/
-├── ContinuousCarousel.js       # Main ES6 class (exposed via factory function)
-├── constants.js                # Configuration constants
+├── ContinuousCarousel.ts       # Main factory function
+├── constants.ts                # Configuration constants
+├── types.ts                    # Central type definitions
 ├── animation/
-│   ├── AnimationController.js  # rAF-based animation
-│   └── TransformStrategy.js    # Strategy pattern for H/V transforms
+│   ├── AnimationController.ts  # rAF-based animation
+│   └── TransformStrategy.ts    # Strategy pattern for H/V transforms
 ├── observers/
-│   ├── VisibilityObserver.js   # IntersectionObserver for pause when off-screen
-│   └── ResizeHandler.js        # ResizeObserver for responsive recalculation
+│   ├── KeyboardHandler.ts      # Arrow key & space/enter support
+│   ├── VisibilityObserver.ts   # IntersectionObserver for pause when off-screen
+│   └── ResizeHandler.ts        # ResizeObserver for responsive recalculation
 └── utils/
-    ├── dom.js                  # DOM manipulation helpers
-    └── validation.js           # Input validation
+    ├── dom.ts                  # DOM manipulation helpers
+    └── validation.ts           # Input validation
 ```
 
 ## Build System
@@ -27,11 +29,16 @@ src/
 - `dist/continuous-carousel.esm.js` - ES6 modules
 - `dist/continuous-carousel.esm.min.js` - ES6 minified
 - `dist/continuous-carousel.min.css` - Minified CSS
+- `dist/ContinuousCarousel.d.ts` - Generated type declarations
+- `dist/*.d.ts.map` - Declaration maps (Go to Definition → source)
 
 **Critical build files:**
 - `rolldown.config.js` - Build configuration (used by watch mode)
 - `bin/build-js.mjs` - Sequential build script (production)
 - `bin/build-one.mjs` - Single-config build worker
+- `tsconfig.json` - TypeScript config (strict mode, declaration generation)
+
+**Build pipeline:** `build:js` (Rolldown) → `build:types` (tsc --emitDeclarationOnly) → `copy` → `build:css` (PostCSS)
 
 ## Documentation Site
 
