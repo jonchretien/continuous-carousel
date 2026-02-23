@@ -19,6 +19,10 @@ A lightweight, performant carousel library using vanilla JavaScript and CSS anim
 - 🔧 **Flexible API** - Programmatic control with play/pause/destroy
 - 🔒 **TypeScript** - Written in TypeScript with full type declarations
 
+## Using React?
+
+Check out [React Continuous Carousel](https://github.com/jonchretien/react-continuous-carousel).
+
 ## Installation
 
 ```bash
