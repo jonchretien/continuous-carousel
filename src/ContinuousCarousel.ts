@@ -29,6 +29,11 @@ import { createAnimationController } from "./animation/AnimationController";
 import { createVisibilityObserver } from "./observers/VisibilityObserver";
 import { createResizeHandler } from "./observers/ResizeHandler";
 import { createKeyboardHandler } from "./observers/KeyboardHandler";
+export type {
+  ContinuousCarouselConfig,
+  ContinuousCarouselInstance,
+} from "./types";
+
 import type {
   ContinuousCarouselConfig,
   ContinuousCarouselInstance,

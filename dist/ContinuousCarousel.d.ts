@@ -1,6 +1,7 @@
 /**
  * Continuous Carousel 🎠
  */
+export type { ContinuousCarouselConfig, ContinuousCarouselInstance, } from "./types";
 import type { ContinuousCarouselConfig, ContinuousCarouselInstance } from "./types";
 /**
  * Creates a continuous carousel instance
