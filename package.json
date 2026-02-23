@@ -77,7 +77,7 @@
     "cssnano": "^5.1.14",
     "eslint": "^8.57.1",
     "jsdom": "^25.0.0",
-    "postcss-cli": "^8.1.0",
+    "postcss-cli": "^11.0.1",
     "rolldown": "^0.15.1",
     "typescript": "^5.9.3",
     "vitepress": "^1.6.4",
