@@ -43,7 +43,7 @@
     "url": "https://github.com/jonchretien/continuous-carousel/issues"
   },
   "engines": {
-    "node": ">=18"
+    "node": "^20.19.0 || ^22.13.0 || >=24"
   },
   "scripts": {
     "build": "npm run build:js && npm run build:types && npm run copy && npm run build:css",
@@ -57,7 +57,7 @@
     "docs:preview": "vitepress preview docs",
     "postversion": "node bin/post-version.mjs",
     "dist": "npm run lint && npm run test && npm run copy && npm run build",
-    "lint": "eslint 'src/**/*.{js,ts}'",
+    "lint": "eslint 'src/**/*.ts'",
     "typecheck": "tsc --noEmit",
     "pretest": "npm run build",
     "test": "vitest run"
@@ -68,18 +68,19 @@
     "@babel/core": "^7.28.6",
     "@babel/preset-env": "^7.28.6",
     "@babel/preset-typescript": "^7.28.5",
+    "@eslint/js": "^9.39.3",
     "@rollup/plugin-babel": "^6.1.0",
     "@rollup/plugin-node-resolve": "^16.0.3",
     "@rollup/plugin-terser": "^0.4.4",
     "@testing-library/dom": "^10.0.0",
-    "@typescript-eslint/eslint-plugin": "^8.56.0",
-    "@typescript-eslint/parser": "^8.56.0",
     "cssnano": "^5.1.14",
-    "eslint": "^8.57.1",
+    "eslint": "^10.0.1",
+    "globals": "^17.3.0",
     "jsdom": "^25.0.0",
     "postcss-cli": "^8.1.0",
     "rolldown": "^0.15.1",
     "typescript": "^5.9.3",
+    "typescript-eslint": "^8.56.0",
     "vitepress": "^1.6.4",
     "vitest": "^3.0.0"
   }
