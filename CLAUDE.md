@@ -2,17 +2,6 @@
 
 Lightweight vanilla JS carousel library with CSS animations supporting horizontal/vertical scrolling.
 
-## Commands
-
-```bash
-npm run build       # Build JS (Rolldown) + CSS (PostCSS)
-npm run build:js    # JS only
-npm run build:css   # CSS only
-npm test            # Vitest
-npm run dev         # Watch mode
-npm run docs:dev    # VitePress dev server
-```
-
 ## Key Constraints
 
 - Don't break the factory function call syntax: `ContinuousCarousel('id', options)`
