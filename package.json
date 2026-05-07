@@ -73,7 +73,7 @@
     "@rollup/plugin-node-resolve": "^16.0.3",
     "@rollup/plugin-terser": "^1.0.0",
     "@testing-library/dom": "^10.0.0",
-    "cssnano": "^7.1.2",
+    "cssnano": "^8.0.0",
     "eslint": "^10.0.1",
     "globals": "^17.3.0",
     "jsdom": "^29.0.0",
