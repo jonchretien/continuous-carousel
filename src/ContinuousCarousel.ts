@@ -137,80 +137,37 @@ export default function ContinuousCarousel(
   }
 
   /**
-   * Advance forward by one step
-   */
-  function advanceForward(itemSize: number): void {
-    const endPosition = -(itemSize * itemsLength);
-
-    // Reset to beginning with instant transition
-    if (position === endPosition) {
-      position = 0;
-      activeSlideIndex = 1;
-      applyTransform(position, config.resetDuration);
-
-      setTimeout(() => {
-        position = position - itemSize * numVisible;
-        activeSlideIndex++;
-        applyTransform(position, config.transitionDuration);
-        notifySlideChange();
-      }, config.resetDuration + 50);
-      return;
-    }
-
-    // Normal animation
-    position = position - itemSize * numVisible;
-    activeSlideIndex++;
-
-    if (activeSlideIndex > itemsLength) {
-      activeSlideIndex = 1;
-    }
-
-    applyTransform(position, config.transitionDuration);
-    notifySlideChange();
-  }
-
-  /**
-   * Advance in reverse by one step
-   */
-  function advanceReverse(itemSize: number): void {
-    // Reset to end with instant transition
-    if (position === 0) {
-      position = -(itemSize * itemsLength);
-      activeSlideIndex = itemsLength;
-      applyTransform(position, config.resetDuration);
-
-      setTimeout(() => {
-        position = position + itemSize * numVisible;
-        activeSlideIndex--;
-        if (activeSlideIndex < 1) {
-          activeSlideIndex = itemsLength;
-        }
-        applyTransform(position, config.transitionDuration);
-        notifySlideChange();
-      }, config.resetDuration + 50);
-      return;
-    }
-
-    // Normal reverse animation
-    position = position + itemSize * numVisible;
-    activeSlideIndex--;
-
-    if (activeSlideIndex < 1) {
-      activeSlideIndex = itemsLength;
-    }
-
-    applyTransform(position, config.transitionDuration);
-    notifySlideChange();
-  }
-
-  /**
    * Advance to next slide
    */
   function advanceSlide(forward?: boolean): void {
     const { itemSize } = recalculateDimensions();
-    const goReverse = forward !== undefined ? !forward : config.reverse;
-    if (goReverse) return advanceReverse(itemSize);
-    advanceForward(itemSize);
+    const goForward = forward !== undefined ? forward : !config.reverse;
+    const delta = goForward ? -1 : 1;
+    const resetPos = goForward ? -(itemSize * itemsLength) : 0;
+    const atBoundary = position === resetPos;
+
+    if (atBoundary) {
+      position = goForward ? 0 : -(itemSize * itemsLength);
+      activeSlideIndex = goForward ? 1 : itemsLength;
+      applyTransform(position, config.resetDuration);
+
+      setTimeout(() => {
+        position += delta * itemSize * numVisible;
+        activeSlideIndex -= delta;
+        if (activeSlideIndex < 1) activeSlideIndex = itemsLength;
+        if (activeSlideIndex > itemsLength) activeSlideIndex = 1;
+        applyTransform(position, config.transitionDuration);
+        notifySlideChange();
+      }, config.resetDuration + 50);
+      return;
+    }
+
+    position += delta * itemSize * numVisible;
+    activeSlideIndex -= delta;
+    if (activeSlideIndex < 1) activeSlideIndex = itemsLength;
+    if (activeSlideIndex > itemsLength) activeSlideIndex = 1;
+    applyTransform(position, config.transitionDuration);
+    notifySlideChange();
   }
 
   /**
