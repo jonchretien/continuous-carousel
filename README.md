@@ -9,7 +9,7 @@ A lightweight, performant carousel library using vanilla JavaScript and CSS anim
 
 ## Features
 
-- 🎯 **Lightweight** - ~8KB minified + gzipped
+- 🎯 **Lightweight** - ~9KB minified, ~3.5KB gzipped
 - ⚡ **Performant** - 60fps animations using requestAnimationFrame
 - 📱 **Responsive** - Auto-adjusts on resize with ResizeObserver
 - 🔋 **Battery-friendly** - Pauses when off-screen using IntersectionObserver
