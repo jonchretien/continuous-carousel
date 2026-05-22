@@ -224,6 +224,10 @@ function debounce(fn, delay) {
 //#endregion
 //#region src/animation/TransformStrategy.ts
 /**
+* Transform Strategy Pattern
+* Separates horizontal and vertical transform logic using plain objects
+*/
+/**
 * Horizontal transform strategy
 * Handles left-to-right carousel movement
 */
@@ -260,13 +264,7 @@ const verticalStrategy = {
 	}
 };
 function createTransformStrategy(direction) {
-	const strategies = {
-		[DIRECTION_HORIZONTAL]: horizontalStrategy,
-		[DIRECTION_VERTICAL]: verticalStrategy
-	};
-	const strategy = strategies[direction];
-	if (!strategy) throw new Error("Invalid direction: ".concat(direction, ". Must be \"").concat(DIRECTION_HORIZONTAL, "\" or \"").concat(DIRECTION_VERTICAL, "\""));
-	return strategy;
+	return direction === "horizontal" ? horizontalStrategy : verticalStrategy;
 }
 
 //#endregion

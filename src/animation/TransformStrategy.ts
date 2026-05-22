@@ -3,7 +3,6 @@
  * Separates horizontal and vertical transform logic using plain objects
  */
 
-import { DIRECTION_HORIZONTAL, DIRECTION_VERTICAL } from '../constants';
 import type { Direction, TransformStrategy } from '../types';
 
 /**
@@ -50,24 +49,8 @@ const verticalStrategy: TransformStrategy = {
   }
 };
 
-/**
- * Factory function to get appropriate strategy
- */
 export function createTransformStrategy(direction: Direction): TransformStrategy {
-  const strategies: Record<string, TransformStrategy> = {
-    [DIRECTION_HORIZONTAL]: horizontalStrategy,
-    [DIRECTION_VERTICAL]: verticalStrategy
-  };
-
-  const strategy = strategies[direction];
-
-  if (!strategy) {
-    throw new Error(
-      `Invalid direction: ${direction}. Must be "${DIRECTION_HORIZONTAL}" or "${DIRECTION_VERTICAL}"`
-    );
-  }
-
-  return strategy;
+  return direction === 'horizontal' ? horizontalStrategy : verticalStrategy;
 }
 
 // Export strategies for testing

@@ -143,13 +143,7 @@ const verticalStrategy = {
 	}
 };
 function createTransformStrategy(direction) {
-	const strategies = {
-		[DIRECTION_HORIZONTAL]: horizontalStrategy,
-		[DIRECTION_VERTICAL]: verticalStrategy
-	};
-	const strategy = strategies[direction];
-	if (!strategy) throw new Error(`Invalid direction: ${direction}. Must be "${DIRECTION_HORIZONTAL}" or "${DIRECTION_VERTICAL}"`);
-	return strategy;
+	return direction === "horizontal" ? horizontalStrategy : verticalStrategy;
 }
 
 //#endregion
