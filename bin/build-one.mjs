@@ -21,12 +21,12 @@ const configs = {
   umd: {
     input,
     output: { dir: "dist", entryFileNames: "continuous-carousel.js", format: "umd", name: "ContinuousCarousel", banner },
-    plugins: [babel({ babelHelpers: "bundled", extensions: ['.ts', '.js'], presets: ["@babel/preset-typescript", ["@babel/preset-env", { modules: false }]] })],
+    plugins: [babel({ babelHelpers: "bundled", extensions: ['.ts', '.js'], presets: ["@babel/preset-typescript", ["@babel/preset-env", { modules: false, targets: { chrome: "61", firefox: "60", safari: "11", edge: "16" } }]] })],
   },
   "umd-min": {
     input,
     output: { dir: "dist", entryFileNames: "continuous-carousel.min.js", format: "umd", name: "ContinuousCarousel", banner },
-    plugins: [babel({ babelHelpers: "bundled", extensions: ['.ts', '.js'], presets: ["@babel/preset-typescript", ["@babel/preset-env", { modules: false }]] }), terser({ format: { comments: /^!/ } })],
+    plugins: [babel({ babelHelpers: "bundled", extensions: ['.ts', '.js'], presets: ["@babel/preset-typescript", ["@babel/preset-env", { modules: false, targets: { chrome: "61", firefox: "60", safari: "11", edge: "16" } }]] }), terser({ format: { comments: /^!/ } })],
   },
   esm: {
     input,

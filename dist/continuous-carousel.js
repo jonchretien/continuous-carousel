@@ -15,14 +15,6 @@
 function _OverloadYield(e, d) {
 	this.v = e, this.k = d;
 }
-function _arrayLikeToArray(r, a) {
-	(null == a || a > r.length) && (a = r.length);
-	for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
-	return n;
-}
-function _arrayWithHoles(r) {
-	if (Array.isArray(r)) return r;
-}
 function _defineProperty(e, r, t) {
 	return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, {
 		value: t,
@@ -30,30 +22,6 @@ function _defineProperty(e, r, t) {
 		configurable: !0,
 		writable: !0
 	}) : e[r] = t, e;
-}
-function _iterableToArrayLimit(r, l) {
-	var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
-	if (null != t) {
-		var e, n, i, u, a = [], f = !0, o = !1;
-		try {
-			if (i = (t = t.call(r)).next, 0 === l) {
-				if (Object(t) !== t) return;
-				f = !1;
-			} else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0);
-		} catch (r$1) {
-			o = !0, n = r$1;
-		} finally {
-			try {
-				if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return;
-			} finally {
-				if (o) throw n;
-			}
-		}
-		return a;
-	}
-}
-function _nonIterableRest() {
-	throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 function ownKeys(e, r) {
 	var t = Object.keys(e);
@@ -76,9 +44,6 @@ function _objectSpread2(e) {
 	}
 	return e;
 }
-function _slicedToArray(r, e) {
-	return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest();
-}
 function _toPrimitive(t, r) {
 	if ("object" != typeof t || !t) return t;
 	var e = t[Symbol.toPrimitive];
@@ -92,13 +57,6 @@ function _toPrimitive(t, r) {
 function _toPropertyKey(t) {
 	var i = _toPrimitive(t, "string");
 	return "symbol" == typeof i ? i : i + "";
-}
-function _unsupportedIterableToArray(r, a) {
-	if (r) {
-		if ("string" == typeof r) return _arrayLikeToArray(r, a);
-		var t = {}.toString.call(r).slice(8, -1);
-		return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0;
-	}
 }
 function AsyncGenerator(e) {
 	var r, t;
@@ -162,21 +120,21 @@ AsyncGenerator.prototype["function" == typeof Symbol && Symbol.asyncIterator || 
 
 //#endregion
 //#region src/constants.ts
-var DIRECTION_HORIZONTAL = "horizontal";
-var DIRECTION_VERTICAL = "vertical";
-var CLASS_NAME_HIDDEN = "c-carousel-visuallyhidden";
-var CLASS_NAME_LIVE_REGION = "c-carousel-liveregion";
-var SELECTOR_GROUP = ".c-carousel-group";
-var SELECTOR_ITEM = ".c-carousel-item";
-var ATTR_DIRECTION = "data-direction";
-var ATTR_NUM_VISIBLE = "data-num-visible";
-var ATTR_PAUSED = "data-paused";
-var ATTR_REVERSE = "data-reverse";
-var DEFAULT_INTERVAL = 2e3;
-var DEFAULT_TRANSITION_DURATION = 1e3;
-var DEFAULT_RESET_DURATION = 1;
-var ARIA_LIVE_POLITE = "polite";
-var DEFAULT_CONFIG = {
+const DIRECTION_HORIZONTAL = "horizontal";
+const DIRECTION_VERTICAL = "vertical";
+const CLASS_NAME_HIDDEN = "c-carousel-visuallyhidden";
+const CLASS_NAME_LIVE_REGION = "c-carousel-liveregion";
+const SELECTOR_GROUP = ".c-carousel-group";
+const SELECTOR_ITEM = ".c-carousel-item";
+const ATTR_DIRECTION = "data-direction";
+const ATTR_NUM_VISIBLE = "data-num-visible";
+const ATTR_PAUSED = "data-paused";
+const ATTR_REVERSE = "data-reverse";
+const DEFAULT_INTERVAL = 2e3;
+const DEFAULT_TRANSITION_DURATION = 1e3;
+const DEFAULT_RESET_DURATION = 1;
+const ARIA_LIVE_POLITE = "polite";
+const DEFAULT_CONFIG = {
 	direction: DIRECTION_HORIZONTAL,
 	numVisible: 1,
 	interval: DEFAULT_INTERVAL,
@@ -200,7 +158,7 @@ var DEFAULT_CONFIG = {
 //#endregion
 //#region src/utils/validation.ts
 function validateElement(element) {
-	var el = element;
+	let el = element;
 	if (typeof element === "string") {
 		el = document.getElementById(element);
 		if (!el) throw new Error("Carousel container with id \"".concat(element, "\" not found"));
@@ -209,12 +167,12 @@ function validateElement(element) {
 	return el;
 }
 function validateDirection(direction) {
-	var normalizedDirection = direction.toLowerCase().trim();
+	const normalizedDirection = direction.toLowerCase().trim();
 	if (normalizedDirection !== DIRECTION_HORIZONTAL && normalizedDirection !== DIRECTION_VERTICAL) throw new Error("Direction must be either \"".concat(DIRECTION_HORIZONTAL, "\" or \"").concat(DIRECTION_VERTICAL, "\""));
 	return normalizedDirection;
 }
 function validateNumVisible(numVisible) {
-	var num = Number(numVisible);
+	const num = Number(numVisible);
 	if (isNaN(num) || num < 1 || !Number.isInteger(num)) throw new Error("numVisible must be a positive integer");
 	return num;
 }
@@ -229,8 +187,8 @@ function validateNumVisibleCount(numVisible, itemCount) {
 //#endregion
 //#region src/utils/dom.ts
 function createLiveRegion(container) {
-	var ariaLive = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "polite";
-	var liveRegion = document.createElement("div");
+	let ariaLive = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "polite";
+	const liveRegion = document.createElement("div");
 	liveRegion.setAttribute("aria-live", ariaLive);
 	liveRegion.setAttribute("aria-atomic", "true");
 	liveRegion.className = "".concat(CLASS_NAME_LIVE_REGION, " ").concat(CLASS_NAME_HIDDEN);
@@ -241,28 +199,25 @@ function updateLiveRegion(liveRegion, currentIndex, totalItems) {
 	if (liveRegion) liveRegion.textContent = "Item ".concat(currentIndex, " of ").concat(totalItems);
 }
 function cloneNodesToFragment(nodes) {
-	var fragment = document.createDocumentFragment();
-	nodes.forEach(function(node) {
-		var clone = node.cloneNode(true);
+	const fragment = document.createDocumentFragment();
+	nodes.forEach((node) => {
+		const clone = node.cloneNode(true);
 		fragment.appendChild(clone);
 	});
 	return fragment;
 }
 function setCSSProperties(element, properties) {
-	Object.entries(properties).forEach(function(_ref) {
-		var _ref2 = _slicedToArray(_ref, 2), key = _ref2[0], value = _ref2[1];
+	Object.entries(properties).forEach((_ref) => {
+		let [key, value] = _ref;
 		element.style.setProperty(key, String(value));
 	});
 }
 function debounce(fn, delay) {
-	var timeoutId;
+	let timeoutId;
 	return function() {
-		var _this = this;
 		for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) args[_key] = arguments[_key];
 		clearTimeout(timeoutId);
-		timeoutId = setTimeout(function() {
-			return fn.apply(_this, args);
-		}, delay);
+		timeoutId = setTimeout(() => fn.apply(this, args), delay);
 	};
 }
 
@@ -272,17 +227,17 @@ function debounce(fn, delay) {
 * Horizontal transform strategy
 * Handles left-to-right carousel movement
 */
-var horizontalStrategy = {
-	getTransform: function getTransform(position) {
+const horizontalStrategy = {
+	getTransform(position) {
 		return "translate3d(".concat(position, "px, 0, 0)");
 	},
-	getMeasurement: function getMeasurement(element) {
+	getMeasurement(element) {
 		return element.offsetWidth;
 	},
-	getSizeProperty: function getSizeProperty() {
+	getSizeProperty() {
 		return "width";
 	},
-	getCSSVariableName: function getCSSVariableName() {
+	getCSSVariableName() {
 		return "--carousel-item-width";
 	}
 };
@@ -290,23 +245,26 @@ var horizontalStrategy = {
 * Vertical transform strategy
 * Handles top-to-bottom carousel movement
 */
-var verticalStrategy = {
-	getTransform: function getTransform(position) {
+const verticalStrategy = {
+	getTransform(position) {
 		return "translate3d(0, ".concat(position, "px, 0)");
 	},
-	getMeasurement: function getMeasurement(element) {
+	getMeasurement(element) {
 		return element.offsetHeight;
 	},
-	getSizeProperty: function getSizeProperty() {
+	getSizeProperty() {
 		return "height";
 	},
-	getCSSVariableName: function getCSSVariableName() {
+	getCSSVariableName() {
 		return "--carousel-item-height";
 	}
 };
 function createTransformStrategy(direction) {
-	var strategies = _defineProperty(_defineProperty({}, DIRECTION_HORIZONTAL, horizontalStrategy), DIRECTION_VERTICAL, verticalStrategy);
-	var strategy = strategies[direction];
+	const strategies = {
+		[DIRECTION_HORIZONTAL]: horizontalStrategy,
+		[DIRECTION_VERTICAL]: verticalStrategy
+	};
+	const strategy = strategies[direction];
 	if (!strategy) throw new Error("Invalid direction: ".concat(direction, ". Must be \"").concat(DIRECTION_HORIZONTAL, "\" or \"").concat(DIRECTION_VERTICAL, "\""));
 	return strategy;
 }
@@ -314,12 +272,12 @@ function createTransformStrategy(direction) {
 //#endregion
 //#region src/animation/AnimationController.ts
 function createAnimationController(carousel) {
-	var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-	var _options$interval = options.interval, interval = _options$interval === void 0 ? 2e3 : _options$interval;
-	var animationFrameId = null;
-	var lastTimestamp = 0;
-	var isPaused = false;
-	var isRunning = false;
+	let options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+	const { interval = 2e3 } = options;
+	let animationFrameId = null;
+	let lastTimestamp = 0;
+	let isPaused = false;
+	let isRunning = false;
 	/**
 	* Animation loop using requestAnimationFrame
 	*/
@@ -329,7 +287,7 @@ function createAnimationController(carousel) {
 			return;
 		}
 		if (lastTimestamp === 0) lastTimestamp = timestamp;
-		var elapsed = timestamp - lastTimestamp;
+		const elapsed = timestamp - lastTimestamp;
 		if (elapsed >= interval) {
 			if (carousel.advanceSlide) carousel.advanceSlide();
 			lastTimestamp = timestamp;
@@ -398,14 +356,14 @@ function createAnimationController(carousel) {
 //#endregion
 //#region src/observers/VisibilityObserver.ts
 function createVisibilityObserver(carousel) {
-	var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-	var _options$threshold = options.threshold, threshold = _options$threshold === void 0 ? .5 : _options$threshold;
-	var observer = null;
+	let options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+	const { threshold = .5 } = options;
+	let observer = null;
 	/**
 	* Callback for intersection changes
 	*/
 	function handleIntersection(entries) {
-		entries.forEach(function(entry) {
+		entries.forEach((entry) => {
 			if (entry.isIntersecting) carousel.play();
 else carousel.pause();
 		});
@@ -439,10 +397,10 @@ else carousel.pause();
 //#endregion
 //#region src/observers/ResizeHandler.ts
 function createResizeHandler(carousel) {
-	var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-	var _options$debounceDela = options.debounceDelay, debounceDelay = _options$debounceDela === void 0 ? 150 : _options$debounceDela;
-	var observer = null;
-	var debouncedResize = null;
+	let options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+	const { debounceDelay = 150 } = options;
+	let observer = null;
+	let debouncedResize = null;
 	/**
 	* Callback for resize events
 	*/
@@ -474,7 +432,7 @@ function createResizeHandler(carousel) {
 			setupWindowResizeFallback();
 			return;
 		}
-		if (!observer) observer = new ResizeObserver(function() {
+		if (!observer) observer = new ResizeObserver(() => {
 			handleResize();
 		});
 		observer.observe(carousel.container);
@@ -498,34 +456,22 @@ function createResizeHandler(carousel) {
 //#endregion
 //#region src/observers/KeyboardHandler.ts
 function createKeyboardHandler(carousel) {
-	var KEY_ACTIONS = {
-		ArrowRight: function ArrowRight() {
-			return carousel.advanceSlide(true);
-		},
-		ArrowDown: function ArrowDown() {
-			return carousel.advanceSlide(true);
-		},
-		ArrowLeft: function ArrowLeft() {
-			return carousel.advanceSlide(false);
-		},
-		ArrowUp: function ArrowUp() {
-			return carousel.advanceSlide(false);
-		},
-		" ": function _() {
-			return carousel.togglePause();
-		},
-		Enter: function Enter() {
-			return carousel.togglePause();
-		}
+	const KEY_ACTIONS = {
+		ArrowRight: () => carousel.advanceSlide(true),
+		ArrowDown: () => carousel.advanceSlide(true),
+		ArrowLeft: () => carousel.advanceSlide(false),
+		ArrowUp: () => carousel.advanceSlide(false),
+		" ": () => carousel.togglePause(),
+		Enter: () => carousel.togglePause()
 	};
 	function handleKeydown(event) {
-		var action = KEY_ACTIONS[event.key];
+		const action = KEY_ACTIONS[event.key];
 		if (!action) return;
 		event.preventDefault();
 		action();
 	}
 	function observe() {
-		var el = carousel.container;
+		const el = carousel.container;
 		el.setAttribute("tabindex", "0");
 		el.setAttribute("role", "region");
 		el.setAttribute("aria-roledescription", "carousel");
@@ -543,34 +489,34 @@ function createKeyboardHandler(carousel) {
 //#endregion
 //#region src/ContinuousCarousel.ts
 function ContinuousCarousel(element) {
-	var userOptions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-	var container = validateElement(element);
-	var dataDirection = container.getAttribute(ATTR_DIRECTION);
-	var dataNumVisible = container.getAttribute(ATTR_NUM_VISIBLE);
-	var dataReverse = container.getAttribute(ATTR_REVERSE);
-	var config = _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, DEFAULT_CONFIG), dataDirection && { direction: validateDirection(dataDirection) }), dataNumVisible && { numVisible: validateNumVisible(dataNumVisible) }), dataReverse !== null && { reverse: validateReverse(dataReverse) }), userOptions);
-	var direction = validateDirection(config.direction);
-	var numVisible = validateNumVisible(config.numVisible);
-	var itemGroup = container.querySelector(SELECTOR_GROUP);
-	var items = Array.from(container.querySelectorAll(SELECTOR_ITEM));
-	var itemsLength = items.length;
+	let userOptions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+	const container = validateElement(element);
+	const dataDirection = container.getAttribute(ATTR_DIRECTION);
+	const dataNumVisible = container.getAttribute(ATTR_NUM_VISIBLE);
+	const dataReverse = container.getAttribute(ATTR_REVERSE);
+	const config = _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, DEFAULT_CONFIG), dataDirection && { direction: validateDirection(dataDirection) }), dataNumVisible && { numVisible: validateNumVisible(dataNumVisible) }), dataReverse !== null && { reverse: validateReverse(dataReverse) }), userOptions);
+	const direction = validateDirection(config.direction);
+	const numVisible = validateNumVisible(config.numVisible);
+	const itemGroup = container.querySelector(SELECTOR_GROUP);
+	const items = Array.from(container.querySelectorAll(SELECTOR_ITEM));
+	const itemsLength = items.length;
 	validateNumVisibleCount(numVisible, itemsLength);
-	var activeSlideIndex = 1;
-	var position = 0;
-	var liveRegion = null;
-	var isPaused = false;
-	var transformStrategy = createTransformStrategy(direction);
-	var animationController = null;
-	var visibilityObserver = null;
-	var resizeHandler = null;
-	var keyboardHandler = null;
+	let activeSlideIndex = 1;
+	let position = 0;
+	let liveRegion = null;
+	let isPaused = false;
+	const transformStrategy = createTransformStrategy(direction);
+	let animationController = null;
+	let visibilityObserver = null;
+	let resizeHandler = null;
+	let keyboardHandler = null;
 	/**
 	* Calculate and update CSS custom properties for layout
 	*/
 	function recalculateDimensions() {
-		var containerSize = transformStrategy.getMeasurement(container);
-		var itemSize = containerSize / numVisible;
-		var totalItems = itemsLength + numVisible;
+		const containerSize = transformStrategy.getMeasurement(container);
+		const itemSize = containerSize / numVisible;
+		const totalItems = itemsLength + numVisible;
 		setCSSProperties(container, {
 			"--carousel-item-width": direction === "horizontal" ? "".concat(itemSize, "px") : "auto",
 			"--carousel-item-height": direction === "vertical" ? "".concat(itemSize, "px") : "auto",
@@ -600,12 +546,12 @@ function ContinuousCarousel(element) {
 	* Advance forward by one step
 	*/
 	function advanceForward(itemSize) {
-		var endPosition = -(itemSize * itemsLength);
+		const endPosition = -(itemSize * itemsLength);
 		if (position === endPosition) {
 			position = 0;
 			activeSlideIndex = 1;
 			applyTransform(position, config.resetDuration);
-			setTimeout(function() {
+			setTimeout(() => {
 				position = position - itemSize * numVisible;
 				activeSlideIndex++;
 				applyTransform(position, config.transitionDuration);
@@ -627,7 +573,7 @@ function ContinuousCarousel(element) {
 			position = -(itemSize * itemsLength);
 			activeSlideIndex = itemsLength;
 			applyTransform(position, config.resetDuration);
-			setTimeout(function() {
+			setTimeout(() => {
 				position = position + itemSize * numVisible;
 				activeSlideIndex--;
 				if (activeSlideIndex < 1) activeSlideIndex = itemsLength;
@@ -646,8 +592,8 @@ function ContinuousCarousel(element) {
 	* Advance to next slide
 	*/
 	function advanceSlide(forward) {
-		var _recalculateDimension = recalculateDimensions(), itemSize = _recalculateDimension.itemSize;
-		var goReverse = forward !== undefined ? !forward : config.reverse;
+		const { itemSize } = recalculateDimensions();
+		const goReverse = forward !== undefined ? !forward : config.reverse;
 		if (goReverse) return advanceReverse(itemSize);
 		advanceForward(itemSize);
 	}
@@ -656,14 +602,14 @@ function ContinuousCarousel(element) {
 	*/
 	function setupClones() {
 		if (config.reverse) {
-			var _clonedFragment = cloneNodesToFragment(items.slice(-numVisible));
-			itemGroup.insertBefore(_clonedFragment, itemGroup.firstChild);
-			var _recalculateDimension2 = recalculateDimensions(), itemSize = _recalculateDimension2.itemSize;
+			const clonedFragment$1 = cloneNodesToFragment(items.slice(-numVisible));
+			itemGroup.insertBefore(clonedFragment$1, itemGroup.firstChild);
+			const { itemSize } = recalculateDimensions();
 			position = -(itemSize * numVisible);
 			applyTransform(position, 0);
 			return;
 		}
-		var clonedFragment = cloneNodesToFragment(items.slice(0, numVisible));
+		const clonedFragment = cloneNodesToFragment(items.slice(0, numVisible));
 		itemGroup.appendChild(clonedFragment);
 		recalculateDimensions();
 	}
