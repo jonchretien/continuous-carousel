@@ -96,13 +96,6 @@ function setCSSProperties(element, properties) {
 		element.style.setProperty(key, String(value));
 	});
 }
-function debounce(fn, delay) {
-	let timeoutId;
-	return function(...args) {
-		clearTimeout(timeoutId);
-		timeoutId = setTimeout(() => fn.apply(this, args), delay);
-	};
-}
 
 //#endregion
 //#region src/animation/TransformStrategy.ts
@@ -275,6 +268,7 @@ function createResizeHandler(carousel, options = {}) {
 	const { debounceDelay = 150 } = options;
 	let observer = null;
 	let debouncedResize = null;
+	let resizeTimeout = null;
 	/**
 	* Callback for resize events
 	*/
@@ -285,16 +279,20 @@ function createResizeHandler(carousel, options = {}) {
 	* Setup fallback using window resize event
 	*/
 	function setupWindowResizeFallback() {
-		debouncedResize = debounce(handleResize, debounceDelay);
+		debouncedResize = () => {
+			if (resizeTimeout) clearTimeout(resizeTimeout);
+			resizeTimeout = setTimeout(handleResize, debounceDelay);
+		};
 		window.addEventListener("resize", debouncedResize);
 	}
-	/**
-	* Cleanup window resize fallback
-	*/
 	function cleanupWindowResizeFallback() {
 		if (debouncedResize) {
 			window.removeEventListener("resize", debouncedResize);
 			debouncedResize = null;
+		}
+		if (resizeTimeout) {
+			clearTimeout(resizeTimeout);
+			resizeTimeout = null;
 		}
 	}
 	/**

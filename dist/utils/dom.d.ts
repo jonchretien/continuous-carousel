@@ -17,8 +17,4 @@ export declare function cloneNodesToFragment(nodes: HTMLElement[]): DocumentFrag
  * Sets multiple CSS custom properties on an element
  */
 export declare function setCSSProperties(element: HTMLElement, properties: Record<string, string | number>): void;
-/**
- * Debounces a function call
- */
-export declare function debounce<T extends (...args: unknown[]) => void>(fn: T, delay: number): (...args: Parameters<T>) => void;
 //# sourceMappingURL=dom.d.ts.map

@@ -3,7 +3,6 @@
  * Uses ResizeObserver to recalculate carousel dimensions on container resize
  */
 
-import { debounce } from '../utils/dom';
 import type { Observer, ResizeCarouselContext } from '../types';
 
 interface ResizeHandlerOptions {
@@ -17,6 +16,7 @@ export function createResizeHandler(carousel: ResizeCarouselContext, options: Re
   const { debounceDelay = 150 } = options;
   let observer: ResizeObserver | null = null;
   let debouncedResize: (() => void) | null = null;
+  let resizeTimeout: ReturnType<typeof setTimeout> | null = null;
 
   /**
    * Callback for resize events
@@ -31,17 +31,21 @@ export function createResizeHandler(carousel: ResizeCarouselContext, options: Re
    * Setup fallback using window resize event
    */
   function setupWindowResizeFallback(): void {
-    debouncedResize = debounce(handleResize, debounceDelay);
+    debouncedResize = () => {
+      if (resizeTimeout) clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(handleResize, debounceDelay);
+    };
     window.addEventListener('resize', debouncedResize);
   }
 
-  /**
-   * Cleanup window resize fallback
-   */
   function cleanupWindowResizeFallback(): void {
     if (debouncedResize) {
       window.removeEventListener('resize', debouncedResize);
       debouncedResize = null;
+    }
+    if (resizeTimeout) {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = null;
     }
   }
 
