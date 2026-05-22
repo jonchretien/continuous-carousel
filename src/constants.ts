@@ -9,9 +9,6 @@ export const DIRECTION_HORIZONTAL = 'horizontal' as const;
 export const DIRECTION_VERTICAL = 'vertical' as const;
 
 // CSS class names
-export const CLASS_NAME_CONTAINER = 'c-carousel-container';
-export const CLASS_NAME_GROUP = 'c-carousel-group';
-export const CLASS_NAME_ITEM = 'c-carousel-item';
 export const CLASS_NAME_HIDDEN = 'c-carousel-visuallyhidden';
 export const CLASS_NAME_LIVE_REGION = 'c-carousel-liveregion';
 
@@ -32,7 +29,6 @@ export const DEFAULT_RESET_DURATION = 1; // ms for instant reset
 
 // ARIA
 export const ARIA_LIVE_POLITE = 'polite';
-export const ARIA_ATOMIC_TRUE = 'true';
 
 // Default configuration
 export const DEFAULT_CONFIG: ContinuousCarouselConfig = {
