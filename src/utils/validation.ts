@@ -32,9 +32,7 @@ export function validateDirection(direction: string): Direction {
   const normalizedDirection = direction.toLowerCase().trim();
 
   if (normalizedDirection !== DIRECTION_HORIZONTAL && normalizedDirection !== DIRECTION_VERTICAL) {
-    throw new Error(
-      `Direction must be either "${DIRECTION_HORIZONTAL}" or "${DIRECTION_VERTICAL}"`
-    );
+    throw new Error('Invalid direction');
   }
 
   return normalizedDirection as Direction;
@@ -83,9 +81,7 @@ export function validateReverse(value: unknown): boolean {
  */
 export function validateNumVisibleCount(numVisible: number, itemCount: number): void {
   if (numVisible >= itemCount) {
-    throw new Error(
-      `numVisible (${numVisible}) must be less than item count (${itemCount}).`
-    );
+    throw new Error('numVisible must be less than item count');
   }
 }
 

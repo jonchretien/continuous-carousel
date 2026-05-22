@@ -75,7 +75,7 @@ describe("Continuous Carousel", () => {
     );
     expect(() => {
       ContinuousCarousel("carouselExampleHorizontal");
-    }).toThrow('Direction must be either "horizontal" or "vertical"');
+    }).toThrow('Invalid direction');
   });
 
   test("it should throw an error if container not found", () => {
@@ -305,7 +305,7 @@ describe("Continuous Carousel", () => {
       );
 
       expect(() => ContinuousCarousel("carouselNumVisible")).toThrow(
-        "numVisible (6) must be less than item count (6).",
+        "numVisible must be less than item count",
       );
     });
 

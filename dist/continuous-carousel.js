@@ -168,7 +168,7 @@ function validateElement(element) {
 }
 function validateDirection(direction) {
 	const normalizedDirection = direction.toLowerCase().trim();
-	if (normalizedDirection !== DIRECTION_HORIZONTAL && normalizedDirection !== DIRECTION_VERTICAL) throw new Error("Direction must be either \"".concat(DIRECTION_HORIZONTAL, "\" or \"").concat(DIRECTION_VERTICAL, "\""));
+	if (normalizedDirection !== DIRECTION_HORIZONTAL && normalizedDirection !== DIRECTION_VERTICAL) throw new Error("Invalid direction");
 	return normalizedDirection;
 }
 function validateNumVisible(numVisible) {
@@ -181,7 +181,7 @@ function validateReverse(value) {
 	return Boolean(value);
 }
 function validateNumVisibleCount(numVisible, itemCount) {
-	if (numVisible >= itemCount) throw new Error("numVisible (".concat(numVisible, ") must be less than item count (").concat(itemCount, ")."));
+	if (numVisible >= itemCount) throw new Error("numVisible must be less than item count");
 }
 
 //#endregion
