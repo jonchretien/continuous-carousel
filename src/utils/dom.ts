@@ -3,7 +3,6 @@
  */
 
 import { CLASS_NAME_HIDDEN, CLASS_NAME_LIVE_REGION } from '../constants';
-import type { Direction } from '../types';
 
 /**
  * Creates and inserts ARIA live region for accessibility
@@ -58,9 +57,3 @@ export function debounce<T extends (...args: unknown[]) => void>(fn: T, delay: n
   };
 }
 
-/**
- * Gets element dimension based on direction
- */
-export function getElementDimension(element: HTMLElement, direction: Direction): number {
-  return direction === 'horizontal' ? element.offsetWidth : element.offsetHeight;
-}
