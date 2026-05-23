@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2026-05-23
+
+### Added
+- `easing` config option (`CSSEasingFunction`) — sets the CSS `transition-timing-function` via `--carousel-easing` custom property; default `'ease-in-out'`; live-swappable via `updateConfig()`
+- `onSlideEnd` callback — fires after the slide transition completes; receives `(index: number, element: HTMLElement)`
+- `goToSlide(index)` public method — snaps to a 0-based slide index and fires `onSlideChange` / `onSlideEnd`
+
+### Changed
+- `onSlideChange` now receives `element: HTMLElement` as a second argument (backwards-compatible)
+
+---
+
 ## [1.2.0] - 2026-05-23
 
 ### Added
