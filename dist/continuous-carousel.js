@@ -5,11 +5,12 @@
  * @license Released under the MIT license.
  */
 (function(global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports =  factory() :
-  typeof define === 'function' && define.amd ? define([], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, (global.ContinuousCarousel = factory()));
-})(this, function() {
+  typeof exports === 'object' && typeof module !== 'undefined' ?  factory(exports) :
+  typeof define === 'function' && define.amd ? define([exports], factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory((global.ContinuousCarousel = {})));
+})(this, function(exports) {
 "use strict";
+Object.defineProperty(exports, '__esModule', { value: true });
 
 //#region \0rollupPluginBabelHelpers.js
 function _OverloadYield(e, d) {
@@ -697,5 +698,12 @@ else if (!animationController.getIsRunning()) animationController.start();
 }
 
 //#endregion
-return ContinuousCarousel;
+exports.DIRECTION_HORIZONTAL = DIRECTION_HORIZONTAL
+exports.DIRECTION_VERTICAL = DIRECTION_VERTICAL
+Object.defineProperty(exports, 'default', {
+  enumerable: true,
+  get: function () {
+    return ContinuousCarousel;
+  }
+});
 });

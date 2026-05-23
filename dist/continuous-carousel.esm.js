@@ -579,4 +579,4 @@ else if (!animationController.getIsRunning()) animationController.start();
 }
 
 //#endregion
-export { ContinuousCarousel as default };
+export { DIRECTION_HORIZONTAL, DIRECTION_VERTICAL, ContinuousCarousel as default };
