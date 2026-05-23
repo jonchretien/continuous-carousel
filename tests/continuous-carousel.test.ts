@@ -408,6 +408,110 @@ describe("Continuous Carousel", () => {
     });
   });
 
+  describe("easing option", () => {
+    test("sets --carousel-easing CSS custom property", () => {
+      document.body.innerHTML = renderComponent("carouselEasing", "horizontal", 1);
+      const carousel = ContinuousCarousel("carouselEasing", {
+        autoplay: false,
+        easing: "linear",
+      });
+      const container = document.getElementById("carouselEasing");
+      expect(container.style.getPropertyValue("--carousel-easing")).toBe("linear");
+      carousel.destroy();
+    });
+
+    test("defaults to ease-in-out", () => {
+      document.body.innerHTML = renderComponent("carouselEasingDefault", "horizontal", 1);
+      const carousel = ContinuousCarousel("carouselEasingDefault", { autoplay: false });
+      const container = document.getElementById("carouselEasingDefault");
+      expect(container.style.getPropertyValue("--carousel-easing")).toBe("ease-in-out");
+      carousel.destroy();
+    });
+
+    test("updateConfig updates --carousel-easing", () => {
+      document.body.innerHTML = renderComponent("carouselEasingUpdate", "horizontal", 1);
+      const carousel = ContinuousCarousel("carouselEasingUpdate", { autoplay: false });
+      carousel.updateConfig({ easing: "cubic-bezier(0.4, 0, 0.2, 1)" });
+      const container = document.getElementById("carouselEasingUpdate");
+      expect(container.style.getPropertyValue("--carousel-easing")).toBe("cubic-bezier(0.4, 0, 0.2, 1)");
+      carousel.destroy();
+    });
+  });
+
+  describe("goToSlide", () => {
+    test("jumps to correct slide index", () => {
+      document.body.innerHTML = renderComponent("carouselGoTo", "horizontal", 1);
+      const carousel = ContinuousCarousel("carouselGoTo", { autoplay: false });
+      carousel.goToSlide(2); // 0-based → slide 3 (activeSlideIndex=3)
+      expect(carousel.config).toBeDefined();
+      carousel.destroy();
+    });
+
+    test("clamps index below 0 to first slide", () => {
+      document.body.innerHTML = renderComponent("carouselGoToClamp", "horizontal", 1);
+      const carousel = ContinuousCarousel("carouselGoToClamp", { autoplay: false });
+      expect(() => carousel.goToSlide(-1)).not.toThrow();
+      carousel.destroy();
+    });
+
+    test("clamps index above max to last slide", () => {
+      document.body.innerHTML = renderComponent("carouselGoToClampMax", "horizontal", 1);
+      const carousel = ContinuousCarousel("carouselGoToClampMax", { autoplay: false });
+      expect(() => carousel.goToSlide(100)).not.toThrow();
+      carousel.destroy();
+    });
+
+    test("fires onSlideChange with index and element", () => {
+      document.body.innerHTML = renderComponent("carouselGoToCallback", "horizontal", 1);
+      const onSlideChange = vi.fn();
+      const carousel = ContinuousCarousel("carouselGoToCallback", {
+        autoplay: false,
+        onSlideChange,
+      });
+      carousel.goToSlide(1);
+      expect(onSlideChange).toHaveBeenCalledWith(
+        expect.any(Number),
+        expect.any(HTMLElement),
+      );
+      carousel.destroy();
+    });
+
+    test("goToSlide is exposed on instance", () => {
+      document.body.innerHTML = renderComponent("carouselGoToApi", "horizontal", 1);
+      const carousel = ContinuousCarousel("carouselGoToApi", { autoplay: false });
+      expect(carousel.goToSlide).toBeInstanceOf(Function);
+      carousel.destroy();
+    });
+  });
+
+  describe("onSlideEnd callback", () => {
+    test("onSlideEnd is stored in config", () => {
+      document.body.innerHTML = renderComponent("carouselSlideEnd", "horizontal", 1);
+      const onSlideEnd = vi.fn();
+      const carousel = ContinuousCarousel("carouselSlideEnd", {
+        autoplay: false,
+        onSlideEnd,
+      });
+      expect(carousel.config.onSlideEnd).toBe(onSlideEnd);
+      carousel.destroy();
+    });
+
+    test("onSlideChange receives element as second argument", () => {
+      document.body.innerHTML = renderComponent("carouselSlideChangeEl", "horizontal", 1);
+      const onSlideChange = vi.fn();
+      const carousel = ContinuousCarousel("carouselSlideChangeEl", {
+        autoplay: false,
+        onSlideChange,
+      });
+      carousel.goToSlide(0);
+      expect(onSlideChange).toHaveBeenCalledWith(
+        expect.any(Number),
+        expect.any(HTMLElement),
+      );
+      carousel.destroy();
+    });
+  });
+
   describe("Callbacks", () => {
     test("onSlideChange callback should be called", (done) => {
       document.body.innerHTML = renderComponent(

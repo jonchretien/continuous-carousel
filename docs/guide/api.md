@@ -36,6 +36,15 @@ carousel.destroy();
 After calling `destroy()`, the carousel instance can no longer be used. You must create a new instance to restart it.
 :::
 
+### `goToSlide(index)`
+
+Jump to a specific slide by 0-based index. Snaps instantly to the target position, then resumes animation from there. Fires `onSlideChange` and `onSlideEnd` callbacks.
+
+```javascript
+carousel.goToSlide(0); // first slide
+carousel.goToSlide(2); // third slide
+```
+
 ### `updateConfig(options)`
 
 Update configuration options on a running carousel. Accepts a partial options object.
@@ -72,8 +81,11 @@ carousel.config.direction;  // 'horizontal'
 const carousel = ContinuousCarousel('myCarousel', {
   interval: 3000,
   pauseOnHover: true,
-  onSlideChange: (index) => console.log('Slide:', index)
+  onSlideChange: (index, element) => console.log('Slide:', index, element)
 });
+
+// Jump to third slide
+carousel.goToSlide(2);
 
 // Pause after 10 seconds
 setTimeout(() => carousel.pause(), 10000);

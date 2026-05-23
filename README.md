@@ -86,8 +86,8 @@ const carousel = ContinuousCarousel('myCarousel');
 const carousel = ContinuousCarousel('myCarousel', {
   interval: 3000,
   pauseOnHover: true,
-  onSlideChange: (index) => {
-    console.log('Current slide:', index);
+  onSlideChange: (index, element) => {
+    console.log('Current slide:', index, element);
   }
 });
 ```
@@ -100,6 +100,7 @@ const carousel = ContinuousCarousel('myCarousel', {
 | `numVisible` | number | `1` | Number of items visible at once |
 | `interval` | number | `2000` | Time between transitions (ms) |
 | `transitionDuration` | number | `1000` | Transition animation length (ms) |
+| `easing` | string | `'ease-in-out'` | CSS `transition-timing-function` value (e.g. `'linear'`, `'cubic-bezier(0.4,0,0.2,1)'`) |
 | `reverse` | boolean | `false` | Scroll in opposite direction (right-to-left or bottom-to-top) |
 | `pauseOnHover` | boolean | `false` | Pause animation on mouse hover |
 | `pauseOnFocus` | boolean | `false` | Pause animation when element focused |
@@ -107,7 +108,8 @@ const carousel = ContinuousCarousel('myCarousel', {
 | `observeVisibility` | boolean | `true` | Pause when off-screen (IntersectionObserver) |
 | `observeResize` | boolean | `true` | Recalculate on resize (ResizeObserver) |
 | `announceSlides` | boolean | `true` | Announce slide changes for screen readers |
-| `onSlideChange` | function | `null` | Callback fired on slide change: `(index) => {}` |
+| `onSlideChange` | function | `null` | Callback fired when a slide begins transitioning: `(index, element) => {}` |
+| `onSlideEnd` | function | `null` | Callback fired after the transition completes: `(index, element) => {}` |
 | `onPause` | function | `null` | Callback fired when paused |
 | `onPlay` | function | `null` | Callback fired when played |
 | `onDestroy` | function | `null` | Callback fired when destroyed |
@@ -120,16 +122,19 @@ The `ContinuousCarousel()` function returns an object with the following methods
 const carousel = ContinuousCarousel('myCarousel');
 
 // Control playback
-carousel.play();        // Resume animation
-carousel.pause();       // Pause animation
-carousel.destroy();     // Stop and cleanup
+carousel.play();           // Resume animation
+carousel.pause();          // Pause animation
+carousel.destroy();        // Stop and cleanup
+
+// Navigate to a specific slide (0-based index, snaps instantly)
+carousel.goToSlide(2);
 
 // Update configuration
 carousel.updateConfig({ interval: 5000 });
 
 // Access properties
-carousel.container;     // HTML element
-carousel.config;        // Current configuration
+carousel.container;        // HTML element
+carousel.config;           // Current configuration
 ```
 
 ## Examples
@@ -191,9 +196,13 @@ carousel.config;        // Current configuration
 const carousel = ContinuousCarousel('myCarousel', {
   interval: 4000,
   transitionDuration: 800,
+  easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
   pauseOnHover: true,
-  onSlideChange: (index) => {
-    console.log(`Slide ${index} is now active`);
+  onSlideChange: (index, element) => {
+    console.log(`Slide ${index} is now active`, element);
+  },
+  onSlideEnd: (index, element) => {
+    console.log(`Slide ${index} transition complete`, element);
   }
 });
 ```
@@ -217,31 +226,6 @@ Or via HTML attribute:
 <div id="myCarousel" class="c-carousel-container" data-direction="horizontal" data-num-visible="1" data-reverse="true">
   ...
 </div>
-```
-
-### Image Gallery
-
-```html
-<div id="gallery" class="c-carousel-container" data-direction="horizontal" data-num-visible="1">
-  <ul class="c-carousel-group">
-    <li class="c-carousel-item">
-      <img src="image1.jpg" alt="Image 1">
-    </li>
-    <li class="c-carousel-item">
-      <img src="image2.jpg" alt="Image 2">
-    </li>
-    <li class="c-carousel-item">
-      <img src="image3.jpg" alt="Image 3">
-    </li>
-  </ul>
-</div>
-
-<script>
-  ContinuousCarousel('gallery', {
-    interval: 5000,
-    pauseOnHover: true
-  });
-</script>
 ```
 
 ## Styling

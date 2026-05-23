@@ -110,6 +110,7 @@ export default function ContinuousCarousel(
         direction === "vertical" ? `${itemSize}px` : "auto",
       "--carousel-item-count": totalItems,
       "--carousel-transition-duration": `${config.transitionDuration}ms`,
+      "--carousel-easing": config.easing,
     });
 
     return { itemSize, containerSize };
@@ -131,11 +132,16 @@ export default function ContinuousCarousel(
    * Notify listeners of a slide change
    */
   function notifySlideChange(): void {
+    const element = items[activeSlideIndex - 1];
     if (liveRegion) {
       updateLiveRegion(liveRegion, activeSlideIndex, itemsLength);
     }
     if (config.onSlideChange) {
-      config.onSlideChange(activeSlideIndex);
+      config.onSlideChange(activeSlideIndex, element);
+    }
+    if (config.onSlideEnd) {
+      const callback = config.onSlideEnd;
+      setTimeout(() => callback(activeSlideIndex, element), config.transitionDuration);
     }
   }
 
@@ -289,13 +295,34 @@ export default function ContinuousCarousel(
   }
 
   /**
+   * Jump to a specific slide by 0-based index (snaps instantly, then resumes)
+   */
+  function goToSlide(index: number): void {
+    const targetSlideIndex = Math.max(1, Math.min(index + 1, itemsLength));
+    const { itemSize } = recalculateDimensions();
+
+    // In reverse mode there are numVisible prepended clones, shifting offset by 1
+    const offset = config.reverse ? targetSlideIndex : targetSlideIndex - 1;
+    const targetPosition = -(offset * numVisible * itemSize);
+
+    // Instant reposition (same pattern as boundary reset)
+    applyTransform(targetPosition, 0);
+    void container.offsetHeight; // force reflow so 0ms snap isn't batched with restore
+    setCSSProperties(container, { "--carousel-transition-duration": `${config.transitionDuration}ms` });
+
+    position = targetPosition;
+    activeSlideIndex = targetSlideIndex;
+
+    notifySlideChange();
+  }
+
+  /**
    * Update configuration
    */
   function updateConfig(newOptions: Partial<ContinuousCarouselConfig>): void {
     Object.assign(config, newOptions);
 
-    // Recalculate if timing changed
-    if (newOptions.transitionDuration !== undefined) {
+    if (newOptions.transitionDuration !== undefined || newOptions.easing !== undefined) {
       recalculateDimensions();
     }
   }
@@ -369,6 +396,7 @@ export default function ContinuousCarousel(
     play,
     pause,
     destroy,
+    goToSlide,
     updateConfig,
     container,
     config,

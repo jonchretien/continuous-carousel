@@ -1,5 +1,7 @@
 <script setup>
 import CarouselDemo from '../.vitepress/components/CarouselDemo.vue';
+import CallbacksDemo from '../.vitepress/components/CallbacksDemo.vue';
+import ProgrammaticDemo from '../.vitepress/components/ProgrammaticDemo.vue';
 </script>
 
 # Advanced Examples
@@ -17,25 +19,51 @@ ContinuousCarousel('myCarousel', {
 });
 ```
 
-## Callbacks
+## Custom Easing
 
-Hook into carousel events:
+Use any CSS `transition-timing-function` for the slide animation:
+
+<CarouselDemo id="adv-easing" direction="horizontal" :num-visible="1" :interval="2000" easing="linear" />
 
 ```javascript
+ContinuousCarousel('myCarousel', {
+  easing: 'linear'
+});
+
+ContinuousCarousel('myCarousel', {
+  easing: 'cubic-bezier(0.4, 0, 0.2, 1)'
+});
+```
+
+## Callbacks
+
+Hook into carousel events. `onSlideChange` fires when a slide begins transitioning; `onSlideEnd` fires once the animation completes:
+
+<CallbacksDemo />
+
+```javascript
+const log = document.getElementById('callbackLog');
+const addEvent = (text) => {
+  const li = document.createElement('li');
+  li.textContent = text;
+  log.prepend(li);
+};
+
 const carousel = ContinuousCarousel('myCarousel', {
-  onSlideChange: (index) => {
-    console.log('Slide changed to:', index);
-    document.getElementById('counter').textContent = `Slide ${index}`;
-  },
-  onPause: () => console.log('Paused'),
-  onPlay: () => console.log('Playing'),
-  onDestroy: () => console.log('Destroyed')
+  interval: 3500,
+  onSlideChange: (index) => addEvent(`onSlideChange → slide ${index}`),
+  onSlideEnd: (index) => addEvent(`onSlideEnd → slide ${index}`),
+  onPause: () => addEvent('onPause'),
+  onPlay: () => addEvent('onPlay'),
+  onDestroy: () => addEvent('onDestroy'),
 });
 ```
 
 ## Programmatic Control
 
-Use the API to control playback:
+Use the API to control playback and navigation:
+
+<ProgrammaticDemo />
 
 ```javascript
 const carousel = ContinuousCarousel('myCarousel', {
@@ -50,6 +78,11 @@ document.getElementById('pauseBtn').addEventListener('click', () => {
   carousel.pause();
 });
 
+// Jump to a specific slide (0-based index)
+document.getElementById('slide3Btn').addEventListener('click', () => {
+  carousel.goToSlide(2);
+});
+
 document.getElementById('destroyBtn').addEventListener('click', () => {
   carousel.destroy();
 });
@@ -58,6 +91,8 @@ document.getElementById('destroyBtn').addEventListener('click', () => {
 ## Dynamic Configuration
 
 Update settings on a running carousel:
+
+<CarouselDemo id="adv-dynamic" direction="horizontal" :num-visible="1" :interval="2000" />
 
 ```javascript
 const carousel = ContinuousCarousel('myCarousel', {
@@ -87,27 +122,3 @@ ContinuousCarousel('myCarousel', {
 Click the carousel above, then use **Arrow Right** to advance or **Space** to pause.
 :::
 
-## Image Gallery
-
-```html
-<div id="gallery" class="c-carousel-container" data-direction="horizontal" data-num-visible="1">
-  <ul class="c-carousel-group">
-    <li class="c-carousel-item">
-      <img src="image1.jpg" alt="Image 1">
-    </li>
-    <li class="c-carousel-item">
-      <img src="image2.jpg" alt="Image 2">
-    </li>
-    <li class="c-carousel-item">
-      <img src="image3.jpg" alt="Image 3">
-    </li>
-  </ul>
-</div>
-```
-
-```javascript
-ContinuousCarousel('gallery', {
-  interval: 5000,
-  pauseOnHover: true
-});
-```

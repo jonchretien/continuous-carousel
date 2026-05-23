@@ -23,6 +23,7 @@ const carousel = ContinuousCarousel('myCarousel', {
 | `numVisible` | number | `1` | Items visible at once |
 | `interval` | number | `2000` | Time between transitions (ms) |
 | `transitionDuration` | number | `1000` | Transition animation length (ms) |
+| `easing` | string | `'ease-in-out'` | CSS `transition-timing-function` value |
 | `pauseOnHover` | boolean | `false` | Pause on mouse hover |
 | `pauseOnFocus` | boolean | `false` | Pause on element focus |
 | `autoplay` | boolean | `true` | Start automatically |
@@ -30,7 +31,8 @@ const carousel = ContinuousCarousel('myCarousel', {
 | `observeResize` | boolean | `true` | Recalculate on resize |
 | `keyboardNav` | boolean | `true` | Enable keyboard navigation |
 | `announceSlides` | boolean | `true` | Announce slides for screen readers |
-| `onSlideChange` | function | `null` | Fired on slide change |
+| `onSlideChange` | function | `null` | Fired when a slide begins transitioning |
+| `onSlideEnd` | function | `null` | Fired after the transition completes |
 | `onPause` | function | `null` | Fired when paused |
 | `onPlay` | function | `null` | Fired when played |
 | `onDestroy` | function | `null` | Fired when destroyed |
@@ -94,6 +96,23 @@ Duration of the slide transition animation. Should be less than `interval`.
 ```javascript
 ContinuousCarousel('myCarousel', {
   transitionDuration: 500 // Fast transition
+});
+```
+
+### `easing`
+
+- **Type:** `string`
+- **Default:** `'ease-in-out'`
+
+CSS `transition-timing-function` value applied to the slide animation. Accepts any valid CSS easing: named keywords, `cubic-bezier(...)`, or `steps(...)`.
+
+```javascript
+ContinuousCarousel('myCarousel', {
+  easing: 'linear'
+});
+
+ContinuousCarousel('myCarousel', {
+  easing: 'cubic-bezier(0.4, 0, 0.2, 1)'
 });
 ```
 
@@ -208,15 +227,30 @@ ContinuousCarousel('myCarousel', {
 
 ### `onSlideChange`
 
-- **Type:** `function(index) | null`
+- **Type:** `function(index, element) | null`
 - **Default:** `null`
 
-Called each time the carousel advances to a new slide. Receives the current slide index.
+Called when a slide begins transitioning. Receives the 1-based slide index and the active slide's DOM element.
 
 ```javascript
 ContinuousCarousel('myCarousel', {
-  onSlideChange: (index) => {
-    console.log('Current slide:', index);
+  onSlideChange: (index, element) => {
+    console.log('Current slide:', index, element);
+  }
+});
+```
+
+### `onSlideEnd`
+
+- **Type:** `function(index, element) | null`
+- **Default:** `null`
+
+Called after the slide transition animation completes. Receives the same arguments as `onSlideChange`. Useful for triggering actions only once the animation has settled.
+
+```javascript
+ContinuousCarousel('myCarousel', {
+  onSlideEnd: (index, element) => {
+    console.log('Transition complete for slide:', index);
   }
 });
 ```

@@ -2,12 +2,14 @@
  * Type definitions for Continuous Carousel
  */
 export type Direction = 'horizontal' | 'vertical';
+export type CSSEasingFunction = 'ease' | 'ease-in' | 'ease-out' | 'ease-in-out' | 'linear' | 'step-start' | 'step-end' | (string & {});
 export interface ContinuousCarouselConfig {
     direction: Direction;
     numVisible: number;
     interval: number;
     transitionDuration: number;
     resetDuration: number;
+    easing: CSSEasingFunction;
     pauseOnHover: boolean;
     pauseOnFocus: boolean;
     autoplay: boolean;
@@ -17,7 +19,8 @@ export interface ContinuousCarouselConfig {
     announceSlides: boolean;
     reverse: boolean;
     keyboardNav: boolean;
-    onSlideChange: ((index: number) => void) | null;
+    onSlideChange: ((index: number, element: HTMLElement) => void) | null;
+    onSlideEnd: ((index: number, element: HTMLElement) => void) | null;
     onPause: (() => void) | null;
     onPlay: (() => void) | null;
     onDestroy: (() => void) | null;
@@ -26,6 +29,7 @@ export interface ContinuousCarouselInstance {
     play(): void;
     pause(): void;
     destroy(): void;
+    goToSlide(index: number): void;
     updateConfig(options: Partial<ContinuousCarouselConfig>): void;
     container: HTMLElement;
     config: ContinuousCarouselConfig;

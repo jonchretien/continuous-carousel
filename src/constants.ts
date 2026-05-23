@@ -26,6 +26,7 @@ export const ATTR_REVERSE = 'data-reverse';
 export const DEFAULT_INTERVAL = 2000; // ms between slides
 export const DEFAULT_TRANSITION_DURATION = 1000; // ms for transition
 export const DEFAULT_RESET_DURATION = 1; // ms for instant reset
+export const DEFAULT_EASING = 'ease-in-out';
 
 // ARIA
 export const ARIA_LIVE_POLITE = 'polite';
@@ -37,6 +38,7 @@ export const DEFAULT_CONFIG: ContinuousCarouselConfig = {
   interval: DEFAULT_INTERVAL,
   transitionDuration: DEFAULT_TRANSITION_DURATION,
   resetDuration: DEFAULT_RESET_DURATION,
+  easing: DEFAULT_EASING,
   pauseOnHover: false,
   pauseOnFocus: false,
   autoplay: true,
@@ -45,6 +47,7 @@ export const DEFAULT_CONFIG: ContinuousCarouselConfig = {
   ariaLive: ARIA_LIVE_POLITE,
   announceSlides: true,
   onSlideChange: null,
+  onSlideEnd: null,
   onPause: null,
   onPlay: null,
   reverse: false,

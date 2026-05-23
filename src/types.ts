@@ -5,6 +5,17 @@
 // Direction types
 export type Direction = 'horizontal' | 'vertical';
 
+// CSS easing function type with autocomplete for common values
+export type CSSEasingFunction =
+  | 'ease'
+  | 'ease-in'
+  | 'ease-out'
+  | 'ease-in-out'
+  | 'linear'
+  | 'step-start'
+  | 'step-end'
+  | (string & {});
+
 // Configuration
 export interface ContinuousCarouselConfig {
   direction: Direction;
@@ -12,6 +23,7 @@ export interface ContinuousCarouselConfig {
   interval: number;
   transitionDuration: number;
   resetDuration: number;
+  easing: CSSEasingFunction;
   pauseOnHover: boolean;
   pauseOnFocus: boolean;
   autoplay: boolean;
@@ -21,7 +33,8 @@ export interface ContinuousCarouselConfig {
   announceSlides: boolean;
   reverse: boolean;
   keyboardNav: boolean;
-  onSlideChange: ((index: number) => void) | null;
+  onSlideChange: ((index: number, element: HTMLElement) => void) | null;
+  onSlideEnd: ((index: number, element: HTMLElement) => void) | null;
   onPause: (() => void) | null;
   onPlay: (() => void) | null;
   onDestroy: (() => void) | null;
@@ -32,6 +45,7 @@ export interface ContinuousCarouselInstance {
   play(): void;
   pause(): void;
   destroy(): void;
+  goToSlide(index: number): void;
   updateConfig(options: Partial<ContinuousCarouselConfig>): void;
   container: HTMLElement;
   config: ContinuousCarouselConfig;

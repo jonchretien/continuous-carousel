@@ -32,6 +32,7 @@ const props = defineProps({
   pauseOnHover: { type: Boolean, default: false },
   autoplay: { type: Boolean, default: true },
   reverse: { type: Boolean, default: false },
+  easing: { type: String, default: 'ease-in-out' },
 });
 
 let carousel = null;
@@ -47,6 +48,7 @@ onMounted(async () => {
     pauseOnHover: props.pauseOnHover,
     autoplay: props.autoplay,
     reverse: props.reverse,
+    easing: props.easing,
   });
 });
 

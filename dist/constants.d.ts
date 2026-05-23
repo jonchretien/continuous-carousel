@@ -15,6 +15,7 @@ export declare const ATTR_REVERSE = "data-reverse";
 export declare const DEFAULT_INTERVAL = 2000;
 export declare const DEFAULT_TRANSITION_DURATION = 1000;
 export declare const DEFAULT_RESET_DURATION = 1;
+export declare const DEFAULT_EASING = "ease-in-out";
 export declare const ARIA_LIVE_POLITE = "polite";
 export declare const DEFAULT_CONFIG: ContinuousCarouselConfig;
 //# sourceMappingURL=constants.d.ts.map

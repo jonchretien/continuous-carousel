@@ -21,7 +21,7 @@
   padding: 0;
   transition-duration: var(--carousel-transition-duration, 1s);
   transition-property: transform;
-  transition-timing-function: ease-in-out;
+  transition-timing-function: var(--carousel-easing, ease-in-out);
   will-change: transform;
 }
 

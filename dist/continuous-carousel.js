@@ -1,5 +1,5 @@
 /*!
- * Continuous Carousel 🎠 v1.1.0
+ * Continuous Carousel 🎠 v1.2.0
  * Continuous carousel that uses vanilla JavaScript & CSS animations.
  * @author Jon Chretien
  * @license Released under the MIT license.
@@ -134,6 +134,7 @@ const ATTR_REVERSE = "data-reverse";
 const DEFAULT_INTERVAL = 2e3;
 const DEFAULT_TRANSITION_DURATION = 1e3;
 const DEFAULT_RESET_DURATION = 1;
+const DEFAULT_EASING = "ease-in-out";
 const ARIA_LIVE_POLITE = "polite";
 const DEFAULT_CONFIG = {
 	direction: DIRECTION_HORIZONTAL,
@@ -141,6 +142,7 @@ const DEFAULT_CONFIG = {
 	interval: DEFAULT_INTERVAL,
 	transitionDuration: DEFAULT_TRANSITION_DURATION,
 	resetDuration: DEFAULT_RESET_DURATION,
+	easing: DEFAULT_EASING,
 	pauseOnHover: false,
 	pauseOnFocus: false,
 	autoplay: true,
@@ -149,6 +151,7 @@ const DEFAULT_CONFIG = {
 	ariaLive: ARIA_LIVE_POLITE,
 	announceSlides: true,
 	onSlideChange: null,
+	onSlideEnd: null,
 	onPause: null,
 	onPlay: null,
 	reverse: false,
@@ -517,7 +520,8 @@ function ContinuousCarousel(element) {
 			"--carousel-item-width": direction === "horizontal" ? "".concat(itemSize, "px") : "auto",
 			"--carousel-item-height": direction === "vertical" ? "".concat(itemSize, "px") : "auto",
 			"--carousel-item-count": totalItems,
-			"--carousel-transition-duration": "".concat(config.transitionDuration, "ms")
+			"--carousel-transition-duration": "".concat(config.transitionDuration, "ms"),
+			"--carousel-easing": config.easing
 		});
 		return {
 			itemSize,
@@ -535,8 +539,13 @@ function ContinuousCarousel(element) {
 	* Notify listeners of a slide change
 	*/
 	function notifySlideChange() {
+		const element$1 = items[activeSlideIndex - 1];
 		if (liveRegion) updateLiveRegion(liveRegion, activeSlideIndex, itemsLength);
-		if (config.onSlideChange) config.onSlideChange(activeSlideIndex);
+		if (config.onSlideChange) config.onSlideChange(activeSlideIndex, element$1);
+		if (config.onSlideEnd) {
+			const callback = config.onSlideEnd;
+			setTimeout(() => callback(activeSlideIndex, element$1), config.transitionDuration);
+		}
 	}
 	/**
 	* Advance to next slide
@@ -634,11 +643,26 @@ else if (!animationController.getIsRunning()) animationController.start();
 		if (config.onDestroy) config.onDestroy();
 	}
 	/**
+	* Jump to a specific slide by 0-based index (snaps instantly, then resumes)
+	*/
+	function goToSlide(index) {
+		const targetSlideIndex = Math.max(1, Math.min(index + 1, itemsLength));
+		const { itemSize } = recalculateDimensions();
+		const offset = config.reverse ? targetSlideIndex : targetSlideIndex - 1;
+		const targetPosition = -(offset * numVisible * itemSize);
+		applyTransform(targetPosition, 0);
+		void container.offsetHeight;
+		setCSSProperties(container, { "--carousel-transition-duration": "".concat(config.transitionDuration, "ms") });
+		position = targetPosition;
+		activeSlideIndex = targetSlideIndex;
+		notifySlideChange();
+	}
+	/**
 	* Update configuration
 	*/
 	function updateConfig(newOptions) {
 		Object.assign(config, newOptions);
-		if (newOptions.transitionDuration !== undefined) recalculateDimensions();
+		if (newOptions.transitionDuration !== undefined || newOptions.easing !== undefined) recalculateDimensions();
 	}
 	/**
 	* Initialize the carousel
@@ -691,6 +715,7 @@ else if (!animationController.getIsRunning()) animationController.start();
 		play,
 		pause,
 		destroy,
+		goToSlide,
 		updateConfig,
 		container,
 		config
