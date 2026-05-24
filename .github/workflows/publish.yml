@@ -15,27 +15,29 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11
+
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
           node-version: '20'
-          cache: 'npm'
+          cache: 'pnpm'
           registry-url: 'https://registry.npmjs.org'
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Lint
-        run: npm run lint
+        run: pnpm run lint
 
       - name: Build
-        run: npm run build
+        run: pnpm run build
 
       - name: Test
-        run: npm test
-
-      - name: Update npm
-        run: npm install -g npm@latest
+        run: pnpm test
 
       - name: Publish
         run: |
@@ -43,7 +45,7 @@ jobs:
           if npm view "continuous-carousel@${VERSION}" version 2>/dev/null | grep -q "${VERSION}"; then
             echo "Version ${VERSION} already published, skipping"
           else
-            npm publish --access public
+            pnpm publish --access public --no-git-checks
           fi
 
       - name: Create GitHub Release

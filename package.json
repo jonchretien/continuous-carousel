@@ -45,8 +45,9 @@
   "engines": {
     "node": "^20.19.0 || ^22.13.0 || >=24"
   },
+  "packageManager": "pnpm@11.3.0",
   "scripts": {
-    "build": "npm run build:js && npm run build:types && npm run copy && npm run build:css",
+    "build": "pnpm run build:js && pnpm run build:types && pnpm run copy && pnpm run build:css",
     "build:js": "node bin/build-js.mjs",
     "build:types": "tsc --emitDeclarationOnly --outDir dist",
     "build:css": "postcss src/continuous-carousel.css -o dist/continuous-carousel.min.css",
@@ -56,10 +57,10 @@
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
     "postversion": "node bin/post-version.mjs",
-    "dist": "npm run lint && npm run test && npm run copy && npm run build",
+    "dist": "pnpm run lint && pnpm run test && pnpm run copy && pnpm run build",
     "lint": "eslint 'src/**/*.ts'",
     "typecheck": "tsc --noEmit",
-    "pretest": "npm run build",
+    "pretest": "pnpm run build",
     "test": "vitest run"
   },
   "author": "Jon Chretien",
@@ -81,6 +82,7 @@
     "rolldown": "^1.0.0",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.56.0",
+    "vite": "^8.0.14",
     "vitepress": "^1.6.4",
     "vitest": "^4.0.18"
   }
