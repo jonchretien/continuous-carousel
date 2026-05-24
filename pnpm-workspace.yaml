@@ -4,3 +4,7 @@ allowBuilds:
 blockExoticSubdeps: true
 minimumReleaseAge: 1440
 trustPolicy: no-downgrade
+trustPolicyExclude:
+  - semver
+  - tinyexec
+  - vite
