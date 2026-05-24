@@ -38,9 +38,20 @@ jobs:
         run: npm install -g npm@latest
 
       - name: Publish
-        run: npm publish --access public
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          if npm view "continuous-carousel@${VERSION}" version 2>/dev/null | grep -q "${VERSION}"; then
+            echo "Version ${VERSION} already published, skipping"
+          else
+            npm publish --access public
+          fi
 
       - name: Create GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create ${{ github.ref_name }} --generate-notes
+        run: |
+          if gh release view ${{ github.ref_name }} 2>/dev/null; then
+            echo "Release ${{ github.ref_name }} already exists, skipping"
+          else
+            gh release create ${{ github.ref_name }} --generate-notes
+          fi
