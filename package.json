@@ -77,7 +77,7 @@
     "cssnano": "^8.0.0",
     "eslint": "^10.0.1",
     "globals": "^17.3.0",
-    "jsdom": "^29.0.0",
+    "jsdom": "^30.0.0",
     "postcss-cli": "^11.0.1",
     "rolldown": "^1.0.0",
     "typescript": "^6.0.3",
