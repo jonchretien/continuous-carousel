@@ -34,7 +34,7 @@ importers:
         version: 10.4.2
       cssnano:
         specifier: ^9.0.0
-        version: 9.2.1(postcss@8.5.28)
+        version: 9.2.2(postcss@8.5.28)
       eslint:
         specifier: ^10.0.1
         version: 10.12.0
@@ -711,8 +711,8 @@ packages:
   '@cacheable/utils@2.5.0':
     resolution: {integrity: sha512-buipgOVDkkPXNR5+xBpDw7Zk2n1EvU7qBJCNUcL7rhQ//kfpOXPAvQ511Os0vpLYJ1pZnvudNytkQt2hst3wqA==}
 
-  '@colordx/core@7.2.0':
-    resolution: {integrity: sha512-Y5PPwWCWVP59qj2EMVSgD9QMXtMSwt9DseqKvRWOXefM7sRu4EjCRuXQXMaanUH32R8c89OCWJJWZe6jA1dvTg==}
+  '@colordx/core@7.3.0':
+    resolution: {integrity: sha512-LVzTTPhX7wpy7TkGjouA9zbbCBIw92RGm7ZQqSKFE0oYE3sMx2FGXz90eVpgw7k/+wrrY+qJ86nHXifZWMS5jA==}
 
   '@csstools/color-helpers@6.1.1':
     resolution: {integrity: sha512-gLNsunvwf3mCi5u5o46/Z/JcJMnhbHSaZ69rkgPzNM3J4s8hWwpPUQB6/tt0EDFyCiWzxANlx+2LJwpYj4zS1w==}
@@ -1725,8 +1725,8 @@ packages:
     engines: {node: '>=4'}
     hasBin: true
 
-  cssnano-preset-default@9.2.1:
-    resolution: {integrity: sha512-D4eDA6lNW2Fiv7O9bAANu/FM63T4W1Q4cS1L065xNKH3U2zxfVU7CmC+O0P2k6KVygIIrdmVHmUCpsPS2Rv6BQ==}
+  cssnano-preset-default@9.2.2:
+    resolution: {integrity: sha512-2xIwkvzbaqfwffkTDMb9fjnI1BZXVEryQ7dhA2yn2t95jo+SkIVnYmZ/ZAmNLrVCj/vmal3FxcLCGh82bQfUvQ==}
     engines: {node: ^22.22.3 || ^24.15.0 || >=26.0}
     peerDependencies:
       postcss: ^8.5.28
@@ -1737,8 +1737,8 @@ packages:
     peerDependencies:
       postcss: ^8.5.28
 
-  cssnano@9.2.1:
-    resolution: {integrity: sha512-WG2X8E8XLiEr+sFHzy5vXBI+iXc6uBIlfszG770X5MH80z4uENWsGbfQyORqEMZlFU5tpuh3dx1R5VW4eVyWbg==}
+  cssnano@9.2.2:
+    resolution: {integrity: sha512-TG/gH1G/wCXM//IVBG5pKJznF1KdtW2OoqojenaSLqL0tSfDP7D8qckbPj59iaFMn7THtYVh2HY7yY/5FGaClw==}
     engines: {node: ^22.22.3 || ^24.15.0 || >=26.0}
     peerDependencies:
       postcss: ^8.5.28
@@ -2352,8 +2352,8 @@ packages:
     peerDependencies:
       postcss: ^8.5.28
 
-  postcss-merge-rules@9.0.7:
-    resolution: {integrity: sha512-FGZhuSWCJTMFrPb+3QiVSI6WLoFIbyL5o8+nhlNvKg5rrUGdHVor26xG+ttQjPhlB7Ysv/ONj0F8oBLvIO5iOQ==}
+  postcss-merge-rules@9.0.8:
+    resolution: {integrity: sha512-kp14dE0AlXwd69pcfU6VWG9G6pCPK11OWJqlb3/ccoO9CRKGVsqiHOq/hpkAm4scYzuo3ZMYQs1E0O7c2K8SSA==}
     engines: {node: ^22.22.3 || ^24.15.0 || >=26.0}
     peerDependencies:
       postcss: ^8.5.28
@@ -3783,7 +3783,7 @@ snapshots:
       hashery: 1.5.1
       keyv: 5.6.0
 
-  '@colordx/core@7.2.0': {}
+  '@colordx/core@7.3.0': {}
 
   '@csstools/color-helpers@6.1.1': {}
 
@@ -4633,7 +4633,7 @@ snapshots:
 
   cssesc@3.0.0: {}
 
-  cssnano-preset-default@9.2.1(postcss@8.5.28):
+  cssnano-preset-default@9.2.2(postcss@8.5.28):
     dependencies:
       browserslist: 4.29.3
       cssnano-utils: 8.1.0(postcss@8.5.28)
@@ -4646,7 +4646,7 @@ snapshots:
       postcss-discard-empty: 9.0.5(postcss@8.5.28)
       postcss-discard-overridden: 9.0.5(postcss@8.5.28)
       postcss-merge-longhand: 9.2.0(postcss@8.5.28)
-      postcss-merge-rules: 9.0.7(postcss@8.5.28)
+      postcss-merge-rules: 9.0.8(postcss@8.5.28)
       postcss-minify-font-values: 9.0.7(postcss@8.5.28)
       postcss-minify-gradients: 9.0.6(postcss@8.5.28)
       postcss-minify-params: 9.0.6(postcss@8.5.28)
@@ -4671,9 +4671,9 @@ snapshots:
       '@csstools/css-tokenizer': 4.0.2
       postcss: 8.5.28
 
-  cssnano@9.2.1(postcss@8.5.28):
+  cssnano@9.2.2(postcss@8.5.28):
     dependencies:
-      cssnano-preset-default: 9.2.1(postcss@8.5.28)
+      cssnano-preset-default: 9.2.2(postcss@8.5.28)
       postcss: 8.5.28
 
   csso@5.0.5:
@@ -5205,7 +5205,7 @@ snapshots:
 
   postcss-colormin@9.0.6(postcss@8.5.28):
     dependencies:
-      '@colordx/core': 7.2.0
+      '@colordx/core': 7.3.0
       '@csstools/css-tokenizer': 4.0.2
       browserslist: 4.29.3
       caniuse-api: 4.0.0
@@ -5250,7 +5250,7 @@ snapshots:
       postcss: 8.5.28
       stylehacks: 9.0.7(postcss@8.5.28)
 
-  postcss-merge-rules@9.0.7(postcss@8.5.28):
+  postcss-merge-rules@9.0.8(postcss@8.5.28):
     dependencies:
       '@csstools/css-tokenizer': 4.0.2
       browserslist: 4.29.3
@@ -5267,7 +5267,7 @@ snapshots:
 
   postcss-minify-gradients@9.0.6(postcss@8.5.28):
     dependencies:
-      '@colordx/core': 7.2.0
+      '@colordx/core': 7.3.0
       '@csstools/css-tokenizer': 4.0.2
       cssnano-utils: 8.1.0(postcss@8.5.28)
       postcss: 8.5.28
